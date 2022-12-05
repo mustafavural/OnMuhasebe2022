@@ -31,7 +31,7 @@
             public static string KodYok => "Cari Bulunamadi.";
             public static string CategoryeEklendi => "Cariye grup kod başarıyla eklendi.";
             public static string CategorydenSilindi => "Cariden grup kod başarıyla silindi.";
-            public static string KurumsalEklendi => "Kurumsal cari başarıyla eklendi.";
+            public static string CariEklendi => "Kurumsal cari başarıyla eklendi.";
             public static string BireyselEklendi => "Bireysel cari başarıyla eklendi.";
             public static string Silindi => "Cari başarıyla silindi.";
             public static string Guncellendi => "Cari başarıyla güncellendi.";
@@ -48,6 +48,7 @@
             public static string HareketEklendi => "Cari hareket eklendi";
             public static string HareketSilindi => "Cari hareket silindi";
             public static string HareketGuncellendi => "Cari hareket güncellendi";
+            public static string CariVeCategoryZatenEslenik => "Cari ve category eşlemesi zaten yapılmış.";
         }
 
         public static class StokMessages

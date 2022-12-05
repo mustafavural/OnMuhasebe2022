@@ -13,13 +13,23 @@ namespace WindowsFormUI.Views.Moduls.Cariler
     {
         private readonly ICariService _cariService;
         private readonly ICariHareketService _cariHareketService;
+        private readonly IAdresService _adresService;
+        private readonly IIlceService _ilceService;
+        private readonly ISehirService _sehirService;
         private Cari _secilenCari;
 
-        public FrmCariKart(ICariService cariService, ICariHareketService cariHareketService)
+        public FrmCariKart(ICariService cariService, ICariHareketService cariHareketService, IAdresService adresService, IIlceService ilceService, ISehirService sehirService)
         {
             InitializeComponent();
             _cariService = cariService;
             _cariHareketService = cariHareketService;
+            _adresService = adresService;
+            _ilceService = ilceService;
+            _sehirService = sehirService;
+            cmbSehir.Items.Add("<<Seçiniz>>");
+            cmbSehir.Items.AddRange(_sehirService.GetList().Data.Select(s => s.Ad).ToArray());
+            cmbSehir.SelectedIndex = 0;
+            cmbIlce.SelectedIndex = 0;
         }
 
         #region Events
@@ -81,7 +91,7 @@ namespace WindowsFormUI.Views.Moduls.Cariler
         {
             var form = Program.Container.Resolve<FrmCariGrup>();
             form.SecimIcin = true;
-            form.Show();
+            form.ShowDialog();
 
             try
             {
@@ -95,6 +105,7 @@ namespace WindowsFormUI.Views.Moduls.Cariler
 
                     uscCariEkleSilButon.LblStatus_Text = result.Message;
                     dgvGrupView.DataSource = _cariService.GetByKod(_secilenCari.Kod).Data.CariCategoryler;
+                    dgvGrupView.Refresh();
                 }
             }
             catch (Exception err)
@@ -126,7 +137,7 @@ namespace WindowsFormUI.Views.Moduls.Cariler
         {
             try
             {
-                this.ReadFromScreen(out Cari cari);
+                this.ReadCariFromForm(out Cari cari);
 
                 var result = cari.Id == 0 ? _cariService.Add(cari) : _cariService.Update(cari);
 
@@ -159,9 +170,12 @@ namespace WindowsFormUI.Views.Moduls.Cariler
         {
             try
             {
-                int secilenCariId = (int)dgvCariListe.Rows[e.RowIndex]?.Cells["colId"].Value;
-                _secilenCari = _cariService.GetById(secilenCariId).Data;
-                WriteToScreen(_secilenCari);
+                if (e.RowIndex > -1)
+                {
+                    int secilenCariId = (int)dgvCariListe.Rows[e.RowIndex]?.Cells["colId"].Value;
+                    _secilenCari = _cariService.GetById(secilenCariId).Data;
+                    WriteToScreen(_secilenCari);
+                }
             }
             catch (Exception err)
             {
@@ -171,8 +185,11 @@ namespace WindowsFormUI.Views.Moduls.Cariler
 
         private void DgvGrupView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            StaticPrimitives.SecilenCariCategoryId = (int)dgvGrupView.Rows[e.RowIndex]?.Cells["colGrupId"].Value;
-            btnGrupSil.Enabled = true;
+            if (e.RowIndex > -1)
+            {
+                StaticPrimitives.SecilenCariCategoryId = (int)dgvGrupView.Rows[e.RowIndex]?.Cells["colGrupId"].Value;
+                btnGrupSil.Enabled = true;
+            }
         }
 
         private void DgvGrupView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -192,7 +209,7 @@ namespace WindowsFormUI.Views.Moduls.Cariler
         #endregion
 
         #region PrivateMethods
-        private void ReadFromScreen(out Cari cari)
+        private void ReadCariFromForm(out Cari cari)
         {
             cari = new Cari
             {
@@ -203,18 +220,14 @@ namespace WindowsFormUI.Views.Moduls.Cariler
                 VergiNo = txtVergiNo.Text,
                 Adres = new Adres
                 {
+                    Id = _secilenCari == null ? 0 : _secilenCari.Id,
                     Telefon = txtTelefon.Text,
+                    Telefon2 = txtTelefon2.Text,
+                    Fax = txtFax.Text,
                     Web = txtWeb.Text,
                     Eposta = txtEposta.Text,
-                    AcikAdres = txtAcikAdres.Text,
-                    Ilce = new Ilce
-                    {
-                        Ad = txtIlce.Text,
-                        Sehir = new Sehir
-                        {
-                            Ad = txtIl.Text
-                        }
-                    }
+                    IlceId = _ilceService.GetByAd(cmbIlce.Text).Data.Id,
+                    AcikAdres = txtAcikAdres.Text
                 }
             };
         }
@@ -226,11 +239,13 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             txtVergiDairesi.Text = secilenCari.VergiDairesi;
             txtVergiNo.Text = secilenCari.VergiNo;
             txtTelefon.Text = secilenCari.Adres.Telefon;
+            txtTelefon2.Text = secilenCari.Adres.Telefon2;
+            txtFax.Text = secilenCari.Adres.Fax;
             txtWeb.Text = secilenCari.Adres.Web;
             txtEposta.Text = secilenCari.Adres.Eposta;
             txtAcikAdres.Text = secilenCari.Adres.AcikAdres;
-            txtIlce.Text = secilenCari.Adres.Ilce.Ad;
-            txtIl.Text = secilenCari.Adres.Ilce.Sehir.Ad;
+            cmbSehir.Text = secilenCari.Adres.Ilce.Sehir.Ad;
+            cmbIlce.Text = secilenCari.Adres.Ilce.Ad;
 
             dgvGrupView.DataSource = _cariService.GetByKod(secilenCari.Kod).Data.CariCategoryler;
 
@@ -261,10 +276,11 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             txtVergiDairesi.Text = "";
             txtVergiNo.Text = "";
             txtTelefon.Text = "";
+            txtTelefon2.Text = "";
+            txtFax.Text = "";
             txtWeb.Text = "";
             txtEposta.Text = "";
-            txtIl.Text = "";
-            txtIlce.Text = "";
+            cmbSehir.SelectedIndex = 0;
             txtAcikAdres.Text = "";
 
             dgvGrupView.DataSource = new List<StokCategory>();
@@ -277,7 +293,24 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             uscCariEkleSilButon.BtnSave_Text = "Ekle";
             uscCariEkleSilButon.LblStatus_Text = "";
             _secilenCari = null;
-            dgvCariListe.DataSource = _cariService.GetList().Data.OrderByDescending(s => s.Id).ToList();
+            var cariListe = _cariService.GetList().Data.OrderByDescending(s => s.Id).ToList();
+            dgvCariListe.DataSource = cariListe.Select(
+                s => new
+                {
+                    s.Id,
+                    s.Kod,
+                    s.Unvan,
+                    s.VergiDairesi,
+                    s.VergiNo,
+                    s.Adres.Telefon,
+                    s.Adres.Telefon2,
+                    s.Adres.Fax,
+                    s.Adres.Web,
+                    s.Adres.Eposta,
+                    Il = s.Adres.Ilce.Sehir.Ad,
+                    Ilce = s.Adres.Ilce.Ad,
+                    s.Adres.AcikAdres
+                }).ToList();
 
             if (tabCariControl.TabPages.Contains(tabCariHareket))
             {
@@ -286,5 +319,25 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             txtCariKod.Focus();
         }
         #endregion
+
+        private void CmbSehir_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cmbIlce.Items.Clear();
+            if (cmbSehir.SelectedIndex > 0)
+            {
+                cmbIlce.Items.Add("<<Seçiniz>>");
+                cmbIlce.Items.AddRange(_ilceService.GetListBySehirAd(cmbSehir.Text).Data.Select(s => s.Ad).ToArray());
+            }
+            else
+            {
+                cmbIlce.Items.Add("<<Şehir Seçiniz>>");
+            }
+            cmbIlce.SelectedIndex = 0;
+        }
+
+        private void CmbIlce_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            uscCariEkleSilButon.BtnSave_Enable = cmbIlce.SelectedIndex > 0;
+        }
     }
 }

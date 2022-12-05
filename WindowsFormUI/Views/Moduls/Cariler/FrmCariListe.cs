@@ -63,7 +63,7 @@ namespace WindowsFormUI.Views.Moduls.Cariler
         {
             var form = Program.Container.Resolve<FrmCariGrup>();
             form.SecimIcin = true;
-            form.Show();
+            form.ShowDialog();
 
             try
             {

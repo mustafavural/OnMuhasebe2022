@@ -1,14 +1,18 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Security;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
+using Core.Entities.Abstract;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 
 namespace Business.Concrete
@@ -25,17 +29,22 @@ namespace Business.Concrete
         }
 
         #region BusinessRules
-        protected IResult KontrolCariIdVarMi(int Id)
+        private IResult KontrolCariIdMevcutMu(int Id)
         {
             return _cariDal.Get(c => c.Id == Id) != null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.KodYok);
         }
-        protected IResult KontrolCariKodVarMi(string kod)
+        private IResult KontrolCariKodZatenVarMi(string kod)
         {
             return _cariDal.Get(c => c.Kod == kod) == null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.KodZatenMevcut);
         }
-        protected IResult KontrolCariUnvanVarMi(string unvan)
+        private IResult KontrolCariUnvanZatenVarMi(string unvan)
         {
             return _cariDal.Get(c => c.Unvan == unvan) == null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.UnvanZatenMevcut);
+        }
+
+        private IResult KontrolCariGrupZatenVarMi(CariGrup cariGrup)
+        {
+            return _cariDal.GetCariGrup(cariGrup.CariId, cariGrup.CariCategoryId) == null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.CariVeCategoryZatenEslenik);
         }
         #endregion
 
@@ -207,6 +216,10 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IResult AddCategoryToCari(CariGrup cariGrup)
         {
+            IResult result = BusinessRules.Run(KontrolCariGrupZatenVarMi(cariGrup));
+            if (!result.IsSuccess)
+                return result;
+
             _cariDal.AddCategoryToCari(cariGrup);
             return new SuccessResult(Messages.CariMessages.CategoryeEklendi);
         }
@@ -221,18 +234,20 @@ namespace Business.Concrete
         }
 
         [SecuredOperation("Add,Admin")]
+        [ValidationAspect(typeof(CariValidator), Priority = 1)]
         [CacheRemoveAspect("ICariService.Get")]
         [LogAspect(typeof(DatabaseLogger))]
         public IResult Add(Cari entity)
         {
-            IResult result = BusinessRules.Run(KontrolCariUnvanVarMi(entity.Unvan),
-                                               KontrolCariKodVarMi(entity.Kod));
+            IResult result = BusinessRules.Run(KontrolCariUnvanZatenVarMi(entity.Unvan),
+                                               KontrolCariKodZatenVarMi(entity.Kod));
             if (!result.IsSuccess)
                 return result;
 
             _adresService.Add(entity.Adres);
+            entity.Id = entity.Adres.Id;
             _cariDal.Add(entity);
-            return new SuccessResult(Messages.CariMessages.KurumsalEklendi);
+            return new SuccessResult(Messages.CariMessages.CariEklendi);
         }
 
         [SecuredOperation("Delete,Admin")]
@@ -240,23 +255,26 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IResult Delete(Cari entity)
         {
-            IResult result = BusinessRules.Run(KontrolCariIdVarMi(entity.Id));
+            IResult result = BusinessRules.Run(KontrolCariIdMevcutMu(entity.Id));
             if (!result.IsSuccess)
                 return result;
 
             _cariDal.Delete(entity);
+            _adresService.Delete(entity.Adres);
             return new SuccessResult(Messages.CariMessages.Silindi);
         }
 
         [SecuredOperation("Update,Admin")]
+        [ValidationAspect(typeof(CariValidator), Priority = 1)]
         [CacheRemoveAspect("ICariService.Get")]
         [LogAspect(typeof(DatabaseLogger))]
         public IResult Update(Cari entity)
         {
-            IResult result = BusinessRules.Run(KontrolCariIdVarMi(entity.Id));
+            IResult result = BusinessRules.Run(KontrolCariIdMevcutMu(entity.Id));
             if (!result.IsSuccess)
                 return result;
 
+            _adresService.Update(entity.Adres);
             _cariDal.Update(entity);
             return new SuccessResult(Messages.CariMessages.Guncellendi);
         }
