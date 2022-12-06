@@ -26,7 +26,7 @@ namespace WindowsFormUI
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            System.Transactions.TransactionManager.ImplicitDistributedTransactions = true;
+            //System.Transactions.TransactionManager.ImplicitDistributedTransactions = true;
             Container = ConfigureContainer();
             ConfigureServices(new ServiceCollection());
             Application.Run(Container.Resolve<FrmWelcome>());

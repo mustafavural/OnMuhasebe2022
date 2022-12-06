@@ -7,12 +7,10 @@ using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Security;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
-using Core.Entities.Abstract;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 
 namespace Business.Concrete
@@ -33,10 +31,12 @@ namespace Business.Concrete
         {
             return _cariDal.Get(c => c.Id == Id) != null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.KodYok);
         }
+
         private IResult KontrolCariKodZatenVarMi(string kod)
         {
             return _cariDal.Get(c => c.Kod == kod) == null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.KodZatenMevcut);
         }
+
         private IResult KontrolCariUnvanZatenVarMi(string unvan)
         {
             return _cariDal.Get(c => c.Unvan == unvan) == null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.UnvanZatenMevcut);
@@ -45,6 +45,16 @@ namespace Business.Concrete
         private IResult KontrolCariGrupZatenVarMi(CariGrup cariGrup)
         {
             return _cariDal.GetCariGrup(cariGrup.CariId, cariGrup.CariCategoryId) == null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.CariVeCategoryZatenEslenik);
+        }
+
+        private IResult KontrolVergiNoZatenVarMi(string vergiNo)
+        {
+            return _cariDal.Get(c=>c.VergiNo == vergiNo) == null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.VergiNoZatenMevcut);
+        }
+
+        private IResult KontrolCariHareketGormusMu(int id)
+        {
+            return _cariDal.GetCariHareketler(id) == null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.CariKullaniliyor);
         }
         #endregion
 
@@ -240,7 +250,8 @@ namespace Business.Concrete
         public IResult Add(Cari entity)
         {
             IResult result = BusinessRules.Run(KontrolCariUnvanZatenVarMi(entity.Unvan),
-                                               KontrolCariKodZatenVarMi(entity.Kod));
+                                               KontrolCariKodZatenVarMi(entity.Kod),
+                                               KontrolVergiNoZatenVarMi(entity.VergiNo));
             if (!result.IsSuccess)
                 return result;
 
@@ -255,13 +266,14 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IResult Delete(Cari entity)
         {
-            IResult result = BusinessRules.Run(KontrolCariIdMevcutMu(entity.Id));
+            IResult result = BusinessRules.Run(KontrolCariIdMevcutMu(entity.Id),
+                                               KontrolCariHareketGormusMu(entity.Id));
             if (!result.IsSuccess)
                 return result;
 
-            _cariDal.Delete(entity);
-            _adresService.Delete(entity.Adres);
-            return new SuccessResult(Messages.CariMessages.Silindi);
+            _cariDal.Delete(new Cari { Id = entity.Id });
+            _adresService.Delete(new Adres { Id = entity.Id });
+            return new SuccessResult(Messages.CariMessages.CariSilindi);
         }
 
         [SecuredOperation("Update,Admin")]
@@ -274,9 +286,9 @@ namespace Business.Concrete
             if (!result.IsSuccess)
                 return result;
 
-            _adresService.Update(entity.Adres);
             _cariDal.Update(entity);
-            return new SuccessResult(Messages.CariMessages.Guncellendi);
+            _adresService.Update(entity.Adres);
+            return new SuccessResult(Messages.CariMessages.CariGuncellendi);
         }
     }
 }

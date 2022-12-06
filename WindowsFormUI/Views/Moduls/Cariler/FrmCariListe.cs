@@ -43,6 +43,8 @@ namespace WindowsFormUI.Views.Moduls.Cariler
                 s.VergiDairesi,
                 s.VergiNo,
                 s.Adres.Telefon,
+                s.Adres.Telefon2,
+                s.Adres.Fax,
                 s.Adres.Web,
                 s.Adres.Eposta,
                 Il = s.Adres.Ilce.Sehir.Ad,
@@ -124,7 +126,11 @@ namespace WindowsFormUI.Views.Moduls.Cariler
                                                  s.Unvan.ToLower().Contains(txtCariUnvan.Text.ToLower()) &&
                                                  s.VergiDairesi.ToLower().Contains(txtCariVergiDairesi.Text.ToLower()) &&
                                                  s.VergiNo.ToString().Contains(txtCariVergiNo.Text) &&
-                                                 s.Adres.Telefon.ToLower().Contains(txtCariTelefon.Text.ToLower()) &&
+
+                                                 (s.Adres.Telefon.ToLower().Contains(txtCariTelefon.Text.ToLower()) ||
+                                                 s.Adres.Telefon2.ToLower().Contains(txtCariTelefon.Text.ToLower()) ||
+                                                 s.Adres.Fax.ToLower().Contains(txtCariTelefon.Text.ToLower())) &&
+
                                                  s.Adres.Web.ToLower().Contains(txtCariWeb.Text.ToLower()) &&
                                                  s.Adres.Eposta.ToLower().Contains(txtCariEposta.Text.ToLower().ToLower()) &&
                                                  s.Adres.Ilce.Sehir.Ad.ToLower().Contains(txtCariIl.Text.ToLower()) &&
@@ -141,9 +147,9 @@ namespace WindowsFormUI.Views.Moduls.Cariler
 
         private void DgvCariListe_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int secilenCariId = (int)dgvCariListe.SelectedRows[0].Cells["colId"].Value;
-            if (secilenCariId > 0)
+            if (e.RowIndex > -1)
             {
+                int secilenCariId = (int)dgvCariListe.SelectedRows[0].Cells["colId"].Value;
                 StaticPrimitives.SecilenCariId = secilenCariId;
                 _ciftTiklandiMi = true;
                 if (SecimIcin) this.Close();

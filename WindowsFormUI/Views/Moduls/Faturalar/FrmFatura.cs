@@ -1,10 +1,7 @@
 ﻿using Autofac;
-using Business.Abstract;
 using Core.Extensions;
 using System;
 using System.Windows.Forms;
-using WindowsFormUI.Helpers;
-using WindowsFormUI.Views.Moduls.Cariler;
 
 namespace WindowsFormUI.Views.Moduls.Faturalar
 {
@@ -22,6 +19,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             var faturaTur = (FaturaTurleri)tsmi.Tag.ToString().ToInt();
             
             var form = Program.Container.Resolve<FrmFaturaKayit>();
+            form.MdiParent = this; 
             form.FaturaTur = faturaTur;
             form.Show();
         }
@@ -29,6 +27,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         private void TsmiKayitFaturaListe_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FrmFaturaListe>();
+            form.MdiParent = this;
             form.FaturaTur = FaturaTurleri.Hepsi;
             form.Show();
         }

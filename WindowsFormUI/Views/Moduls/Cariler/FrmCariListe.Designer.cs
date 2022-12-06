@@ -64,18 +64,6 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.btnCariGrupSil = new System.Windows.Forms.Button();
             this.btnCariGrupEkle = new System.Windows.Forms.Button();
             this.dgvCariListe = new System.Windows.Forms.DataGridView();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUnvan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVergiDairesi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVergiNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTelefon = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colWeb = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.colEPosta = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.colIl = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colIlce = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAcikAdres = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBakiye = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.msShowColumns = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiSeperator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiCariKod = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,12 +71,28 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.tsmiCariVergiDairesi = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCariVergiNo = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCariTelefon = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCariTelefon2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCariFax = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCariWeb = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCariEPosta = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCariIl = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCariIlce = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCariAcikAdres = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCariBakiye = new System.Windows.Forms.ToolStripMenuItem();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colKod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUnvan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVergiDairesi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVergiNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBakiye = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTelefon = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTelefon2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFax = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colWeb = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.colEPosta = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.colIl = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIlce = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAcikAdres = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpCariListe.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCariListe)).BeginInit();
             this.msShowColumns.SuspendLayout();
@@ -332,13 +336,15 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.colUnvan,
             this.colVergiDairesi,
             this.colVergiNo,
+            this.colBakiye,
             this.colTelefon,
+            this.colTelefon2,
+            this.colFax,
             this.colWeb,
             this.colEPosta,
             this.colIl,
             this.colIlce,
-            this.colAcikAdres,
-            this.colBakiye});
+            this.colAcikAdres});
             this.dgvCariListe.ContextMenuStrip = this.msShowColumns;
             this.dgvCariListe.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCariListe.Location = new System.Drawing.Point(131, 0);
@@ -352,143 +358,6 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.dgvCariListe.TabIndex = 1;
             this.dgvCariListe.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCariListe_CellDoubleClick);
             // 
-            // colId
-            // 
-            this.colId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colId.DataPropertyName = "Id";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colId.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colId.HeaderText = "Id";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colId.Visible = false;
-            // 
-            // colKod
-            // 
-            this.colKod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colKod.DataPropertyName = "Kod";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colKod.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colKod.HeaderText = "Cari Kodu";
-            this.colKod.Name = "colKod";
-            this.colKod.ReadOnly = true;
-            this.colKod.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colKod.Width = 85;
-            // 
-            // colUnvan
-            // 
-            this.colUnvan.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colUnvan.DataPropertyName = "Unvan";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colUnvan.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colUnvan.HeaderText = "Unvanı";
-            this.colUnvan.Name = "colUnvan";
-            this.colUnvan.ReadOnly = true;
-            this.colUnvan.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // colVergiDairesi
-            // 
-            this.colVergiDairesi.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colVergiDairesi.DataPropertyName = "VergiDairesi";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colVergiDairesi.DefaultCellStyle = dataGridViewCellStyle4;
-            this.colVergiDairesi.HeaderText = "Vergi Dairesi";
-            this.colVergiDairesi.Name = "colVergiDairesi";
-            this.colVergiDairesi.ReadOnly = true;
-            this.colVergiDairesi.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colVergiDairesi.Visible = false;
-            // 
-            // colVergiNo
-            // 
-            this.colVergiNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colVergiNo.DataPropertyName = "VergiNo";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colVergiNo.DefaultCellStyle = dataGridViewCellStyle5;
-            this.colVergiNo.HeaderText = "Vergi No";
-            this.colVergiNo.Name = "colVergiNo";
-            this.colVergiNo.ReadOnly = true;
-            this.colVergiNo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colVergiNo.Visible = false;
-            // 
-            // colTelefon
-            // 
-            this.colTelefon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colTelefon.DataPropertyName = "Telefon";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colTelefon.DefaultCellStyle = dataGridViewCellStyle6;
-            this.colTelefon.HeaderText = "Telefon";
-            this.colTelefon.Name = "colTelefon";
-            this.colTelefon.ReadOnly = true;
-            this.colTelefon.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colTelefon.Width = 75;
-            // 
-            // colWeb
-            // 
-            this.colWeb.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colWeb.DataPropertyName = "Web";
-            this.colWeb.HeaderText = "Web";
-            this.colWeb.Name = "colWeb";
-            this.colWeb.ReadOnly = true;
-            this.colWeb.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colWeb.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colWeb.Visible = false;
-            // 
-            // colEPosta
-            // 
-            this.colEPosta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colEPosta.DataPropertyName = "EPosta";
-            this.colEPosta.HeaderText = "EPosta";
-            this.colEPosta.Name = "colEPosta";
-            this.colEPosta.ReadOnly = true;
-            this.colEPosta.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colEPosta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colEPosta.Visible = false;
-            // 
-            // colIl
-            // 
-            this.colIl.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colIl.DataPropertyName = "Il";
-            this.colIl.HeaderText = "İli";
-            this.colIl.Name = "colIl";
-            this.colIl.ReadOnly = true;
-            this.colIl.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colIl.Width = 48;
-            // 
-            // colIlce
-            // 
-            this.colIlce.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colIlce.DataPropertyName = "Ilce";
-            this.colIlce.HeaderText = "İlçesi";
-            this.colIlce.Name = "colIlce";
-            this.colIlce.ReadOnly = true;
-            this.colIlce.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colIlce.Width = 66;
-            // 
-            // colAcikAdres
-            // 
-            this.colAcikAdres.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colAcikAdres.DataPropertyName = "AcikAdres";
-            this.colAcikAdres.HeaderText = "Açık Adresi";
-            this.colAcikAdres.Name = "colAcikAdres";
-            this.colAcikAdres.ReadOnly = true;
-            this.colAcikAdres.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colAcikAdres.Visible = false;
-            // 
-            // colBakiye
-            // 
-            this.colBakiye.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colBakiye.DataPropertyName = "Bakiye";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle7.Format = "#,###.## TL";
-            dataGridViewCellStyle7.NullValue = null;
-            this.colBakiye.DefaultCellStyle = dataGridViewCellStyle7;
-            this.colBakiye.HeaderText = "Mevcut Bakiye";
-            this.colBakiye.Name = "colBakiye";
-            this.colBakiye.ReadOnly = true;
-            this.colBakiye.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colBakiye.Width = 104;
-            // 
             // msShowColumns
             // 
             this.msShowColumns.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -498,6 +367,8 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.tsmiCariVergiDairesi,
             this.tsmiCariVergiNo,
             this.tsmiCariTelefon,
+            this.tsmiCariTelefon2,
+            this.tsmiCariFax,
             this.tsmiCariWeb,
             this.tsmiCariEPosta,
             this.tsmiCariIl,
@@ -505,7 +376,7 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.tsmiCariAcikAdres,
             this.tsmiCariBakiye});
             this.msShowColumns.Name = "msShowColumns";
-            this.msShowColumns.Size = new System.Drawing.Size(152, 252);
+            this.msShowColumns.Size = new System.Drawing.Size(152, 296);
             // 
             // tsmiSeperator1
             // 
@@ -552,6 +423,20 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.tsmiCariTelefon.Size = new System.Drawing.Size(151, 22);
             this.tsmiCariTelefon.Text = "Telefon";
             this.tsmiCariTelefon.Click += new System.EventHandler(this.TsmiShowColumn_Click);
+            // 
+            // tsmiCariTelefon2
+            // 
+            this.tsmiCariTelefon2.Name = "tsmiCariTelefon2";
+            this.tsmiCariTelefon2.Size = new System.Drawing.Size(151, 22);
+            this.tsmiCariTelefon2.Text = "Telefon2";
+            this.tsmiCariTelefon2.Click += new System.EventHandler(this.TsmiShowColumn_Click);
+            // 
+            // tsmiCariFax
+            // 
+            this.tsmiCariFax.Name = "tsmiCariFax";
+            this.tsmiCariFax.Size = new System.Drawing.Size(151, 22);
+            this.tsmiCariFax.Text = "Fax";
+            this.tsmiCariFax.Click += new System.EventHandler(this.TsmiShowColumn_Click);
             // 
             // tsmiCariWeb
             // 
@@ -600,6 +485,152 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.tsmiCariBakiye.Size = new System.Drawing.Size(151, 22);
             this.tsmiCariBakiye.Text = "Mevcut Bakiye";
             this.tsmiCariBakiye.Click += new System.EventHandler(this.TsmiShowColumn_Click);
+            // 
+            // colId
+            // 
+            this.colId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colId.DataPropertyName = "Id";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colId.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colId.HeaderText = "Id";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            this.colId.Width = 27;
+            // 
+            // colKod
+            // 
+            this.colKod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colKod.DataPropertyName = "Kod";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colKod.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colKod.HeaderText = "Cari Kodu";
+            this.colKod.Name = "colKod";
+            this.colKod.ReadOnly = true;
+            this.colKod.Width = 85;
+            // 
+            // colUnvan
+            // 
+            this.colUnvan.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colUnvan.DataPropertyName = "Unvan";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colUnvan.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colUnvan.HeaderText = "Unvanı";
+            this.colUnvan.Name = "colUnvan";
+            this.colUnvan.ReadOnly = true;
+            this.colUnvan.Width = 70;
+            // 
+            // colVergiDairesi
+            // 
+            this.colVergiDairesi.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colVergiDairesi.DataPropertyName = "VergiDairesi";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colVergiDairesi.DefaultCellStyle = dataGridViewCellStyle4;
+            this.colVergiDairesi.HeaderText = "Vergi Dairesi";
+            this.colVergiDairesi.Name = "colVergiDairesi";
+            this.colVergiDairesi.ReadOnly = true;
+            this.colVergiDairesi.Visible = false;
+            this.colVergiDairesi.Width = 108;
+            // 
+            // colVergiNo
+            // 
+            this.colVergiNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colVergiNo.DataPropertyName = "VergiNo";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colVergiNo.DefaultCellStyle = dataGridViewCellStyle5;
+            this.colVergiNo.HeaderText = "Vergi No";
+            this.colVergiNo.Name = "colVergiNo";
+            this.colVergiNo.ReadOnly = true;
+            this.colVergiNo.Visible = false;
+            this.colVergiNo.Width = 83;
+            // 
+            // colBakiye
+            // 
+            this.colBakiye.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colBakiye.DataPropertyName = "Bakiye";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle6.Format = "#,###.## TL";
+            dataGridViewCellStyle6.NullValue = "0,000.00 TL";
+            this.colBakiye.DefaultCellStyle = dataGridViewCellStyle6;
+            this.colBakiye.HeaderText = "Mevcut Bakiye";
+            this.colBakiye.Name = "colBakiye";
+            this.colBakiye.ReadOnly = true;
+            this.colBakiye.Width = 113;
+            // 
+            // colTelefon
+            // 
+            this.colTelefon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colTelefon.DataPropertyName = "Telefon";
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colTelefon.DefaultCellStyle = dataGridViewCellStyle7;
+            this.colTelefon.HeaderText = "Telefon";
+            this.colTelefon.Name = "colTelefon";
+            this.colTelefon.ReadOnly = true;
+            this.colTelefon.Width = 75;
+            // 
+            // colTelefon2
+            // 
+            this.colTelefon2.DataPropertyName = "Telefon2";
+            this.colTelefon2.HeaderText = "Telefon 2";
+            this.colTelefon2.Name = "colTelefon2";
+            this.colTelefon2.ReadOnly = true;
+            this.colTelefon2.Visible = false;
+            // 
+            // colFax
+            // 
+            this.colFax.DataPropertyName = "Fax";
+            this.colFax.HeaderText = "Fax";
+            this.colFax.Name = "colFax";
+            this.colFax.ReadOnly = true;
+            this.colFax.Visible = false;
+            // 
+            // colWeb
+            // 
+            this.colWeb.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colWeb.DataPropertyName = "Web";
+            this.colWeb.HeaderText = "Web";
+            this.colWeb.Name = "colWeb";
+            this.colWeb.ReadOnly = true;
+            this.colWeb.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colWeb.Visible = false;
+            this.colWeb.Width = 57;
+            // 
+            // colEPosta
+            // 
+            this.colEPosta.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colEPosta.DataPropertyName = "EPosta";
+            this.colEPosta.HeaderText = "EPosta";
+            this.colEPosta.Name = "colEPosta";
+            this.colEPosta.ReadOnly = true;
+            this.colEPosta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colEPosta.Visible = false;
+            this.colEPosta.Width = 71;
+            // 
+            // colIl
+            // 
+            this.colIl.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colIl.DataPropertyName = "Il";
+            this.colIl.HeaderText = "İli";
+            this.colIl.Name = "colIl";
+            this.colIl.ReadOnly = true;
+            this.colIl.Width = 48;
+            // 
+            // colIlce
+            // 
+            this.colIlce.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colIlce.DataPropertyName = "Ilce";
+            this.colIlce.HeaderText = "İlçesi";
+            this.colIlce.Name = "colIlce";
+            this.colIlce.ReadOnly = true;
+            this.colIlce.Width = 66;
+            // 
+            // colAcikAdres
+            // 
+            this.colAcikAdres.DataPropertyName = "AcikAdres";
+            this.colAcikAdres.HeaderText = "Açık Adres";
+            this.colAcikAdres.Name = "colAcikAdres";
+            this.colAcikAdres.ReadOnly = true;
+            this.colAcikAdres.Visible = false;
             // 
             // FrmCariListe
             // 
@@ -662,17 +693,21 @@ namespace WindowsFormUI.Views.Moduls.Cariler
         private ToolStripMenuItem tsmiCariIlce;
         private ToolStripMenuItem tsmiCariAcikAdres;
         private ToolStripMenuItem tsmiCariBakiye;
+        private ToolStripMenuItem tsmiCariTelefon2;
+        private ToolStripMenuItem tsmiCariFax;
         private DataGridViewTextBoxColumn colId;
         private DataGridViewTextBoxColumn colKod;
         private DataGridViewTextBoxColumn colUnvan;
         private DataGridViewTextBoxColumn colVergiDairesi;
         private DataGridViewTextBoxColumn colVergiNo;
+        private DataGridViewTextBoxColumn colBakiye;
         private DataGridViewTextBoxColumn colTelefon;
+        private DataGridViewTextBoxColumn colTelefon2;
+        private DataGridViewTextBoxColumn colFax;
+        private DataGridViewLinkColumn colWeb;
+        private DataGridViewLinkColumn colEPosta;
         private DataGridViewTextBoxColumn colIl;
         private DataGridViewTextBoxColumn colIlce;
         private DataGridViewTextBoxColumn colAcikAdres;
-        private DataGridViewTextBoxColumn colBakiye;
-        private DataGridViewLinkColumn colWeb;
-        private DataGridViewLinkColumn colEPosta;
     }
 }

@@ -66,7 +66,6 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.tabStokHareket = new System.Windows.Forms.TabPage();
             this.grpStokHareketler = new System.Windows.Forms.GroupBox();
             this.dgvStokHareketler = new System.Windows.Forms.DataGridView();
-            this.imLStokKart = new System.Windows.Forms.ImageList(this.components);
             this.colHareketId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStokId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFaturaId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -78,6 +77,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.colNetTutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHareketTarih = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHareketAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.imLStokKart = new System.Windows.Forms.ImageList(this.components);
             this.grpStok.SuspendLayout();
             this.grpGrup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGrupView)).BeginInit();
@@ -453,14 +453,6 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.dgvStokHareketler.Size = new System.Drawing.Size(728, 299);
             this.dgvStokHareketler.TabIndex = 0;
             // 
-            // imLStokKart
-            // 
-            this.imLStokKart.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imLStokKart.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imLStokKart.ImageStream")));
-            this.imLStokKart.TransparentColor = System.Drawing.Color.Transparent;
-            this.imLStokKart.Images.SetKeyName(0, "Stok_Kartı32x32.ico");
-            this.imLStokKart.Images.SetKeyName(1, "Stok_Hareket32x32.ico");
-            // 
             // colHareketId
             // 
             this.colHareketId.DataPropertyName = "Id";
@@ -556,16 +548,25 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.colHareketAciklama.Name = "colHareketAciklama";
             this.colHareketAciklama.ReadOnly = true;
             // 
+            // imLStokKart
+            // 
+            this.imLStokKart.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imLStokKart.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imLStokKart.ImageStream")));
+            this.imLStokKart.TransparentColor = System.Drawing.Color.Transparent;
+            this.imLStokKart.Images.SetKeyName(0, "Stok_Kartı32x32.ico");
+            this.imLStokKart.Images.SetKeyName(1, "Stok_Hareket32x32.ico");
+            // 
             // FrmStokKart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(748, 358);
             this.Controls.Add(this.tabFrmStok);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(764, 700);
+            this.MinimumSize = new System.Drawing.Size(764, 397);
             this.Name = "FrmStokKart";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Stok Kartı";
             this.grpStok.ResumeLayout(false);
             this.grpStok.PerformLayout();

@@ -1,4 +1,5 @@
 using Core.Entities.Abstract;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Concrete
 {
@@ -15,6 +16,7 @@ namespace Entities.Concrete
 
 
         public virtual Cari? Cari { get; set; }
+        [NotMapped]
         public virtual CariHareket? CariHareket { get; set; }
         public virtual List<StokHareket>? StokHareketler { get; set; }
 

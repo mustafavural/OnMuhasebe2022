@@ -757,6 +757,8 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.ClientSize = new System.Drawing.Size(816, 546);
             this.Controls.Add(this.tabCariControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(832, 800);
+            this.MinimumSize = new System.Drawing.Size(832, 585);
             this.Name = "FrmCariKart";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Cari Kartı";

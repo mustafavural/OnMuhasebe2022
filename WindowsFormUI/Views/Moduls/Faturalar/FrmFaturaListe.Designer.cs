@@ -38,12 +38,12 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmFaturaListe));
             this.grpFaturaListe = new System.Windows.Forms.GroupBox();
+            this.lblFaturaTurler = new System.Windows.Forms.Label();
             this.grpFaturaTarih = new System.Windows.Forms.GroupBox();
             this.lblTarihBaslangic = new System.Windows.Forms.Label();
             this.dtpTarihBitis = new System.Windows.Forms.DateTimePicker();
             this.lblTarihBitis = new System.Windows.Forms.Label();
             this.dtpTarihBaslangic = new System.Windows.Forms.DateTimePicker();
-            this.cmbFaturaTur = new System.Windows.Forms.ComboBox();
             this.lblFaturaTur = new System.Windows.Forms.Label();
             this.txtCariUnvan = new System.Windows.Forms.TextBox();
             this.lblCariUnvan = new System.Windows.Forms.Label();
@@ -55,6 +55,8 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             this.colFaturaTur = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCariUnvan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFaturaTarih = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFaturaTutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpFaturaListe.SuspendLayout();
             this.grpFaturaTarih.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFaturaListe)).BeginInit();
@@ -62,8 +64,8 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             // 
             // grpFaturaListe
             // 
+            this.grpFaturaListe.Controls.Add(this.lblFaturaTurler);
             this.grpFaturaListe.Controls.Add(this.grpFaturaTarih);
-            this.grpFaturaListe.Controls.Add(this.cmbFaturaTur);
             this.grpFaturaListe.Controls.Add(this.lblFaturaTur);
             this.grpFaturaListe.Controls.Add(this.txtCariUnvan);
             this.grpFaturaListe.Controls.Add(this.lblCariUnvan);
@@ -76,6 +78,14 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             this.grpFaturaListe.TabIndex = 0;
             this.grpFaturaListe.TabStop = false;
             this.grpFaturaListe.Text = "Fatura Bilgileri";
+            // 
+            // lblFaturaTurler
+            // 
+            this.lblFaturaTurler.Location = new System.Drawing.Point(6, 88);
+            this.lblFaturaTurler.Name = "lblFaturaTurler";
+            this.lblFaturaTurler.Size = new System.Drawing.Size(119, 33);
+            this.lblFaturaTurler.TabIndex = 11;
+            this.lblFaturaTurler.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // grpFaturaTarih
             // 
@@ -125,22 +135,6 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             this.dtpTarihBaslangic.Size = new System.Drawing.Size(83, 24);
             this.dtpTarihBaslangic.TabIndex = 7;
             this.dtpTarihBaslangic.ValueChanged += new System.EventHandler(this.FaturaListe_TextChanged);
-            // 
-            // cmbFaturaTur
-            // 
-            this.cmbFaturaTur.FormattingEnabled = true;
-            this.cmbFaturaTur.Items.AddRange(new object[] {
-            "<<tümünü seç>>",
-            "Alış Faturası",
-            "Satış Faturası",
-            "Alış İade Faturası",
-            "Satış İade Faturası"});
-            this.cmbFaturaTur.Location = new System.Drawing.Point(6, 92);
-            this.cmbFaturaTur.Name = "cmbFaturaTur";
-            this.cmbFaturaTur.Size = new System.Drawing.Size(119, 25);
-            this.cmbFaturaTur.TabIndex = 3;
-            this.cmbFaturaTur.SelectedIndexChanged += new System.EventHandler(this.FaturaListe_TextChanged);
-            this.cmbFaturaTur.TextChanged += new System.EventHandler(this.FaturaListe_TextChanged);
             // 
             // lblFaturaTur
             // 
@@ -193,11 +187,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             this.dgvFaturaListe.BackgroundColor = System.Drawing.Color.White;
             this.dgvFaturaListe.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFaturaListe.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colFaturaId,
-            this.colFaturaNo,
-            this.colFaturaTur,
-            this.colCariUnvan,
-            this.colFaturaTarih});
+            this.colFaturaId});
             this.dgvFaturaListe.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFaturaListe.Location = new System.Drawing.Point(131, 0);
             this.dgvFaturaListe.MultiSelect = false;
@@ -212,62 +202,65 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             // 
             // colFaturaId
             // 
-            this.colFaturaId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colFaturaId.DataPropertyName = "Id";
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
             this.colFaturaId.DefaultCellStyle = dataGridViewCellStyle1;
             this.colFaturaId.HeaderText = "Id";
             this.colFaturaId.Name = "colFaturaId";
             this.colFaturaId.ReadOnly = true;
-            this.colFaturaId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.colFaturaId.Visible = false;
             // 
             // colFaturaNo
             // 
-            this.colFaturaNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colFaturaNo.DataPropertyName = "No";
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
             this.colFaturaNo.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colFaturaNo.Frozen = true;
             this.colFaturaNo.HeaderText = "Fatura No";
             this.colFaturaNo.Name = "colFaturaNo";
-            this.colFaturaNo.ReadOnly = true;
-            this.colFaturaNo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colFaturaNo.Width = 90;
             // 
             // colFaturaTur
             // 
-            this.colFaturaTur.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colFaturaTur.DataPropertyName = "FaturaTur";
+            this.colFaturaTur.DataPropertyName = "Tur";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
             this.colFaturaTur.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colFaturaTur.Frozen = true;
             this.colFaturaTur.HeaderText = "Fatura Tür";
             this.colFaturaTur.Name = "colFaturaTur";
-            this.colFaturaTur.ReadOnly = true;
-            this.colFaturaTur.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colFaturaTur.Width = 87;
             // 
             // colCariUnvan
             // 
-            this.colCariUnvan.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colCariUnvan.DataPropertyName = "Unvan";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
             this.colCariUnvan.DefaultCellStyle = dataGridViewCellStyle4;
+            this.colCariUnvan.Frozen = true;
             this.colCariUnvan.HeaderText = "Unvan";
             this.colCariUnvan.Name = "colCariUnvan";
-            this.colCariUnvan.ReadOnly = true;
-            this.colCariUnvan.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.colCariUnvan.Width = 200;
             // 
             // colFaturaTarih
             // 
-            this.colFaturaTarih.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colFaturaTarih.DataPropertyName = "Tarih";
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
             this.colFaturaTarih.DefaultCellStyle = dataGridViewCellStyle5;
+            this.colFaturaTarih.Frozen = true;
             this.colFaturaTarih.HeaderText = "Fatura Tarihi";
             this.colFaturaTarih.Name = "colFaturaTarih";
-            this.colFaturaTarih.ReadOnly = true;
-            this.colFaturaTarih.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colFaturaTarih.Width = 99;
+            // 
+            // colAciklama
+            // 
+            this.colAciklama.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colAciklama.DataPropertyName = "Aciklama";
+            this.colAciklama.Frozen = true;
+            this.colAciklama.HeaderText = "Aciklama";
+            this.colAciklama.Name = "colAciklama";
+            // 
+            // colFaturaTutar
+            // 
+            this.colFaturaTutar.Frozen = true;
+            this.colFaturaTutar.HeaderText = "Fatura Tutarı";
+            this.colFaturaTutar.Name = "colFaturaTutar";
+            this.colFaturaTutar.ReadOnly = true;
             // 
             // FrmFaturaListe
             // 
@@ -304,14 +297,16 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         private System.Windows.Forms.TextBox txtFaturaNo;
         private System.Windows.Forms.Label lblFaturaNo;
         private System.Windows.Forms.Label lblTarihBitis;
-        private ComboBox cmbFaturaTur;
         private DateTimePicker dtpTarihBitis;
         private DateTimePicker dtpTarihBaslangic;
         private GroupBox grpFaturaTarih;
+        private Label lblFaturaTurler;
         private DataGridViewTextBoxColumn colFaturaId;
         private DataGridViewTextBoxColumn colFaturaNo;
         private DataGridViewTextBoxColumn colFaturaTur;
         private DataGridViewTextBoxColumn colCariUnvan;
         private DataGridViewTextBoxColumn colFaturaTarih;
+        private DataGridViewTextBoxColumn colAciklama;
+        private DataGridViewTextBoxColumn colFaturaTutar;
     }
 }

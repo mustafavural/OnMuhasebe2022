@@ -14,12 +14,13 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
 
         private readonly IFaturaService _faturaService;
         private readonly ICariService _cariService;
-        private readonly bool _secimIcin = false;
+        private readonly List<Fatura> _faturalar;
 
         private bool _ciftTiklandiMi = false;
-        private List<Fatura> _faturalar;
 
         public FaturaTurleri FaturaTur { get; set; }
+
+        public bool SecimIcin => (int)FaturaTur > 0;
 
         public FrmFaturaListe(IFaturaService faturaService, ICariService cariService)
         {
@@ -27,7 +28,6 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             _faturaService = faturaService;
             _cariService = cariService;
             FaturaTur = FaturaTurleri.Hepsi;
-            _secimIcin = (int)FaturaTur > 0;
             _faturalar = _faturaService.GetList().Data;
         }
 
@@ -37,17 +37,20 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             {
                 s.Id,
                 s.No,
-                FaturaTur = s.Tur,
+                s.Tur,
                 _cariService.GetById(s.CariId).Data.Unvan,
-                s.Tarih
+                s.Tarih,
+                s.Aciklama
             }).ToList();
         }
 
         private void FrmFaturaListe_Load(object sender, EventArgs e)
         {
             dtpTarihBaslangic.Value = DateTime.Today.Add(new TimeSpan(-10, 0, 0, 0));
-            cmbFaturaTur.SelectedIndex = (int)FaturaTur;
-            if (_secimIcin) cmbFaturaTur.Enabled = false;
+            if (SecimIcin) 
+                lblFaturaTurler.Text = FaturaTur == FaturaTurleri.Satis ? "Satış Faturası" : "Alış Faturası";
+            else
+                lblFaturaTurler.Text = "Tümü";
 
             WriteToScreen(_faturalar);
 
@@ -56,11 +59,11 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
 
         private void FaturaListe_TextChanged(object sender, EventArgs e)
         {
+            string tur = FaturaTur == FaturaTurleri.Satis ? "Satış Faturası" : "Alış Faturası";
             try
             {
-                string faturaTur = cmbFaturaTur.Text == "<<tümünü seç>>" ? "" : cmbFaturaTur.Text;
                 var result = _faturalar.Where(s => s.No.ToLower().Contains(txtFaturaNo.Text.ToLower()) &&
-                                                   s.Tur.ToLower().Contains(faturaTur.ToLower()) &&
+                                                   SecimIcin ? s.Tur == tur : true &&
                                                    _cariService.GetById(s.CariId).Data.Unvan.ToLower().Contains(txtCariUnvan.Text.ToLower()) &&
                                                    s.Tarih >= dtpTarihBaslangic.Value &&
                                                    s.Tarih <= dtpTarihBitis.Value).ToList();
@@ -75,9 +78,12 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
 
         private void DgvFaturaListe_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            StaticPrimitives.SecilenFaturaId = e.RowIndex > -1 ? (int)dgvFaturaListe.SelectedRows[0].Cells["colFaturaId"].Value : 0;
-            _ciftTiklandiMi = true;
-            if (_secimIcin) this.Close();
+            if (e.RowIndex > -1)
+            {
+                StaticPrimitives.SecilenFaturaId = (int)dgvFaturaListe.Rows[e.RowIndex].Cells["colFaturaId"].Value;
+                _ciftTiklandiMi = true;
+            }
+            if (SecimIcin) this.Close();
         }
 
         private void FrmFaturaListe_FormClosing(object sender, FormClosingEventArgs e)

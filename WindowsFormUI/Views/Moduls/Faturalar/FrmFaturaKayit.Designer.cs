@@ -83,16 +83,12 @@
             this.colShId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShStokKod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShStokAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShFaturaNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShStokMiktar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShStokBirim = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShStokFiyat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShStokBrutTutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShStokKDV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShStokNetTutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShFaturaTarih = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colShFaturaAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStokMiktar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlFaturaAltBilgiler.SuspendLayout();
             this.grpFaturaAlt.SuspendLayout();
             this.pnlFaturaKalemler.SuspendLayout();
@@ -301,7 +297,7 @@
             this.txtStokFiyat.Name = "txtStokFiyat";
             this.txtStokFiyat.Size = new System.Drawing.Size(104, 24);
             this.txtStokFiyat.TabIndex = 11;
-            this.txtStokFiyat.Leave += new System.EventHandler(this.TxtStokFiyat_Leave);
+            this.txtStokFiyat.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ThrowLeaveOnlyWithTabButton);
             // 
             // lblStokFiyat
             // 
@@ -380,7 +376,7 @@
             this.txtStokKod.Name = "txtStokKod";
             this.txtStokKod.Size = new System.Drawing.Size(100, 24);
             this.txtStokKod.TabIndex = 1;
-            this.txtStokKod.Leave += new System.EventHandler(this.TxtStokKod_Leave);
+            this.txtStokKod.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ThrowLeaveOnlyWithTabButton);
             // 
             // lblStokKodu
             // 
@@ -417,7 +413,7 @@
             this.txtCariKod.Name = "txtCariKod";
             this.txtCariKod.Size = new System.Drawing.Size(92, 24);
             this.txtCariKod.TabIndex = 4;
-            this.txtCariKod.Leave += new System.EventHandler(this.TxtCariKod_Leave);
+            this.txtCariKod.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ThrowLeaveOnlyWithTabButton);
             // 
             // lblCariKod
             // 
@@ -448,7 +444,7 @@
             this.txtFaturaNo.Name = "txtFaturaNo";
             this.txtFaturaNo.Size = new System.Drawing.Size(92, 24);
             this.txtFaturaNo.TabIndex = 1;
-            this.txtFaturaNo.Leave += new System.EventHandler(this.TxtFaturaNo_Leave);
+            this.txtFaturaNo.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ThrowLeaveOnlyWithTabButton);
             // 
             // lblFaturaNo
             // 
@@ -472,16 +468,12 @@
             this.colShId,
             this.colShStokKod,
             this.colShStokAd,
-            this.colShFaturaNo,
             this.colShStokMiktar,
             this.colShStokBirim,
             this.colShStokFiyat,
             this.colShStokBrutTutar,
             this.colShStokKDV,
-            this.colShStokNetTutar,
-            this.colShFaturaTarih,
-            this.colShFaturaAciklama,
-            this.colStokMiktar});
+            this.colShStokNetTutar});
             this.dgvFaturaKalemler.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFaturaKalemler.Location = new System.Drawing.Point(126, 160);
             this.dgvFaturaKalemler.MultiSelect = false;
@@ -536,7 +528,7 @@
             this.txtFaturaAciklama.Name = "txtFaturaAciklama";
             this.txtFaturaAciklama.Size = new System.Drawing.Size(118, 24);
             this.txtFaturaAciklama.TabIndex = 11;
-            this.txtFaturaAciklama.Leave += new System.EventHandler(this.TxtFaturaAciklama_Leave);
+            this.txtFaturaAciklama.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ThrowLeaveOnlyWithTabButton);
             // 
             // lblFaturaAciklama
             // 
@@ -615,17 +607,6 @@
             this.colShStokAd.Name = "colShStokAd";
             this.colShStokAd.ReadOnly = true;
             this.colShStokAd.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // colShFaturaNo
-            // 
-            this.colShFaturaNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colShFaturaNo.DataPropertyName = "FaturaNo";
-            this.colShFaturaNo.HeaderText = "FaturaNo";
-            this.colShFaturaNo.Name = "colShFaturaNo";
-            this.colShFaturaNo.ReadOnly = true;
-            this.colShFaturaNo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colShFaturaNo.Visible = false;
-            this.colShFaturaNo.Width = 86;
             // 
             // colShStokMiktar
             // 
@@ -708,37 +689,6 @@
             this.colShStokNetTutar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.colShStokNetTutar.Width = 91;
             // 
-            // colShFaturaTarih
-            // 
-            this.colShFaturaTarih.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colShFaturaTarih.DataPropertyName = "Tarih";
-            this.colShFaturaTarih.HeaderText = "Tarih";
-            this.colShFaturaTarih.Name = "colShFaturaTarih";
-            this.colShFaturaTarih.ReadOnly = true;
-            this.colShFaturaTarih.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colShFaturaTarih.Visible = false;
-            this.colShFaturaTarih.Width = 63;
-            // 
-            // colShFaturaAciklama
-            // 
-            this.colShFaturaAciklama.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colShFaturaAciklama.DataPropertyName = "Aciklama";
-            this.colShFaturaAciklama.HeaderText = "Açiklama";
-            this.colShFaturaAciklama.Name = "colShFaturaAciklama";
-            this.colShFaturaAciklama.ReadOnly = true;
-            this.colShFaturaAciklama.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colShFaturaAciklama.Visible = false;
-            this.colShFaturaAciklama.Width = 81;
-            // 
-            // colStokMiktar
-            // 
-            this.colStokMiktar.DataPropertyName = "StokMiktar";
-            this.colStokMiktar.HeaderText = "Stok Miktar";
-            this.colStokMiktar.Name = "colStokMiktar";
-            this.colStokMiktar.ReadOnly = true;
-            this.colStokMiktar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colStokMiktar.Visible = false;
-            // 
             // FrmFaturaKayit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -810,22 +760,18 @@
         private System.Windows.Forms.Label lblFaturaKDVlerToplam;
         private System.Windows.Forms.TextBox txtFaturaGenelToplam;
         private System.Windows.Forms.Label lblGenelToplam;
+        private System.Windows.Forms.Label lblFaturaTurEkran;
+        private System.Windows.Forms.TextBox txtFaturaAciklama;
+        private System.Windows.Forms.Label lblFaturaAciklama;
+        private System.Windows.Forms.TextBox txtStokBirim;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShStokKod;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShStokAd;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShFaturaNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShStokMiktar;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShStokBirim;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShStokFiyat;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShStokBrutTutar;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShStokKDV;
         private System.Windows.Forms.DataGridViewTextBoxColumn colShStokNetTutar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShFaturaTarih;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colShFaturaAciklama;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colStokMiktar;
-        private System.Windows.Forms.Label lblFaturaTurEkran;
-        private System.Windows.Forms.TextBox txtFaturaAciklama;
-        private System.Windows.Forms.Label lblFaturaAciklama;
-        private System.Windows.Forms.TextBox txtStokBirim;
     }
 }

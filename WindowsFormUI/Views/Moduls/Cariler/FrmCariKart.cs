@@ -66,7 +66,7 @@ namespace WindowsFormUI.Views.Moduls.Cariler
         {
             var form = Program.Container.Resolve<FrmCariListe>();
             form.SecimIcin = true;
-            form.Show();
+            form.ShowDialog();
 
             try
             {

@@ -9,7 +9,7 @@
             public static string AdresSilindi => "Adres başarıyla silindi.";
             public static string EpostaZatenKullanimda => "Girilen E-Posta adresi zaten kullanımda.";
             public static string FaxZatenKullanimda => "Girilen Fax zaten kullanımda.";
-            public static string KayitBulunamadi => "Silinecek kayıt bulunamadı.";
+            public static string AdresBulunamadi => "Silinecek kayıt bulunamadı.";
             public static string TelefonZatenKullanimda => "Girilen Telefonlardan biri zaten kullanımda.";
             public static string WebZatenKullanimda => "Girilen Web adresi zaten kullanımda.";
         }
@@ -31,10 +31,9 @@
             public static string KodYok => "Cari Bulunamadi.";
             public static string CategoryeEklendi => "Cariye grup kod başarıyla eklendi.";
             public static string CategorydenSilindi => "Cariden grup kod başarıyla silindi.";
-            public static string CariEklendi => "Kurumsal cari başarıyla eklendi.";
-            public static string BireyselEklendi => "Bireysel cari başarıyla eklendi.";
-            public static string Silindi => "Cari başarıyla silindi.";
-            public static string Guncellendi => "Cari başarıyla güncellendi.";
+            public static string CariEklendi => "Cari başarıyla eklendi.";
+            public static string CariSilindi => "Cari başarıyla silindi.";
+            public static string CariGuncellendi => "Cari başarıyla güncellendi.";
             public static string VergiNoZatenMevcut => "Bu vergi no daha önce girilmiş.";
             public static string KodZatenMevcut => "Cari kod zaten mevcut.";
             public static string UnvanZatenMevcut => "Cari unvan zaten mevcut.";

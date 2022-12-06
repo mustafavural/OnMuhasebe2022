@@ -26,20 +26,16 @@ namespace Business.Concrete
         }
 
         #region BusinessRules
-        private IResult KontrolTelefonlarZatenVarMi(string? telefon, string? telefon2)
+        private IResult KontrolTelefonZatenVarMi(string? telefon)
         {
-            if (telefon != null && telefon2 != null)
-                return _adresDal.Get(s => s.Telefon == telefon || s.Telefon == telefon2 ||
-                                             s.Telefon2 == telefon || s.Telefon2 == telefon2) == null
-                                             ? new SuccessResult() : new ErrorResult(Messages.AdresMessages.TelefonZatenKullanimda);
-            else if (telefon != null && telefon2 == null)
-                return _adresDal.Get(s => s.Telefon == telefon || s.Telefon2 == telefon) == null
-                                             ? new SuccessResult() : new ErrorResult(Messages.AdresMessages.TelefonZatenKullanimda);
-            else if (telefon == null && telefon2 != null)
-                return _adresDal.Get(s => s.Telefon == telefon2 || s.Telefon2 == telefon2) == null
-                                             ? new SuccessResult() : new ErrorResult(Messages.AdresMessages.TelefonZatenKullanimda);
-            else
-                return new SuccessResult();
+            if (telefon == null) return new SuccessResult();
+            return _adresDal.Get(s => s.Telefon == telefon) == null ? new SuccessResult() : new ErrorResult(Messages.AdresMessages.TelefonZatenKullanimda);
+        }
+
+        private IResult KontrolTelefon2ZatenVarMi(string? telefon2)
+        {
+            if (telefon2 == null) return new SuccessResult();
+            return _adresDal.Get(s => s.Telefon == telefon2) == null ? new SuccessResult() : new ErrorResult(Messages.AdresMessages.TelefonZatenKullanimda);
         }
 
         private IResult KontrolFaxZatenVarMi(string? fax)
@@ -60,9 +56,9 @@ namespace Business.Concrete
             return _adresDal.Get(s => s.Eposta == eposta) == null ? new SuccessResult() : new ErrorResult(Messages.AdresMessages.EpostaZatenKullanimda);
         }
 
-        private IResult KontrolKayitMevcutMu(int adresId)
+        private IResult KontrolAdresMevcutMu(int adresId)
         {
-            return _adresDal.GetById(adresId) != null ? new SuccessResult() : new ErrorResult(Messages.AdresMessages.KayitBulunamadi);
+            return _adresDal.GetById(adresId) != null ? new SuccessResult() : new ErrorResult(Messages.AdresMessages.AdresBulunamadi);
         }
         #endregion
 
@@ -98,59 +94,33 @@ namespace Business.Concrete
             return new SuccessDataResult<Adres>(iletisim);
         }
 
+        [CacheAspect(1)]
         public IDataResult<List<Adres>> GetListByIlce(string ilceAd)
         {
-            var iletisim = _adresDal.GetList();
+            var adresler = _adresDal.GetList();
             var ilce = _ilceService.GetByAd(ilceAd).Data;
-            foreach (var item in iletisim)
-            {
-                item.Ilce = ilce;
-            }
-            return new SuccessDataResult<List<Adres>>(iletisim);
+            adresler.ForEach(s => s.Ilce = ilce);
+            return new SuccessDataResult<List<Adres>>(adresler);
         }
 
+        [CacheAspect(1)]
         public IDataResult<List<Adres>> GetListBySehir(string sehirAd)
         {
             var adresler = _adresDal.GetList();
             var ilceler = _ilceService.GetListBySehirAd(sehirAd).Data;
-            var result = adresler.Join(ilceler, a => a.IlceId, i => i.Id, (a, i) => new Adres
-            {
-                Id = a.Id,
-                Telefon = a.Telefon,
-                Telefon2 = a.Telefon2,
-                Fax = a.Fax,
-                Eposta = a.Eposta,
-                Web = a.Web,
-                AcikAdres = a.AcikAdres,
-                IlceId = a.IlceId,
-                Ilce = i
-            });
-            return new SuccessDataResult<List<Adres>>(result.ToList());
+            adresler.ForEach(s => s.Ilce = ilceler.Where(b => b.Id == s.IlceId).Single());
+            return new SuccessDataResult<List<Adres>>(adresler);
         }
 
         [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheAspect(1)]
         public IDataResult<List<Adres>> GetList(Expression<Func<Adres, bool>>? filter = null)
         {
             var adresler = _adresDal.GetList(filter);
             var ilceler = _ilceService.GetList(x => adresler.Select(y => y.IlceId).Contains(x.Id)).Data;
-            var result = adresler.Join(
-                ilceler,
-                adres => adres.IlceId,
-                ilce => ilce.Id,
-                (adres, ilce) => new Adres
-                {
-                    Id = adres.Id,
-                    Telefon = adres.Telefon,
-                    Telefon2 = adres.Telefon2,
-                    Fax = adres.Fax,
-                    Eposta = adres.Eposta,
-                    Web = adres.Web,
-                    AcikAdres = adres.AcikAdres,
-                    IlceId = adres.IlceId,
-                    Ilce = ilce
-                });
-            return new SuccessDataResult<List<Adres>>(result.ToList());
+            adresler.ForEach(s => s.Ilce = ilceler.Where(b => b.Id == s.IlceId).Single());
+            return new SuccessDataResult<List<Adres>>(adresler);
         }
 
         [SecuredOperation("Add,Admin")]
@@ -159,7 +129,8 @@ namespace Business.Concrete
         [CacheRemoveAspect("IAdresService.Get")]
         public IResult Add(Adres entity)
         {
-            IResult result = BusinessRules.Run(KontrolTelefonlarZatenVarMi(entity.Telefon, entity.Telefon2),
+            IResult result = BusinessRules.Run(KontrolTelefonZatenVarMi(entity.Telefon),
+                                               KontrolTelefon2ZatenVarMi(entity.Telefon2),
                                                KontrolFaxZatenVarMi(entity.Fax),
                                                KontrolWebZatenVarMi(entity.Web),
                                                KontrolEpostaZatenVarMi(entity.Eposta));
@@ -175,12 +146,12 @@ namespace Business.Concrete
         [CacheRemoveAspect("IAdresService.Get")]
         public IResult Delete(Adres entity)
         {
-            IResult result = BusinessRules.Run(KontrolKayitMevcutMu(entity.Id));
+            IResult result = BusinessRules.Run(KontrolAdresMevcutMu(entity.Id));
 
             if (!result.IsSuccess)
                 return result;
 
-            _adresDal.Delete(entity);
+            _adresDal.Delete(new Adres { Id = entity.Id });
             return new SuccessResult(Messages.AdresMessages.AdresSilindi);
         }
 
@@ -190,6 +161,14 @@ namespace Business.Concrete
         [CacheRemoveAspect("IAdresService.Get")]
         public IResult Update(Adres entity)
         {
+            //IResult result = BusinessRules.Run(KontrolTelefonZatenVarMi(entity.Telefon),
+            //                                   KontrolTelefon2ZatenVarMi(entity.Telefon2),
+            //                                   KontrolFaxZatenVarMi(entity.Fax),
+            //                                   KontrolWebZatenVarMi(entity.Web),
+            //                                   KontrolEpostaZatenVarMi(entity.Eposta));
+            //if (!result.IsSuccess)
+            //    return result;
+
             _adresDal.Update(entity);
             return new SuccessResult(Messages.AdresMessages.AdresGuncellendi);
         }

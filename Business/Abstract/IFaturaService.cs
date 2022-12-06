@@ -13,7 +13,6 @@ namespace Business.Abstract
         IDataResult<List<Fatura>> GetListByCariKod(string cariKod);
         IDataResult<List<Fatura>> GetListBetweenTarihler(DateTime ilk, DateTime son);
         IDataResult<List<Fatura>> GetListBetweenKayitTarihler(DateTime ilk, DateTime son);
-        IDataResult<List<StokHareket>> GetFaturaKalemler(string no);
         IDataResult<List<int>> GetFaturaKdvler(string no);
         IDataResult<decimal?> GetBrutToplam(string no);
         IDataResult<decimal?> GetNetToplam(string no);

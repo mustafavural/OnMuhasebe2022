@@ -108,6 +108,7 @@
             this.tsmiKayitFaturaListe.Image = global::WindowsFormUI.Properties.Resources.Fatura32x32;
             this.tsmiKayitFaturaListe.Name = "tsmiKayitFaturaListe";
             this.tsmiKayitFaturaListe.Size = new System.Drawing.Size(180, 22);
+            this.tsmiKayitFaturaListe.Tag = "0";
             this.tsmiKayitFaturaListe.Text = "Fatura Liste";
             this.tsmiKayitFaturaListe.Click += new System.EventHandler(this.TsmiKayitFaturaListe_Click);
             // 
