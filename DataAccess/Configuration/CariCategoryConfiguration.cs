@@ -10,7 +10,7 @@ namespace DataAccess.Configuration
     {
         public void Configure(EntityTypeBuilder<CariCategory> builder)
         {
-            builder.ToTable("CariCategoryler", "dbo");
+            builder.ToTable("CariCategoryler");
             builder.HasKey(x => x.Id).HasName("PK_CariCategoryler").IsClustered();
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();

@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
+using WindowsFormUI.Helpers;
 
 namespace WindowsFormUI.Views.Moduls.Faturalar
 {
@@ -14,7 +15,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
 
         private readonly IFaturaService _faturaService;
         private readonly ICariService _cariService;
-        private readonly List<Fatura> _faturalar;
+        private List<Fatura> _faturalar;
 
         private bool _ciftTiklandiMi = false;
 
@@ -39,6 +40,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
                 s.No,
                 s.Tur,
                 _cariService.GetById(s.CariId).Data.Unvan,
+                Tutar = s.StokHareketler.Sum(a => a.NetTutar),
                 s.Tarih,
                 s.Aciklama
             }).ToList();
@@ -47,7 +49,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         private void FrmFaturaListe_Load(object sender, EventArgs e)
         {
             dtpTarihBaslangic.Value = DateTime.Today.Add(new TimeSpan(-10, 0, 0, 0));
-            if (SecimIcin) 
+            if (SecimIcin)
                 lblFaturaTurler.Text = FaturaTur == FaturaTurleri.Satis ? "Satış Faturası" : "Alış Faturası";
             else
                 lblFaturaTurler.Text = "Tümü";
@@ -62,8 +64,8 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             string tur = FaturaTur == FaturaTurleri.Satis ? "Satış Faturası" : "Alış Faturası";
             try
             {
-                var result = _faturalar.Where(s => s.No.ToLower().Contains(txtFaturaNo.Text.ToLower()) &&
-                                                   SecimIcin ? s.Tur == tur : true &&
+                var result = _faturalar.Where(s => 
+                                                   s.No.ToLower().Contains(txtFaturaNo.Text.ToLower()) &&
                                                    _cariService.GetById(s.CariId).Data.Unvan.ToLower().Contains(txtCariUnvan.Text.ToLower()) &&
                                                    s.Tarih >= dtpTarihBaslangic.Value &&
                                                    s.Tarih <= dtpTarihBitis.Value).ToList();
@@ -72,7 +74,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
 

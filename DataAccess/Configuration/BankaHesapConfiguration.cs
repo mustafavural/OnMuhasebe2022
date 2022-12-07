@@ -10,7 +10,7 @@ namespace DataAccess.Configuration
     {
         public void Configure(EntityTypeBuilder<BankaHesap> builder)
         {
-            builder.ToTable("BankaHesaplar", "dbo");
+            builder.ToTable("BankaHesaplar");
             builder.HasKey(x => x.Id).HasName("PK_Bankalar").IsClustered();
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired();

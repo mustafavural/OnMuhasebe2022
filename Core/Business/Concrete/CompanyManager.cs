@@ -6,7 +6,7 @@ namespace Core.Business.Concrete
 {
     public class CompanyManager : ICompanyService
     {
-        ICompanyDal _companyDal;
+        private readonly ICompanyDal _companyDal;
 
         public CompanyManager(ICompanyDal companyDal)
         {

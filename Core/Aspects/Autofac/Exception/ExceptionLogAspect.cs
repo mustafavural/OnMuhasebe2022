@@ -8,7 +8,7 @@ namespace Core.Aspects.Autofac.Exception
 {
     public class ExceptionLogAspect : MethodInterception
     {
-        LoggerServiceBase _loggerServiceBase;
+        private readonly LoggerServiceBase _loggerServiceBase;
 
         public ExceptionLogAspect(Type loggerService)
         {
@@ -27,7 +27,7 @@ namespace Core.Aspects.Autofac.Exception
             _loggerServiceBase.Error(logDetailWithException);
         }
 
-        private LogDetailWithException GetLogDetail(IInvocation invocation)
+        private static LogDetailWithException GetLogDetail(IInvocation invocation)
         {
             var logParameters = new List<LogParameter>();
             for (int i = 0; i < invocation.Arguments.Length; i++)

@@ -7,7 +7,6 @@ namespace Business.Abstract
     public interface IAdresService
     {
         IDataResult<Adres> GetById(int id);
-        IDataResult<List<Adres>> GetList(Expression<Func<Adres, bool>>? filter = null);
         IDataResult<Adres> GetByTelNo(string telNo);
         IDataResult<Adres> GetByWeb(string web);
         IDataResult<Adres> GetByEposta(string ePosta);

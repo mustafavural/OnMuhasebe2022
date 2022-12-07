@@ -10,7 +10,7 @@ namespace DataAccess.Configuration
     {
         public void Configure(EntityTypeBuilder<StokGrup> builder)
         {
-            builder.ToTable("StokGruplar", "dbo");
+            builder.ToTable("StokGruplar");
             builder.HasKey(x => x.Id).HasName("PK_StokGrup").IsClustered();
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();

@@ -8,7 +8,7 @@ namespace DataAccess.Configuration
     {
         public void Configure(EntityTypeBuilder<Fatura> builder)
         {
-            builder.ToTable("Faturalar", "dbo");
+            builder.ToTable("Faturalar");
             builder.HasKey(x => x.Id).HasName("PK_Fatura");
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedNever().UseIdentityColumn();

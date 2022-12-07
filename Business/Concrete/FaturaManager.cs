@@ -24,9 +24,9 @@ namespace Business.Concrete
         public FaturaManager(IFaturaDal faturaDal, ICariHareketService cariHareketService, IStokHareketService stokHareketService, ICariService cariService)
         {
             _faturaDal = faturaDal;
+            _cariService = cariService;
             _cariHareketService = cariHareketService;
             _stokHareketService = stokHareketService;
-            _cariService = cariService;
         }
 
         #region BusinessRules
@@ -56,32 +56,54 @@ namespace Business.Concrete
         }
         #endregion
 
+        private Cari GetFaturaCari(string no)
+        {
+            int cariId = _faturaDal.Get(s => s.No == no).CariId;
+            return _cariService.GetById(cariId).Data;
+        }
+
         private List<StokHareket> GetFaturaKalemler(string no)
         {
             int faturaId = _faturaDal.Get(s => s.No == no).Id;
-            return faturaId == 0
-                ? new List<StokHareket>()
-                : new List<StokHareket>(_stokHareketService.GetListByFaturaId(faturaId).Data);
+            return new List<StokHareket>(_stokHareketService.GetListByFaturaId(faturaId).Data);
+        }
+
+        private Fatura Get(Expression<Func<Fatura, bool>> filter)
+        {
+            var fatura = _faturaDal.Get(filter);
+            if (fatura != null)
+            {
+                fatura.StokHareketler = GetFaturaKalemler(fatura.No);
+                fatura.Cari = GetFaturaCari(fatura.No);
+            }
+            return fatura;
+        }
+
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
+        public IDataResult<List<Fatura>> GetList(Expression<Func<Fatura, bool>>? filter = null)
+        {
+            var faturalar = _faturaDal.GetList(filter);
+            if (faturalar.Count > 0)
+            {
+                faturalar.ForEach(s => s.StokHareketler = GetFaturaKalemler(s.No));
+                faturalar.ForEach(s => s.Cari = GetFaturaCari(s.No));
+            }
+            return new SuccessDataResult<List<Fatura>>(faturalar);
         }
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Fatura> GetById(int id)
         {
-            var fatura = _faturaDal.GetById(id);
-            if (fatura != null)
-                fatura.StokHareketler = GetFaturaKalemler(fatura.No);
-            return new SuccessDataResult<Fatura>(fatura);
+            return new SuccessDataResult<Fatura>(Get(f => f.Id == id));
         }
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Fatura> GetByNo(string no)
         {
-            var fatura = _faturaDal.Get(s => s.No == no);
-            if (fatura != null)
-                fatura.StokHareketler = GetFaturaKalemler(no);
-            return new SuccessDataResult<Fatura>(fatura);
+            return new SuccessDataResult<Fatura>(Get(s => s.No == no));
         }
 
         [SecuredOperation("List,Admin")]
@@ -89,10 +111,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<Fatura>> GetListByTur(string tur)
         {
-            var faturalar = _faturaDal.GetList(f => f.Tur == tur);
-            if (faturalar.Count > 0)
-                faturalar.ForEach(s => s.StokHareketler = GetFaturaKalemler(s.No));
-            return new SuccessDataResult<List<Fatura>>(faturalar);
+            return new SuccessDataResult<List<Fatura>>(GetList(f => f.Tur == tur).Data);
         }
 
         [SecuredOperation("List,Admin")]
@@ -101,11 +120,7 @@ namespace Business.Concrete
         public IDataResult<List<Fatura>> GetListByCariKod(string cariKod)
         {
             var cariId = _cariService.GetByKod(cariKod).Data.Id;
-            var cariHareketler = _cariHareketService.GetListByCariId(cariId).Data.Select(s => s.Id).ToList();
-            var faturalar = cariHareketler.Count > 0 ? _faturaDal.GetList(s => cariHareketler.Contains(s.Id)) : new List<Fatura>();
-            if (faturalar.Count > 0)
-                faturalar.ForEach(s => s.StokHareketler = GetFaturaKalemler(s.No));
-            return new SuccessDataResult<List<Fatura>>(faturalar);
+            return new SuccessDataResult<List<Fatura>>(GetList(s => s.CariId == cariId).Data);
         }
 
         [SecuredOperation("List,Admin")]
@@ -113,12 +128,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<Fatura>> GetListBetweenTarihler(DateTime ilk, DateTime son)
         {
-            var faturalar = _faturaDal.GetList(f => f.Tarih >= ilk && f.Tarih <= son);
-            if (faturalar.Count > 0)
-            {
-                faturalar.ForEach(s => s.StokHareketler = GetFaturaKalemler(s.No));
-            }
-            return new SuccessDataResult<List<Fatura>>(faturalar);
+            return new SuccessDataResult<List<Fatura>>(GetList(f => f.Tarih >= ilk && f.Tarih <= son).Data);
         }
 
         [SecuredOperation("List,Admin")]
@@ -126,23 +136,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<Fatura>> GetListBetweenKayitTarihler(DateTime ilk, DateTime son)
         {
-            var faturalar = _faturaDal.GetList(f => f.KayitTarihi >= ilk && f.KayitTarihi <= son);
-            if (faturalar.Count > 0)
-            {
-                faturalar.ForEach(s => s.StokHareketler = GetFaturaKalemler(s.No));
-            }
-            return new SuccessDataResult<List<Fatura>>(faturalar);
-        }
-
-        [SecuredOperation("List,Admin")]
-        [CacheAspect(duration: 1)]
-        [LogAspect(typeof(DatabaseLogger))]
-        public IDataResult<List<Fatura>> GetList(Expression<Func<Fatura, bool>>? filter = null)
-        {
-            var faturalar = _faturaDal.GetList(filter);
-            if (faturalar.Count > 0)
-                faturalar.ForEach(s => s.StokHareketler = GetFaturaKalemler(s.No));
-            return new SuccessDataResult<List<Fatura>>(faturalar);
+            return new SuccessDataResult<List<Fatura>>(GetList(f => f.KayitTarihi >= ilk && f.KayitTarihi <= son).Data);
         }
 
         [SecuredOperation("List,Admin")]
@@ -184,8 +178,6 @@ namespace Business.Concrete
             foreach (var item in fatura.StokHareketler)
             {
                 item.Miktar *= fatura.Tur == "Satış Faturası" ? -1 : 1;
-                item.BrutTutar = item.Miktar * item.Fiyat;
-                item.NetTutar = item.BrutTutar * (item.Kdv / 100 + 1);
                 item.Tarih = fatura.KayitTarihi;
                 item.Aciklama = $"{fatura.No} nolu {fatura.Tur}.";
             }

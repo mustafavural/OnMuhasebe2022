@@ -10,7 +10,7 @@ namespace DataAccess.Configuration
     {
         public void Configure(EntityTypeBuilder<StokCategory> builder)
         {
-            builder.ToTable("StokCategoryler", "dbo");
+            builder.ToTable("StokCategoryler");
             builder.HasKey(x => x.Id).HasName("PK_StokCategory").IsClustered();
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();

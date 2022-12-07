@@ -8,7 +8,7 @@ namespace DataAccess.Configuration
     {
         public void Configure(EntityTypeBuilder<StokHareket> builder)
         {
-            builder.ToTable("StokHareketler", "dbo");
+            builder.ToTable("StokHareketler");
             builder.HasKey(x => x.Id).HasName("PK_StokHareket").IsClustered();
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();

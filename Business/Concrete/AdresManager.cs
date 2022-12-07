@@ -62,65 +62,54 @@ namespace Business.Concrete
         }
         #endregion
 
-        public IDataResult<Adres> GetById(int id)
+        private Adres Get(Expression<Func<Adres, bool>> filter)
         {
-            var iletisim = _adresDal.GetById(id);
+            var iletisim = _adresDal.Get(filter);
             var ilce = _ilceService.GetById(iletisim.IlceId).Data;
             iletisim.Ilce = ilce;
-            return new SuccessDataResult<Adres>(iletisim);
+            return iletisim;
+        }
+
+        private List<Adres> GetList(Expression<Func<Adres, bool>>? filter = null)
+        {
+            var adresler = _adresDal.GetList(filter);
+            var ilceler = _ilceService.GetList(x => adresler.Select(y => y.IlceId).Contains(x.Id)).Data;
+            adresler.ForEach(s => s.Ilce = ilceler.Where(b => b.Id == s.IlceId).Single());
+            return adresler;
+        }
+
+        public IDataResult<Adres> GetById(int id)
+        {
+            return new SuccessDataResult<Adres>(Get(a => a.Id == id));
         }
 
         public IDataResult<Adres> GetByTelNo(string telNo)
         {
-            var iletisim = _adresDal.Get(s => s.Telefon == telNo || s.Telefon2 == telNo || s.Fax == telNo);
-            var ilce = _ilceService.GetById(iletisim.IlceId).Data;
-            iletisim.Ilce = ilce;
-            return new SuccessDataResult<Adres>(iletisim);
+            return new SuccessDataResult<Adres>(Get(s => s.Telefon == telNo || s.Telefon2 == telNo || s.Fax == telNo));
         }
 
         public IDataResult<Adres> GetByWeb(string web)
         {
-            var iletisim = _adresDal.Get(s => s.Web == web);
-            var ilce = _ilceService.GetById(iletisim.IlceId).Data;
-            iletisim.Ilce = ilce;
-            return new SuccessDataResult<Adres>(iletisim);
+            return new SuccessDataResult<Adres>(Get(s => s.Web == web));
         }
 
         public IDataResult<Adres> GetByEposta(string ePosta)
         {
-            var iletisim = _adresDal.Get(s => s.Eposta == ePosta);
-            var ilce = _ilceService.GetById(iletisim.IlceId).Data;
-            iletisim.Ilce = ilce;
-            return new SuccessDataResult<Adres>(iletisim);
+            return new SuccessDataResult<Adres>(Get(s => s.Eposta == ePosta));
         }
 
         [CacheAspect(1)]
         public IDataResult<List<Adres>> GetListByIlce(string ilceAd)
         {
-            var adresler = _adresDal.GetList();
-            var ilce = _ilceService.GetByAd(ilceAd).Data;
-            adresler.ForEach(s => s.Ilce = ilce);
-            return new SuccessDataResult<List<Adres>>(adresler);
+            var ilceId = _ilceService.GetByAd(ilceAd).Data.Id;
+            return ilceId > 0 ? new SuccessDataResult<List<Adres>>(GetList(a => a.IlceId == ilceId)) : new SuccessDataResult<List<Adres>>();
         }
 
         [CacheAspect(1)]
         public IDataResult<List<Adres>> GetListBySehir(string sehirAd)
         {
-            var adresler = _adresDal.GetList();
-            var ilceler = _ilceService.GetListBySehirAd(sehirAd).Data;
-            adresler.ForEach(s => s.Ilce = ilceler.Where(b => b.Id == s.IlceId).Single());
-            return new SuccessDataResult<List<Adres>>(adresler);
-        }
-
-        [SecuredOperation("List,Admin")]
-        [LogAspect(typeof(DatabaseLogger))]
-        [CacheAspect(1)]
-        public IDataResult<List<Adres>> GetList(Expression<Func<Adres, bool>>? filter = null)
-        {
-            var adresler = _adresDal.GetList(filter);
-            var ilceler = _ilceService.GetList(x => adresler.Select(y => y.IlceId).Contains(x.Id)).Data;
-            adresler.ForEach(s => s.Ilce = ilceler.Where(b => b.Id == s.IlceId).Single());
-            return new SuccessDataResult<List<Adres>>(adresler);
+            var ilceler = _ilceService.GetListBySehirAd(sehirAd).Data.Select(i => i.Id);
+            return new SuccessDataResult<List<Adres>>(GetList(a => ilceler.Contains(a.IlceId)));
         }
 
         [SecuredOperation("Add,Admin")]

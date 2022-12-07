@@ -10,7 +10,7 @@ namespace DataAccess.Configuration
     {
         public void Configure(EntityTypeBuilder<Cari> builder)
         {
-            builder.ToTable("Cariler", "dbo");
+            builder.ToTable("Cariler");
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired();
             builder.Property(x => x.Kod).HasColumnName(@"Kod").HasColumnType("nvarchar(50)").IsRequired().HasMaxLength(50);

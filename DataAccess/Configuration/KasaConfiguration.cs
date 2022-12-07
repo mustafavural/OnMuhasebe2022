@@ -10,7 +10,7 @@ namespace DataAccess.Configuration
     {
         public void Configure(EntityTypeBuilder<Kasa> builder)
         {
-            builder.ToTable("Kasalar", "dbo");
+            builder.ToTable("Kasalar");
             builder.HasKey(x => x.Id).HasName("PK_Kasa").IsClustered();
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();

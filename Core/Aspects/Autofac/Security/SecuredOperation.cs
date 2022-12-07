@@ -7,7 +7,7 @@ namespace Core.Aspects.Autofac.Security
 {
     public class SecuredOperation : MethodInterception
     {
-        private string[] _roles;
+        private readonly string[] _roles;
         //private IHttpContextAccessor _httpContextAccessor;
         public SecuredOperation(string roles)
         {

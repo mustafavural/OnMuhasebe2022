@@ -72,14 +72,6 @@
             this.txtFaturaNo = new System.Windows.Forms.TextBox();
             this.lblFaturaNo = new System.Windows.Forms.Label();
             this.dgvFaturaKalemler = new System.Windows.Forms.DataGridView();
-            this.pnlFaturaUstBilgiler = new System.Windows.Forms.Panel();
-            this.grpFaturaUst = new System.Windows.Forms.GroupBox();
-            this.txtFaturaAciklama = new System.Windows.Forms.TextBox();
-            this.lblFaturaAciklama = new System.Windows.Forms.Label();
-            this.lblFaturaTurEkran = new System.Windows.Forms.Label();
-            this.lblCariAd = new System.Windows.Forms.Label();
-            this.lblFaturaTarih = new System.Windows.Forms.Label();
-            this.dtpTarih = new System.Windows.Forms.DateTimePicker();
             this.colShId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShStokKod = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShStokAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,6 +81,14 @@
             this.colShStokBrutTutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShStokKDV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colShStokNetTutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pnlFaturaUstBilgiler = new System.Windows.Forms.Panel();
+            this.grpFaturaUst = new System.Windows.Forms.GroupBox();
+            this.txtFaturaAciklama = new System.Windows.Forms.TextBox();
+            this.lblFaturaAciklama = new System.Windows.Forms.Label();
+            this.lblFaturaTurEkran = new System.Windows.Forms.Label();
+            this.lblCariAd = new System.Windows.Forms.Label();
+            this.lblFaturaTarih = new System.Windows.Forms.Label();
+            this.dtpTarih = new System.Windows.Forms.DateTimePicker();
             this.pnlFaturaAltBilgiler.SuspendLayout();
             this.grpFaturaAlt.SuspendLayout();
             this.pnlFaturaKalemler.SuspendLayout();
@@ -490,90 +490,6 @@
             this.dgvFaturaKalemler.TabIndex = 2;
             this.dgvFaturaKalemler.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvFaturaKalemler_CellDoubleClick);
             // 
-            // pnlFaturaUstBilgiler
-            // 
-            this.pnlFaturaUstBilgiler.Controls.Add(this.grpFaturaUst);
-            this.pnlFaturaUstBilgiler.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlFaturaUstBilgiler.Location = new System.Drawing.Point(0, 0);
-            this.pnlFaturaUstBilgiler.Name = "pnlFaturaUstBilgiler";
-            this.pnlFaturaUstBilgiler.Size = new System.Drawing.Size(126, 452);
-            this.pnlFaturaUstBilgiler.TabIndex = 0;
-            // 
-            // grpFaturaUst
-            // 
-            this.grpFaturaUst.Controls.Add(this.txtFaturaAciklama);
-            this.grpFaturaUst.Controls.Add(this.lblFaturaAciklama);
-            this.grpFaturaUst.Controls.Add(this.lblFaturaTurEkran);
-            this.grpFaturaUst.Controls.Add(this.lblCariAd);
-            this.grpFaturaUst.Controls.Add(this.lblFaturaTarih);
-            this.grpFaturaUst.Controls.Add(this.lblFaturaNo);
-            this.grpFaturaUst.Controls.Add(this.dtpTarih);
-            this.grpFaturaUst.Controls.Add(this.btnCariBul);
-            this.grpFaturaUst.Controls.Add(this.txtCariKod);
-            this.grpFaturaUst.Controls.Add(this.lblCariKod);
-            this.grpFaturaUst.Controls.Add(this.txtFaturaNo);
-            this.grpFaturaUst.Controls.Add(this.lblFaturaTur);
-            this.grpFaturaUst.Controls.Add(this.btnFaturaBul);
-            this.grpFaturaUst.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grpFaturaUst.Location = new System.Drawing.Point(0, 0);
-            this.grpFaturaUst.Name = "grpFaturaUst";
-            this.grpFaturaUst.Size = new System.Drawing.Size(126, 452);
-            this.grpFaturaUst.TabIndex = 0;
-            this.grpFaturaUst.TabStop = false;
-            this.grpFaturaUst.Text = "Üst Bilgiler";
-            // 
-            // txtFaturaAciklama
-            // 
-            this.txtFaturaAciklama.Location = new System.Drawing.Point(6, 241);
-            this.txtFaturaAciklama.Name = "txtFaturaAciklama";
-            this.txtFaturaAciklama.Size = new System.Drawing.Size(118, 24);
-            this.txtFaturaAciklama.TabIndex = 11;
-            this.txtFaturaAciklama.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ThrowLeaveOnlyWithTabButton);
-            // 
-            // lblFaturaAciklama
-            // 
-            this.lblFaturaAciklama.AutoSize = true;
-            this.lblFaturaAciklama.Location = new System.Drawing.Point(6, 221);
-            this.lblFaturaAciklama.Name = "lblFaturaAciklama";
-            this.lblFaturaAciklama.Size = new System.Drawing.Size(56, 17);
-            this.lblFaturaAciklama.TabIndex = 10;
-            this.lblFaturaAciklama.Text = "Açıklama";
-            // 
-            // lblFaturaTurEkran
-            // 
-            this.lblFaturaTurEkran.Location = new System.Drawing.Point(6, 138);
-            this.lblFaturaTurEkran.Name = "lblFaturaTurEkran";
-            this.lblFaturaTurEkran.Size = new System.Drawing.Size(114, 33);
-            this.lblFaturaTurEkran.TabIndex = 7;
-            this.lblFaturaTurEkran.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblCariAd
-            // 
-            this.lblCariAd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.lblCariAd.BackColor = System.Drawing.SystemColors.Control;
-            this.lblCariAd.Location = new System.Drawing.Point(6, 271);
-            this.lblCariAd.Name = "lblCariAd";
-            this.lblCariAd.Size = new System.Drawing.Size(118, 178);
-            this.lblCariAd.TabIndex = 12;
-            this.lblCariAd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblFaturaTarih
-            // 
-            this.lblFaturaTarih.AutoSize = true;
-            this.lblFaturaTarih.Location = new System.Drawing.Point(6, 171);
-            this.lblFaturaTarih.Name = "lblFaturaTarih";
-            this.lblFaturaTarih.Size = new System.Drawing.Size(38, 17);
-            this.lblFaturaTarih.TabIndex = 8;
-            this.lblFaturaTarih.Text = "Tarih";
-            // 
-            // dtpTarih
-            // 
-            this.dtpTarih.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpTarih.Location = new System.Drawing.Point(6, 192);
-            this.dtpTarih.Name = "dtpTarih";
-            this.dtpTarih.Size = new System.Drawing.Size(118, 24);
-            this.dtpTarih.TabIndex = 9;
-            // 
             // colShId
             // 
             this.colShId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -583,7 +499,6 @@
             this.colShId.ReadOnly = true;
             this.colShId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.colShId.Visible = false;
-            this.colShId.Width = 27;
             // 
             // colShStokKod
             // 
@@ -594,7 +509,6 @@
             this.colShStokKod.ReadOnly = true;
             this.colShStokKod.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.colShStokKod.Visible = false;
-            this.colShStokKod.Width = 69;
             // 
             // colShStokAd
             // 
@@ -688,6 +602,89 @@
             this.colShStokNetTutar.ReadOnly = true;
             this.colShStokNetTutar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.colShStokNetTutar.Width = 91;
+            // 
+            // pnlFaturaUstBilgiler
+            // 
+            this.pnlFaturaUstBilgiler.Controls.Add(this.grpFaturaUst);
+            this.pnlFaturaUstBilgiler.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlFaturaUstBilgiler.Location = new System.Drawing.Point(0, 0);
+            this.pnlFaturaUstBilgiler.Name = "pnlFaturaUstBilgiler";
+            this.pnlFaturaUstBilgiler.Size = new System.Drawing.Size(126, 452);
+            this.pnlFaturaUstBilgiler.TabIndex = 0;
+            // 
+            // grpFaturaUst
+            // 
+            this.grpFaturaUst.Controls.Add(this.txtFaturaAciklama);
+            this.grpFaturaUst.Controls.Add(this.lblFaturaAciklama);
+            this.grpFaturaUst.Controls.Add(this.lblFaturaTurEkran);
+            this.grpFaturaUst.Controls.Add(this.lblCariAd);
+            this.grpFaturaUst.Controls.Add(this.lblFaturaTarih);
+            this.grpFaturaUst.Controls.Add(this.lblFaturaNo);
+            this.grpFaturaUst.Controls.Add(this.dtpTarih);
+            this.grpFaturaUst.Controls.Add(this.btnCariBul);
+            this.grpFaturaUst.Controls.Add(this.txtCariKod);
+            this.grpFaturaUst.Controls.Add(this.lblCariKod);
+            this.grpFaturaUst.Controls.Add(this.txtFaturaNo);
+            this.grpFaturaUst.Controls.Add(this.lblFaturaTur);
+            this.grpFaturaUst.Controls.Add(this.btnFaturaBul);
+            this.grpFaturaUst.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grpFaturaUst.Location = new System.Drawing.Point(0, 0);
+            this.grpFaturaUst.Name = "grpFaturaUst";
+            this.grpFaturaUst.Size = new System.Drawing.Size(126, 452);
+            this.grpFaturaUst.TabIndex = 0;
+            this.grpFaturaUst.TabStop = false;
+            this.grpFaturaUst.Text = "Üst Bilgiler";
+            // 
+            // txtFaturaAciklama
+            // 
+            this.txtFaturaAciklama.Location = new System.Drawing.Point(6, 241);
+            this.txtFaturaAciklama.Name = "txtFaturaAciklama";
+            this.txtFaturaAciklama.Size = new System.Drawing.Size(118, 24);
+            this.txtFaturaAciklama.TabIndex = 11;
+            // 
+            // lblFaturaAciklama
+            // 
+            this.lblFaturaAciklama.AutoSize = true;
+            this.lblFaturaAciklama.Location = new System.Drawing.Point(6, 221);
+            this.lblFaturaAciklama.Name = "lblFaturaAciklama";
+            this.lblFaturaAciklama.Size = new System.Drawing.Size(56, 17);
+            this.lblFaturaAciklama.TabIndex = 10;
+            this.lblFaturaAciklama.Text = "Açıklama";
+            // 
+            // lblFaturaTurEkran
+            // 
+            this.lblFaturaTurEkran.Location = new System.Drawing.Point(6, 138);
+            this.lblFaturaTurEkran.Name = "lblFaturaTurEkran";
+            this.lblFaturaTurEkran.Size = new System.Drawing.Size(114, 33);
+            this.lblFaturaTurEkran.TabIndex = 7;
+            this.lblFaturaTurEkran.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblCariAd
+            // 
+            this.lblCariAd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.lblCariAd.BackColor = System.Drawing.SystemColors.Control;
+            this.lblCariAd.Location = new System.Drawing.Point(6, 271);
+            this.lblCariAd.Name = "lblCariAd";
+            this.lblCariAd.Size = new System.Drawing.Size(118, 178);
+            this.lblCariAd.TabIndex = 12;
+            this.lblCariAd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblFaturaTarih
+            // 
+            this.lblFaturaTarih.AutoSize = true;
+            this.lblFaturaTarih.Location = new System.Drawing.Point(6, 171);
+            this.lblFaturaTarih.Name = "lblFaturaTarih";
+            this.lblFaturaTarih.Size = new System.Drawing.Size(38, 17);
+            this.lblFaturaTarih.TabIndex = 8;
+            this.lblFaturaTarih.Text = "Tarih";
+            // 
+            // dtpTarih
+            // 
+            this.dtpTarih.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpTarih.Location = new System.Drawing.Point(6, 192);
+            this.dtpTarih.Name = "dtpTarih";
+            this.dtpTarih.Size = new System.Drawing.Size(118, 24);
+            this.dtpTarih.TabIndex = 9;
             // 
             // FrmFaturaKayit
             // 

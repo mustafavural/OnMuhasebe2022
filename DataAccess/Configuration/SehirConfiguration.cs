@@ -10,7 +10,7 @@ namespace DataAccess.Configuration
     {
         public void Configure(EntityTypeBuilder<Sehir> builder)
         {
-            builder.ToTable("Sehirler", "dbo");
+            builder.ToTable("Sehirler");
             builder.HasKey(x => x.Id).HasName("PK_Sehirler").IsClustered();
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();

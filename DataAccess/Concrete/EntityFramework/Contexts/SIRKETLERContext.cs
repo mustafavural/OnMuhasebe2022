@@ -17,7 +17,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         public DbSet<Stok> Stoklar { get; set; }

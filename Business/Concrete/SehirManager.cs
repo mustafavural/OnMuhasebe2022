@@ -9,10 +9,12 @@ namespace Business.Concrete
     public class SehirManager : ISehirService
     {
         private readonly ISehirDal _sehirDal;
+
         public SehirManager(ISehirDal sehirDal)
         {
             _sehirDal = sehirDal;
         }
+
         public IDataResult<Sehir> GetById(int id)
         {
             return new SuccessDataResult<Sehir>(_sehirDal.GetById(id));
@@ -25,8 +27,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Sehir>> GetList(Expression<Func<Sehir, bool>>? filter = null)
         {
-            var result = _sehirDal.GetList(filter);
-            return new SuccessDataResult<List<Sehir>>(result);
+            return new SuccessDataResult<List<Sehir>>(_sehirDal.GetList(filter));
         }
     }
 }

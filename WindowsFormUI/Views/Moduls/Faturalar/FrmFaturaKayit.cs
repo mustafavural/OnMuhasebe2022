@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
+using WindowsFormUI.Helpers;
 using WindowsFormUI.Views.Moduls.Cariler;
 using WindowsFormUI.Views.Moduls.Stoklar;
 using WindowsFormUI.Views.UserExtensions;
@@ -22,9 +23,8 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         private readonly IFaturaService _faturaService;
         private readonly ICariService _cariService;
         private readonly IStokService _stokService;
-        private readonly IStokHareketService _stokHareketService;
+        private List<StokHareket> FaturaKalemEntities { get; set; }
 
-        private List<StokHareket> faturaKalemEntities;
         private int _secilenKalemIndex = -1;
         private Cari _secilenCari;
         private Stok _secilenStok;
@@ -35,16 +35,14 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
 
         public FrmFaturaKayit(IFaturaService faturaService,
                               ICariService cariService,
-                              IStokService stokService,
-                              IStokHareketService stokHareketService)
+                              IStokService stokService)
         {
             InitializeComponent();
             _faturaService = faturaService;
             _cariService = cariService;
             _stokService = stokService;
-            _stokHareketService = stokHareketService;
             FaturaTur = FaturaTurleri.Hepsi;
-            faturaKalemEntities = new List<StokHareket>();
+            FaturaKalemEntities = new List<StokHareket>();
         }
 
         private void FrmFaturaKayit_Load(object sender, EventArgs e)
@@ -81,10 +79,10 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         {
             if (txtFaturaNo.Text.Length != 0)
             {
-                var result = _faturaService.GetByNo(txtFaturaNo.Text).Data;
-                if (result != null)
+                var result = _faturaService.GetByNo(txtFaturaNo.Text);
+                if (result.Data != null)
                 {
-                    _secilenFatura = result;
+                    _secilenFatura = result.Data;
                     BringExistingFatura(_secilenFatura);
                 }
                 else
@@ -105,14 +103,9 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
                     txtCariKod.Enabled = false;
                     btnCariBul.Enabled = false;
                     lblCariAd.Text = _secilenCari.Unvan;
+                    grpFaturaKalem.Enabled = true;
                 }
             }
-        }
-
-        private void TxtFaturaAciklama_Leave()
-        {
-            grpFaturaKalem.Enabled = true;
-            txtStokKod.Focus();
         }
 
         private void TxtStokKod_Leave()
@@ -160,6 +153,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             var form = Program.Container.Resolve<FrmFaturaListe>();
             form.FaturaTur = FaturaTur;
             form.ShowDialog();
+
             try
             {
                 if (StaticPrimitives.SecilenFaturaId > 0)
@@ -171,7 +165,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -191,7 +185,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -211,7 +205,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
         #endregion
@@ -235,6 +229,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             stokBrutFiyat = 0;
             stokKdv = 0;
             stokNetFiyat = 0;
+            txtStokKod.Focus();
         }
 
         private void ClearScreen()
@@ -252,6 +247,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             txtFaturaAciklama.Text = "";
 
             dgvFaturaKalemler.DataSource = new List<StokHareket>();
+            FaturaKalemEntities.Clear();
             txtFaturaAraToplam.Text = "";
             txtFaturaKDVlerToplam.Text = "";
             txtFaturaGenelToplam.Text = "";
@@ -259,44 +255,27 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             uscFaturaEkleSilGuncelle.BtnDelete_Enable = false;
             uscFaturaEkleSilGuncelle.BtnSave_Enable = false;
             grpFaturaKalem.Enabled = false;
+            txtFaturaNo.Focus();
         }
 
         private void BringExistingFatura(Fatura fatura)
         {
-            ClearItems();
+            ClearScreen();
             StaticPrimitives.SecilenFaturaId = fatura.Id;
-            var cari = _cariService.GetById(fatura.CariId).Data;
             txtFaturaNo.Text = fatura.No;
             txtFaturaNo.Enabled = false;
             btnFaturaBul.Enabled = false;
-            txtCariKod.Text = cari.Kod;
+            txtCariKod.Text = fatura.Cari.Kod;
             txtCariKod.Enabled = false;
             btnCariBul.Enabled = false;
             txtFaturaAciklama.Text = fatura.Aciklama;
             dtpTarih.Enabled = true;
             dtpTarih.Value = fatura.Tarih;
-            lblCariAd.Text = cari.Unvan;
+            lblCariAd.Text = fatura.Cari.Unvan;
+            FaturaKalemEntities = fatura.StokHareketler;
+            dgvFaturaKalemler.DataSource = HareketleriListeyeYaz(FaturaKalemEntities);
 
-            dgvFaturaKalemler.DataSource = HareketleriListeyeYaz(fatura.StokHareketler);//.Select(s => new
-            //{
-            //    s.Id,
-            //    StokKodu = s.Stok.Kod,
-            //    StokAd = s.Stok.Ad,
-            //    FaturaNo = fatura.No,
-            //    Miktar = s.Miktar < 0 ? s.Miktar * -1 : s.Miktar,
-            //    s.Birim,
-            //    s.Fiyat,
-            //    BrutTutar = s.BrutTutar ?? 0,
-            //    s.Kdv,
-            //    NetTutar = s.NetTutar ?? 0,
-            //    s.Tarih,
-            //    s.Aciklama,
-            //    StokMiktar = _stokHareketService.GetStokBakiye(s.Stok.Kod)
-            //}).ToList();
-
-            txtFaturaAraToplam.Text = fatura.StokHareketler.Sum(f => f.BrutTutar).Value.ToString("#,###.## TL");
-            txtFaturaKDVlerToplam.Text = fatura.StokHareketler.Sum(f => f.NetTutar - f.BrutTutar).Value.ToString("#,###.## TL");
-            txtFaturaGenelToplam.Text = fatura.StokHareketler.Sum(f => f.NetTutar).Value.ToString("#,###.## TL");
+            UpdateAltBilgiler();
             uscFaturaEkleSilGuncelle.BtnClear_Visible = true;
             uscFaturaEkleSilGuncelle.BtnDelete_Enable = true;
             uscFaturaEkleSilGuncelle.BtnSave_Enable = true;
@@ -308,34 +287,39 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         {
             return new StokHareket
             {
-                Id = 0,
                 StokId = _stokService.GetByKod(txtStokKod.Text).Data.Id,
-                FaturaId = _faturaService.GetByNo(txtFaturaNo.Text).Data?.Id ?? 0,
                 Miktar = stokMiktar,
                 Birim = txtStokBirim.Text,
                 Fiyat = stokFiyat,
                 BrutTutar = stokBrutFiyat,
                 Kdv = stokKdv.ToString().ToInt(),
-                NetTutar = stokNetFiyat,
-                Tarih = dtpTarih.Value,
-                Aciklama = txtFaturaNo.Text
+                NetTutar = stokNetFiyat
             };
         }
 
         private object HareketleriListeyeYaz(List<StokHareket> stokHareketler)
         {
-            return stokHareketler.Select(h => new
+            object result = null;
+            try
             {
-                h.Id,
-                StokKod = _stokService.GetById(h.StokId).Data.Kod,
-                StokAd = _stokService.GetById(h.StokId).Data.Ad,
-                h.Miktar,
-                h.Birim,
-                h.Fiyat,
-                h.BrutTutar,
-                h.Kdv,
-                h.NetTutar
-            }).ToList();
+                result = stokHareketler.Select(h => new
+                {
+                    h.Id,
+                    StokKod = _stokService.GetById(h.StokId).Data.Kod,
+                    StokAd = _stokService.GetById(h.StokId).Data.Ad,
+                    h.Miktar,
+                    h.Birim,
+                    h.Fiyat,
+                    h.BrutTutar,
+                    h.Kdv,
+                    h.NetTutar,
+                }).ToList();
+            }
+            catch(Exception err) 
+            {
+                ErrorMessageHelper.ErrorMessageBuilder(err);
+            }
+            return result;
         }
 
         private void OpenNewFatura()
@@ -359,9 +343,9 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
 
         private void UpdateAltBilgiler()
         {
-            txtFaturaAraToplam.Text = faturaKalemEntities.Sum(s => s.BrutTutar).Value.ToString("#,###.## TL");
-            txtFaturaKDVlerToplam.Text = faturaKalemEntities.Sum(s => s.NetTutar - s.BrutTutar).Value.ToString("#,###.## TL");
-            txtFaturaGenelToplam.Text = faturaKalemEntities.Sum(s => s.NetTutar).Value.ToString("#,###.## TL");
+            txtFaturaAraToplam.Text = FaturaKalemEntities.Sum(s => s.BrutTutar).Value.ToString("#,###.## TL");
+            txtFaturaKDVlerToplam.Text = FaturaKalemEntities.Sum(s => s.NetTutar - s.BrutTutar).Value.ToString("#,###.## TL");
+            txtFaturaGenelToplam.Text = FaturaKalemEntities.Sum(s => s.NetTutar).Value.ToString("#,###.## TL");
         }
 
         private void UscKalemEkleSilGuncelle_ClickClear(object sender, EventArgs e)
@@ -374,10 +358,10 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         {
             var newStok = ReadStokHareketFromForm();
 
-            if (_secilenKalemIndex > -1) faturaKalemEntities.Update(_secilenKalemIndex, newStok);
-            else faturaKalemEntities.Add(newStok);
+            if (_secilenKalemIndex > -1) FaturaKalemEntities.Update(_secilenKalemIndex, newStok);
+            else FaturaKalemEntities.Add(newStok);
 
-            dgvFaturaKalemler.DataSource = HareketleriListeyeYaz(faturaKalemEntities);
+            dgvFaturaKalemler.DataSource = HareketleriListeyeYaz(FaturaKalemEntities);
             UpdateAltBilgiler();
             ClearItems();
         }
@@ -386,16 +370,16 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         {
             try
             {
-                faturaKalemEntities.RemoveAt(_secilenKalemIndex);
+                FaturaKalemEntities.RemoveAt(_secilenKalemIndex);
                 _secilenKalemIndex = -1;
                 uscKalemEkleSilGuncelle.BtnDelete_Enable = false;
-                dgvFaturaKalemler.DataSource = HareketleriListeyeYaz(faturaKalemEntities);
+                dgvFaturaKalemler.DataSource = HareketleriListeyeYaz(FaturaKalemEntities);
                 uscKalemEkleSilGuncelle.LblStatus_Text = Messages.FaturaMessages.KalemSilindi;
                 UpdateAltBilgiler();
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -422,20 +406,12 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
                 {
                     No = txtFaturaNo.Text,
                     CariId = _secilenCari.Id,
+                    Cari = _secilenCari,
                     KayitTarihi = DateTime.Now.Date,
                     Tarih = dtpTarih.Value,
                     Tur = lblFaturaTurEkran.Text,
                     Aciklama = txtFaturaAciklama.Text,
-                    StokHareketler = faturaKalemEntities.Select(s => new StokHareket
-                    {
-                        Id = s.Id,
-                        Miktar = s.Miktar,
-                        Birim = s.Birim,
-                        Fiyat = s.Fiyat,
-                        Kdv = s.Kdv,
-                        Tarih = s.Tarih,
-                        Aciklama = s.Aciklama
-                    }).ToList()
+                    StokHareketler = FaturaKalemEntities
                 };
                 IResult result = _faturaService.GetByNo(fatura.No).Data == null ? _faturaService.Add(fatura) : _faturaService.Update(fatura);
                 ClearScreen();
@@ -443,9 +419,10 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
+
 
         private void UscFaturaEkleSilGuncelle_ClickCancel(object sender, EventArgs e)
         {
@@ -460,7 +437,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
     }

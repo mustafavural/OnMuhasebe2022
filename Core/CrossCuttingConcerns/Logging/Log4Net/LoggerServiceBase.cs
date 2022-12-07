@@ -7,7 +7,7 @@ namespace Core.CrossCuttingConcerns.Logging.Log4Net
 {
     public class LoggerServiceBase
     {
-        private ILog _log;
+        private readonly ILog _log;
         public LoggerServiceBase(string name)
         {
             XmlDocument xmlDocument = new XmlDocument();

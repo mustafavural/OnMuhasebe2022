@@ -9,7 +9,7 @@ namespace DataAccess.Configuration
     {
         public void Configure(EntityTypeBuilder<BankaHareket> builder)
         {
-            builder.ToTable("BankaHareketler", "dbo");
+            builder.ToTable("BankaHareketler");
             builder.HasKey(x => x.Id).HasName("PK_BankaHareketler");
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedNever().UseIdentityColumn();

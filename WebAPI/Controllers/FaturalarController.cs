@@ -64,13 +64,6 @@ namespace WebAPI.Controllers
             return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Message);
         }
 
-        [HttpGet("GetFaturaKalemler")]
-        public IActionResult GetFaturaKalemler(string faturaNo)
-        {
-            var result = _faturaService.GetFaturaKalemler(faturaNo);
-            return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Message);
-        }
-
         [HttpGet("GetFaturaKdvler")]
         public IActionResult GetFaturaKdvler(string faturaNo)
         {

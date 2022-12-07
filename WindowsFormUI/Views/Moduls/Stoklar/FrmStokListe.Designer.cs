@@ -463,8 +463,6 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
         private ToolStripMenuItem tsmiShowAd;
         private ToolStripMenuItem tsmiShowKDV;
         private ToolStripMenuItem tsmiShowBirim;
-        private ToolStripMenuItem tsmiShowBirim2;
-        private ToolStripMenuItem tsmiShowBirim2Oran;
         private ToolStripMenuItem tsmiShowMevcutMiktar;
         private DataGridViewTextBoxColumn colId;
         private DataGridViewTextBoxColumn colKod;
