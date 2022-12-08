@@ -308,7 +308,6 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             this.MinimumSize = new System.Drawing.Size(863, 487);
             this.Name = "FrmFaturaListe";
             this.Text = "Fatura Listesi";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmFaturaListe_FormClosing);
             this.Load += new System.EventHandler(this.FrmFaturaListe_Load);
             this.grpFaturaListe.ResumeLayout(false);
             this.grpFaturaListe.PerformLayout();

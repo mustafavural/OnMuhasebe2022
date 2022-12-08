@@ -26,24 +26,40 @@ namespace Business.Concrete
             _kasaService = kasaService;
         }
 
+        private KasaHareket Get(Expression<Func<KasaHareket,bool>> filter)
+        {
+            var kasaHareket = _kasaHareketDal.Get(filter);
+            if (kasaHareket != null)
+            {
+                kasaHareket.Kasa = _kasaService.GetById(kasaHareket.KasaId).Data;
+                kasaHareket.CariHareket = _cariHareketService.GetById(kasaHareket.Id).Data;
+            }
+            return kasaHareket;
+        }
+
+        private List<KasaHareket> GetAll(Expression<Func<KasaHareket, bool>>? filter = null)
+        {
+            var kasaHareketler = _kasaHareketDal.GetList(filter);
+            if (kasaHareketler.Count > 0)
+            {
+                kasaHareketler.ForEach(k => k.CariHareket = _cariHareketService.GetById(k.Id).Data);
+                kasaHareketler.ForEach(k => k.Kasa = _kasaService.GetById(k.Id).Data);
+            }
+            return kasaHareketler;
+        }
+
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<KasaHareket> GetById(int id)
         {
-            var kasaHareket = _kasaHareketDal.GetById(id);
-            kasaHareket.Kasa = _kasaService.GetById(kasaHareket.KasaId).Data;
-            kasaHareket.CariHareket = _cariHareketService.GetById(kasaHareket.Id).Data;
-            return new SuccessDataResult<KasaHareket>(kasaHareket);
+            return new SuccessDataResult<KasaHareket>(Get(k => k.Id == id));
         }
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<KasaHareket> GetByEvrakNo(string evrakNo)
         {
-            var kasaHareket = _kasaHareketDal.Get(s => s.EvrakNo == evrakNo);
-            kasaHareket.Kasa = _kasaService.GetById(kasaHareket.KasaId).Data;
-            kasaHareket.CariHareket = _cariHareketService.GetById(kasaHareket.Id).Data;
-            return new SuccessDataResult<KasaHareket>(kasaHareket);
+            return new SuccessDataResult<KasaHareket>(Get(s => s.EvrakNo == evrakNo));
         }
 
         [SecuredOperation("List,Admin")]
@@ -51,14 +67,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<KasaHareket>> GetListByCariId(int cariId)
         {
-            var cariHareketIdler = _cariHareketService.GetListByCariId(cariId).Data;
-            var kasaHareketler = _kasaHareketDal.GetList(k => cariHareketIdler.Select(c => c.Id).Contains(k.Id));
-            foreach (var hareket in kasaHareketler)
-            {
-                hareket.CariHareket = _cariHareketService.GetById(hareket.Id).Data;
-                hareket.Kasa = _kasaService.GetById(hareket.KasaId).Data;
-            }
-            return new SuccessDataResult<List<KasaHareket>>(kasaHareketler);
+            return new SuccessDataResult<List<KasaHareket>>(GetAll(k => k.CariId == cariId));
         }
 
         [SecuredOperation("List,Admin")]
@@ -66,13 +75,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<KasaHareket>> GetListByKasaId(int kasaId)
         {
-            var kasaHareketler = _kasaHareketDal.GetList(k => k.KasaId == kasaId);
-            foreach (var hareket in kasaHareketler)
-            {
-                hareket.CariHareket = _cariHareketService.GetById(hareket.Id).Data;
-                hareket.Kasa = _kasaService.GetById(hareket.KasaId).Data;
-            }
-            return new SuccessDataResult<List<KasaHareket>>(kasaHareketler);
+            return new SuccessDataResult<List<KasaHareket>>(GetAll(k => k.KasaId == kasaId));
         }
 
         [SecuredOperation("List,Admin")]
@@ -80,13 +83,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<KasaHareket>> GetListBetweenTarihler(DateTime first, DateTime last)
         {
-            var kasaHareketler = _kasaHareketDal.GetList(s => first <= s.Tarih && s.Tarih >= last);
-            foreach (var hareket in kasaHareketler)
-            {
-                hareket.CariHareket = _cariHareketService.GetById(hareket.Id).Data;
-                hareket.Kasa = _kasaService.GetById(hareket.KasaId).Data;
-            }
-            return new SuccessDataResult<List<KasaHareket>>(kasaHareketler);
+            return new SuccessDataResult<List<KasaHareket>>(GetAll(s => first <= s.Tarih && s.Tarih >= last));
         }
 
         [SecuredOperation("List,Admin")]
@@ -94,24 +91,15 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<KasaHareket>> GetListBetweenFiyatlar(decimal min, decimal max)
         {
-            var kasaHareketler = _kasaHareketDal.GetList(s => min <= s.GirenCikanMiktar && s.GirenCikanMiktar >= max);
-            foreach (var hareket in kasaHareketler)
-            {
-                hareket.CariHareket = _cariHareketService.GetById(hareket.Id).Data;
-                hareket.Kasa = _kasaService.GetById(hareket.KasaId).Data;
-            }
-            return new SuccessDataResult<List<KasaHareket>>(kasaHareketler);
+            return new SuccessDataResult<List<KasaHareket>>(GetAll(s => min <= s.GirenCikanMiktar && s.GirenCikanMiktar >= max));
         }
 
+        [SecuredOperation("List,Admin")]
+        [CacheAspect(duration: 1)]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<KasaHareket>> GetList(Expression<Func<KasaHareket, bool>>? filter = null)
         {
-            var kasaHareketler = _kasaHareketDal.GetList(filter);
-            foreach (var hareket in kasaHareketler)
-            {
-                hareket.CariHareket = _cariHareketService.GetById(hareket.Id).Data;
-                hareket.Kasa = _kasaService.GetById(hareket.KasaId).Data;
-            }
-            return new SuccessDataResult<List<KasaHareket>>(kasaHareketler);
+            return new SuccessDataResult<List<KasaHareket>>(GetAll(filter));
         }
 
         [SecuredOperation("List,Admin")]

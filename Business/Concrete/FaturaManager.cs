@@ -79,9 +79,7 @@ namespace Business.Concrete
             return fatura;
         }
 
-        [SecuredOperation("List,Admin")]
-        [LogAspect(typeof(DatabaseLogger))]
-        public IDataResult<List<Fatura>> GetList(Expression<Func<Fatura, bool>>? filter = null)
+        private List<Fatura> GetAll(Expression<Func<Fatura, bool>>? filter = null)
         {
             var faturalar = _faturaDal.GetList(filter);
             if (faturalar.Count > 0)
@@ -89,7 +87,7 @@ namespace Business.Concrete
                 faturalar.ForEach(s => s.StokHareketler = GetFaturaKalemler(s.No));
                 faturalar.ForEach(s => s.Cari = GetFaturaCari(s.No));
             }
-            return new SuccessDataResult<List<Fatura>>(faturalar);
+            return faturalar;
         }
 
         [SecuredOperation("List,Admin")]
@@ -111,7 +109,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<Fatura>> GetListByTur(string tur)
         {
-            return new SuccessDataResult<List<Fatura>>(GetList(f => f.Tur == tur).Data);
+            return new SuccessDataResult<List<Fatura>>(GetAll(f => f.Tur == tur));
         }
 
         [SecuredOperation("List,Admin")]
@@ -120,7 +118,7 @@ namespace Business.Concrete
         public IDataResult<List<Fatura>> GetListByCariKod(string cariKod)
         {
             var cariId = _cariService.GetByKod(cariKod).Data.Id;
-            return new SuccessDataResult<List<Fatura>>(GetList(s => s.CariId == cariId).Data);
+            return new SuccessDataResult<List<Fatura>>(GetAll(s => s.CariId == cariId));
         }
 
         [SecuredOperation("List,Admin")]
@@ -128,7 +126,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<Fatura>> GetListBetweenTarihler(DateTime ilk, DateTime son)
         {
-            return new SuccessDataResult<List<Fatura>>(GetList(f => f.Tarih >= ilk && f.Tarih <= son).Data);
+            return new SuccessDataResult<List<Fatura>>(GetAll(f => f.Tarih >= ilk && f.Tarih <= son));
         }
 
         [SecuredOperation("List,Admin")]
@@ -136,7 +134,14 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<Fatura>> GetListBetweenKayitTarihler(DateTime ilk, DateTime son)
         {
-            return new SuccessDataResult<List<Fatura>>(GetList(f => f.KayitTarihi >= ilk && f.KayitTarihi <= son).Data);
+            return new SuccessDataResult<List<Fatura>>(GetAll(f => f.KayitTarihi >= ilk && f.KayitTarihi <= son));
+        }
+
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
+        public IDataResult<List<Fatura>> GetList(Expression<Func<Fatura, bool>>? filter = null)
+        {
+            return new SuccessDataResult<List<Fatura>>(GetAll(filter));
         }
 
         [SecuredOperation("List,Admin")]

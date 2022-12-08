@@ -58,46 +58,45 @@ namespace Business.Concrete
         }
         #endregion
 
-        [SecuredOperation("List,Admin")]
-        [LogAspect(typeof(DatabaseLogger))]
-        public IDataResult<Cari> GetById(int id)
+        private Cari Get(Expression<Func<Cari,bool>> filter)
         {
-            var cari = _cariDal.GetById(id);
+            var cari = _cariDal.Get(filter);
             if (cari != null)
             {
                 var adres = _adresService.GetById(cari.Id).Data;
                 cari.Adres = adres;
                 cari.CariCategoryler = _cariDal.GetCariCategoryler(cari.Id);
             }
-            return new SuccessDataResult<Cari>(cari);
+            return cari;
+        }
+
+        private List<Cari> GetAll(Expression<Func<Cari, bool>>? filter = null)
+        {
+            var cariler = _cariDal.GetList(filter);
+            cariler.ForEach(s => s.CariCategoryler = _cariDal.GetCariCategoryler(s.Id));
+            cariler.ForEach(x => x.Adres = _adresService.GetById(x.Id).Data);
+            return cariler;
+        }
+
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
+        public IDataResult<Cari> GetById(int id)
+        {
+            return new SuccessDataResult<Cari>(Get(c=>c.Id==id));
         }
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Cari> GetByKod(string kod)
         {
-            var cari = _cariDal.Get(s => s.Kod == kod);
-            if (cari != null)
-            {
-                var adres = _adresService.GetById(cari.Id).Data;
-                cari.Adres = adres;
-                cari.CariCategoryler = _cariDal.GetCariCategoryler(cari.Id);
-            }
-            return new SuccessDataResult<Cari>(cari);
+            return new SuccessDataResult<Cari>(Get(s => s.Kod == kod));
         }
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Cari> GetByVergiNo(string vergiNo)
         {
-            var cari = _cariDal.Get(s => s.VergiNo == vergiNo);
-            if (cari != null)
-            {
-                var adres = _adresService.GetById(cari.Id).Data;
-                cari.Adres = adres;
-                cari.CariCategoryler = _cariDal.GetCariCategoryler(cari.Id);
-            }
-            return new SuccessDataResult<Cari>(cari);
+            return new SuccessDataResult<Cari>(Get(s => s.VergiNo == vergiNo));
         }
 
         [SecuredOperation("List,Admin")]
@@ -115,13 +114,7 @@ namespace Business.Concrete
             var adres = _adresService.GetByTelNo(telNo).Data;
             if (adres != null)
             {
-                var cari = _cariDal.Get(s => s.Id == adres.Id);
-                if (cari != null)
-                {
-                    cari.Adres = adres;
-                    cari.CariCategoryler = _cariDal.GetCariCategoryler(cari.Id);
-                    return new SuccessDataResult<Cari>(cari);
-                }
+                return new SuccessDataResult<Cari>(Get(s => s.Id == adres.Id));
             }
             return new SuccessDataResult<Cari>();
         }
@@ -133,13 +126,7 @@ namespace Business.Concrete
             var adres = _adresService.GetByWeb(web).Data;
             if (adres != null)
             {
-                var cari = _cariDal.Get(s => s.Id == adres.Id);
-                if (cari != null)
-                {
-                    cari.Adres = adres;
-                    cari.CariCategoryler = _cariDal.GetCariCategoryler(cari.Id);
-                    return new SuccessDataResult<Cari>(cari);
-                }
+                return new SuccessDataResult<Cari>(Get(s => s.Id == adres.Id));
             }
             return new SuccessDataResult<Cari>();
         }
@@ -151,13 +138,7 @@ namespace Business.Concrete
             var adres = _adresService.GetByEposta(ePosta).Data;
             if (adres != null)
             {
-                var cari = _cariDal.Get(s => s.Id == adres.Id);
-                if (cari != null)
-                {
-                    cari.Adres = adres;
-                    cari.CariCategoryler = _cariDal.GetCariCategoryler(cari.Id);
-                    return new SuccessDataResult<Cari>(cari);
-                }
+                return new SuccessDataResult<Cari>(Get(s => s.Id == adres.Id));
             }
             return new SuccessDataResult<Cari>();
         }
@@ -170,25 +151,7 @@ namespace Business.Concrete
             var adresler = _adresService.GetListByIlce(ilceAd).Data;
             if (adresler.Count != 0)
             {
-                var result = _cariDal.GetList(c => adresler.Select(a => a.Id).Contains(c.Id)).Join(
-                adresler,
-                cari => cari.Id,
-                adres => adres.Id,
-                (cari, adres) => new Cari
-                {
-                    Id = cari.Id,
-                    Kod = cari.Kod,
-                    Unvan = cari.Unvan,
-                    VergiDairesi = cari.VergiDairesi,
-                    VergiNo = cari.VergiNo,
-                    Adres = adres
-                }).ToList();
-
-                if (result.Count != 0)
-                {
-                    result.ForEach(s => s.CariCategoryler = _cariDal.GetCariCategoryler(s.Id));
-                    return new SuccessDataResult<List<Cari>>(result);
-                }
+                return new SuccessDataResult<List<Cari>>(GetAll(c => adresler.Select(a => a.Id).Contains(c.Id)));
             }
             return new SuccessDataResult<List<Cari>>();
         }
@@ -198,15 +161,12 @@ namespace Business.Concrete
         [CacheAspect(1)]
         public IDataResult<List<Cari>> GetListBySehir(string sehirAd)
         {
-            List<Cari> result = null;
             var adresler = _adresService.GetListBySehir(sehirAd).Data;
             if (adresler.Count != 0)
             {
-                result = _cariDal.GetList(c => adresler.Select(a => a.Id).Contains(c.Id));
-                result.ForEach(s => s.Adres = adresler.Where(a => a.Id == s.Id).Single());
-                result.ForEach(s => s.CariCategoryler = _cariDal.GetCariCategoryler(s.Id));
+                return new SuccessDataResult<List<Cari>>(GetAll(c => adresler.Select(a => a.Id).Contains(c.Id)));
             }
-            return new SuccessDataResult<List<Cari>>(result);
+            return new SuccessDataResult<List<Cari>>();
         }
 
         [SecuredOperation("List,Admin")]
@@ -215,10 +175,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public IDataResult<List<Cari>> GetList(Expression<Func<Cari, bool>>? filter = null)
         {
-            var cariler = _cariDal.GetList(filter);
-            cariler.ForEach(s => s.CariCategoryler = _cariDal.GetCariCategoryler(s.Id));
-            cariler.ForEach(x => x.Adres = _adresService.GetById(x.Id).Data);
-            return new SuccessDataResult<List<Cari>>(cariler);
+            return new SuccessDataResult<List<Cari>>(GetAll(filter));
         }
 
         [SecuredOperation("Add,Admin")]

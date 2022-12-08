@@ -22,5 +22,10 @@ namespace WindowsFormUI.Helpers
             Builder(err);
             MessageBox.Show(ErrorStringResult, err.Source, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
         }
+
+        public static void ErrorMessageBuilder(string errorMessage, string caption)
+        {
+            MessageBox.Show(errorMessage, caption, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+        }
     }
 }

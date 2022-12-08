@@ -13,30 +13,29 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
 {
     public partial class FrmKasaListe : FrmBase
     {
-        private IKasaHareketService _kasaHareketService;
-        private ICariService _cariService;
-        private bool _ciftTiklandiMi = false;
-        private List<KasaHareket> _kasaHareketler;
-        private List<Cari> _cariler;
+        private readonly IKasaHareketService _kasaHareketService;
+        private readonly List<KasaHareket> _kasaHareketler;
+        public KasaIslemTuru KasaIslemTuru { get; set; }
+        public bool SecimIcin => KasaIslemTuru > 0;
 
-        public bool SecimIcin { get; set; }
-
-        public FrmKasaListe(ICariService cariService, IKasaHareketService kasaHareketService)
+        public FrmKasaListe(IKasaHareketService kasaHareketService)
         {
             InitializeComponent();
-            _cariService = cariService;
-            SecimIcin = false;
-            _kasaHareketler = _kasaHareketService.GetList().Data;
-            _cariler = _cariService.GetList().Data;
-            this.Icon = Resources.Kasa_Hareket32x321;
-            this.Text = "Kasa Hareket Listesi";
-            this.dtpTarihIlk.Value = DateTime.Today.AddDays(-10);
             _kasaHareketService = kasaHareketService;
+            KasaIslemTuru = KasaIslemTuru.Hepsi;
+            _kasaHareketler = _kasaHareketService.GetList().Data;
+            this.Icon = Resources.Kasa_Hareket32x321;
+            dtpTarihIlk.Value = DateTime.Today.AddDays(-10);
         }
 
         private void FrmKasaListe_Load(object sender, EventArgs e)
         {
-            WriteToScreen(_kasaHareketler);
+            if (!SecimIcin)
+                this.Text = "Kasa Hareket Listesi";
+            else
+                this.Text = KasaIslemTuru == KasaIslemTuru.Tahsilat ? "Kasa Tahsilat Listesi" : "Kasa Tediye Listesi";
+
+            _TextChanged(sender, e);
             txtEvrakNo.Focus();
         }
 
@@ -46,7 +45,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             {
                 var result = _kasaHareketler.Where(s =>
                     s.EvrakNo.ToLower().Contains(txtEvrakNo.Text.ToLower()) &&
-                    _cariler.Where(c => c.Id == s.CariId).Select(c => c.Unvan).Single().ToLower().Contains(txtCariUnvan.Text.ToLower()) &&
+                    s.CariHareket.Cari.Unvan.ToLower().Contains(txtCariUnvan.Text.ToLower()) &&
                     txtMiktarEnAz.Text.ToDecimal(0) <= s.GirenCikanMiktar &&
                     s.GirenCikanMiktar <= txtMiktarEnCok.Text.ToDecimal(1) &&
                     dtpTarihIlk.Value <= s.Tarih && s.Tarih <= dtpTarihSon.Value &&
@@ -61,16 +60,14 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
         }
 
-        private void WriteToScreen(List<KasaHareket> result)
+        private void WriteToScreen(List<KasaHareket> kasaHareketler)
         {
-            dgvEvrakListe.DataSource = result.Select(s => new
+            dgvEvrakListe.DataSource = kasaHareketler.Select(s => new
             {
                 s.Id,
-                s.KasaId,
-                s.CariId,
                 s.EvrakNo,
+                s.CariHareket.Cari.Unvan,
                 s.GirenCikanMiktar,
-                CariAd = _cariler.Where(c => c.Id == s.CariId).Select(c => c.Unvan).Single(),
                 s.Tarih,
                 s.Aciklama
             }).ToList();
@@ -78,18 +75,11 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
 
         private void DgvEvrakListe_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > 0)
+            if (e.RowIndex > -1 && SecimIcin)
             {
-                StaticPrimitives.SecilenKasaHareketId = (int)dgvEvrakListe.SelectedRows[0].Cells["colId"].Value;
-                _ciftTiklandiMi = true;
-                if (SecimIcin) this.Close();
+                StaticPrimitives.SecilenKasaHareketId = (int)dgvEvrakListe.Rows[e.RowIndex].Cells["colId"].Value;
+                this.Close();
             }
-        }
-
-        private void FrmEvrakListe_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (!_ciftTiklandiMi)
-                StaticPrimitives.SecilenKasaHareketId = 0;
         }
     }
 }

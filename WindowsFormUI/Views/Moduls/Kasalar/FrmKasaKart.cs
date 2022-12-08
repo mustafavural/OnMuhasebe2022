@@ -7,12 +7,13 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
+using WindowsFormUI.Helpers;
 
 namespace WindowsFormUI.Views.Moduls.Kasalar
 {
     public partial class FrmKasaKart : FrmBase
     {
-        private IKasaService _kasaService;
+        private readonly IKasaService _kasaService;
         private List<Kasa> _kasalar;
         private Kasa _secilenKasa;
         private bool ciftTiklandiMi = false;
@@ -53,7 +54,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -68,7 +69,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -76,23 +77,21 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
         {
             try
             {
-                int kasaId = (int)dgvKasalar.Rows[e.RowIndex].Cells["colId"].Value;
-                if (kasaId > 0)
+                if (e.RowIndex > -1)
                 {
-                    _secilenKasa = _kasaService.GetById(kasaId).Data;
+                    StaticPrimitives.SecilenKasaId = (int)dgvKasalar.Rows[e.RowIndex].Cells["colId"].Value;
+                    _secilenKasa = _kasaService.GetById(StaticPrimitives.SecilenKasaId).Data;
                     if (SecimIcin)
                     {
-                        StaticPrimitives.SecilenKasaId = kasaId;
                         ciftTiklandiMi = true;
                         this.Close();
-                        return;
                     }
                     this.WriteToScreen(_secilenKasa);
                 }
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -145,7 +144,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -169,8 +168,14 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
+        }
+
+        private void FrmKasaKart_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!ciftTiklandiMi)
+                StaticPrimitives.SecilenKasaId = 0;
         }
     }
 }

@@ -17,6 +17,11 @@
             return Convert.ToInt32(value);
         }
 
+        public static string ToFirstLetterUpperCase(this string value)
+        {
+            return value[0].ToString().ToUpper() + value[1..];
+        }
+
         public static DateTime ToDateTime(this string value)
         {
             return Convert.ToDateTime(value);

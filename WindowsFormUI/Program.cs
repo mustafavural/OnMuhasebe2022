@@ -46,9 +46,11 @@ namespace WindowsFormUI
             builder.RegisterType<FrmCariListe>().AsSelf();
             builder.RegisterType<FrmFatura>().AsSelf();
             builder.RegisterType<FrmFaturaKayit>().AsSelf();
+            builder.RegisterType<FrmFaturaListe>().AsSelf();
             builder.RegisterType<FrmKasa>().AsSelf();
             builder.RegisterType<FrmKasaKart>().AsSelf();
-            builder.RegisterType<FrmFaturaListe>().AsSelf();
+            builder.RegisterType<FrmKasaKayit>().AsSelf();
+            builder.RegisterType<FrmKasaListe>().AsSelf();
             builder.RegisterType<FrmDegerliEvrak>().AsSelf();
             builder.RegisterType<FrmWelcome>().AsSelf();
             builder.RegisterType<FrmMdiBase>().AsSelf();

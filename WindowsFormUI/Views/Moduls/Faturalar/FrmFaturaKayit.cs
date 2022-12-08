@@ -79,6 +79,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         {
             if (txtFaturaNo.Text.Length != 0)
             {
+                txtFaturaNo.Text = FormatFaturaNo(txtFaturaNo.Text);
                 var result = _faturaService.GetByNo(txtFaturaNo.Text);
                 if (result.Data != null)
                 {
@@ -142,7 +143,6 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
                 txtStokNetTutar.Text = stokNetFiyat.ToString("#,###.## TL");
                 uscKalemEkleSilGuncelle.BtnClear_Visible = true;
                 uscKalemEkleSilGuncelle.BtnSave_Enable = true;
-                uscKalemEkleSilGuncelle.Focus();
             }
         }
         #endregion
@@ -230,6 +230,29 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             stokKdv = 0;
             stokNetFiyat = 0;
             txtStokKod.Focus();
+        }
+
+        public bool IsFormattedFaturaNo(string value)
+        {
+            if (value.Length == 14 && value.StartsWith("F"))
+                return true;
+            else
+                return false;
+        }
+
+        public string FormatFaturaNo(string value)
+        {
+            if (this.IsFormattedFaturaNo(value))
+                return value;
+            else
+            {
+                string txt = value;
+                value = "F";
+                for (int i = 0; i < 13 - txt.Length; i++)
+                    value += "0";
+                value += txt;
+                return value;
+            }
         }
 
         private void ClearScreen()

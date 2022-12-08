@@ -39,75 +39,33 @@ namespace Business.Concrete
             return new SuccessDataResult<decimal>(_stokHareketDal.GetList(s => s.StokId == stokId).Sum(s => s.Miktar));
         }
 
+        private StokHareket Get(Expression<Func<StokHareket,bool>> filter)
+        {
+            var stokHareket = _stokHareketDal.Get(filter);
+            stokHareket.Stok = _stokService.GetById(stokHareket.StokId).Data;
+            return stokHareket;
+        }
+
+        private List<StokHareket> GetList(Expression<Func<StokHareket, bool>>? filter = null)
+        {
+            var stokHareketler = _stokHareketDal.GetList(filter);
+            stokHareketler.ForEach(s => s.Stok = _stokService.GetById(s.StokId).Data);
+            return stokHareketler;
+        }
+
         public IDataResult<StokHareket> GetById(int id)
         {
-            var stokHareket = _stokHareketDal.GetById(id);
-            var stok = _stokService.GetById(stokHareket.StokId).Data;
-            stokHareket.Stok = stok;
-            return new SuccessDataResult<StokHareket>(stokHareket);
+            return new SuccessDataResult<StokHareket>(Get(s => s.Id == id));
         }
 
         public IDataResult<List<StokHareket>> GetListByFaturaId(int faturaId)
         {
-            var stokHareketler = _stokHareketDal.GetList(s => s.FaturaId == faturaId);
-            var stoklar = _stokService.GetList(s => stokHareketler.Select(shar => shar.StokId).Contains(s.Id)).Data;
-            var result = stokHareketler.Join(
-                stoklar,
-                shar => shar.StokId,
-                s => s.Id,
-                (hareket, stok) => new StokHareket
-                {
-                    Aciklama = hareket.Aciklama,
-                    FaturaId = hareket.FaturaId,
-                    StokId = hareket.StokId,
-                    Tarih = hareket.Tarih,
-                    NetTutar = hareket.NetTutar,
-                    Miktar = hareket.Miktar,
-                    Kdv = hareket.Kdv,
-                    Id = hareket.Id,
-                    BrutTutar = hareket.BrutTutar,
-                    Birim = hareket.Birim,
-                    Fiyat = hareket.Fiyat,
-                    Stok = stok
-                });
-            return new SuccessDataResult<List<StokHareket>>(result.ToList());
+            return new SuccessDataResult<List<StokHareket>>(GetList(s => s.FaturaId == faturaId));
         }
 
         public IDataResult<List<StokHareket>> GetListByStokId(int stokId)
         {
-            var stokHareketler = _stokHareketDal.GetList(s => s.StokId == stokId);
-            var stok = _stokService.GetById(stokId).Data;
-            foreach (var hareket in stokHareketler)
-            {
-                hareket.Stok = stok;
-            }
-            return new SuccessDataResult<List<StokHareket>>(stokHareketler);
-        }
-
-        public IDataResult<List<StokHareket>> GetList(Expression<Func<StokHareket, bool>>? filter = null)
-        {
-            var stokHareketler = _stokHareketDal.GetList(filter);
-            var stoklar = _stokService.GetList(s => stokHareketler.Select(shar => shar.StokId).Contains(s.Id)).Data;
-            var result = stokHareketler.Join(
-                stoklar,
-                shar => shar.StokId,
-                s => s.Id,
-                (hareket, stok) => new StokHareket
-                {
-                    Aciklama = hareket.Aciklama,
-                    FaturaId = hareket.FaturaId,
-                    StokId = hareket.StokId,
-                    Tarih = hareket.Tarih,
-                    NetTutar = hareket.NetTutar,
-                    Miktar = hareket.Miktar,
-                    Kdv = hareket.Kdv,
-                    Id = hareket.Id,
-                    BrutTutar = hareket.BrutTutar,
-                    Birim = hareket.Birim,
-                    Fiyat = hareket.Fiyat,
-                    Stok = stok
-                });
-            return new SuccessDataResult<List<StokHareket>>(result.ToList());
+            return new SuccessDataResult<List<StokHareket>>(GetList(s => s.StokId == stokId));
         }
 
         [ValidationAspect(typeof(StokHareketValidator), Priority = 1)]

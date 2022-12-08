@@ -45,35 +45,41 @@ namespace Business.Concrete
         }
         #endregion
 
+        private Stok Get(Expression<Func<Stok, bool>> filter)
+        {
+            var result = _stokDal.Get(filter);
+            if (result != null)
+                result.StokCategoryler = _stokDal.GetStokCategoryler(result.Id);
+            return result;
+        }
+
+        private List<Stok> GetAll(Expression<Func<Stok, bool>>? filter = null)
+        {
+            var result = _stokDal.GetList(filter);
+            result?.ForEach(s => s.StokCategoryler = _stokDal.GetStokCategoryler(s.Id));
+            return result;
+        }
+
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Stok> GetById(int stokId)
         {
-            var result = _stokDal.Get(s => s.Id == stokId);
-            if (result != null)
-                result.StokCategoryler = _stokDal.GetStokCategoryler(result.Id);
-            return new SuccessDataResult<Stok>(result);
+            return new SuccessDataResult<Stok>(Get(s => s.Id == stokId));
         }
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Stok> GetByKod(string stokKod)
         {
-            var result = _stokDal.Get(s => s.Kod == stokKod);
-            if (result != null)
-                result.StokCategoryler = _stokDal.GetStokCategoryler(result.Id);
-            return new SuccessDataResult<Stok>(result);
+            return new SuccessDataResult<Stok>(Get(s => s.Kod == stokKod));
         }
 
-        [SecuredOperation("List,Admin")]
-        [CacheAspect(duration: 1)]
-        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<Stok>> GetListByCategoryId(int categoryId)
         {
-            var result = _stokDal.GetListByCategoryId(categoryId);
-            if (result != null)
-                result.ForEach(s => s.StokCategoryler = _stokDal.GetStokCategoryler(s.Id));
-            return new SuccessDataResult<List<Stok>>(result);
+            //var result = _stokDal.GetListByCategoryId(categoryId);
+            //result?.ForEach(s => s.StokCategoryler = _stokDal.GetStokCategoryler(s.Id));
+            //return new SuccessDataResult<List<Stok>>(result);
+            throw new NotImplementedException();
         }
 
         [SecuredOperation("List,Admin")]
@@ -81,10 +87,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<Stok>> GetList(Expression<Func<Stok, bool>>? filter = null)
         {
-            var result = _stokDal.GetList(filter);
-            if (result != null)
-                result.ForEach(s => s.StokCategoryler = _stokDal.GetStokCategoryler(s.Id));
-            return new SuccessDataResult<List<Stok>>(result);
+            return new SuccessDataResult<List<Stok>>(GetAll(filter));
         }
 
         [SecuredOperation("List,Admin")]

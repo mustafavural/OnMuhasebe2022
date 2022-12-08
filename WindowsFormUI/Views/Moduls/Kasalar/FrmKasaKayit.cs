@@ -1,42 +1,31 @@
 ﻿using Autofac;
 using Business.Abstract;
+using Business.Constants;
 using Core.Extensions;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
 using WindowsFormUI.Helpers;
 using WindowsFormUI.Properties;
 using WindowsFormUI.Views.Moduls.Cariler;
+using WindowsFormUI.Views.UserExtensions;
 
 namespace WindowsFormUI.Views.Moduls.Kasalar
 {
     public partial class FrmKasaKayit : FrmBase
     {
-        private struct KasaView
-        {
-            public int Id { get; set; }
-            public int KasaId { get; set; }
-            public string KasaAd { get; set; }
-            public int CariId { get; set; }
-            public string CariAd { get; set; }
-            public string EvrakNo { get; set; }
-            public decimal GirenCikanMiktar { get; set; }
-            public DateTime Tarih { get; set; }
-            public string Aciklama { get; set; }
-        }
-
-        private IKasaService _kasaService;
-        private IKasaHareketService _kasaHareketService;
-        private ICariService _cariService;
+        private readonly IKasaService _kasaService;
+        private readonly IKasaHareketService _kasaHareketService;
+        private readonly ICariService _cariService;
         private Kasa _secilenKasa;
         private Cari _secilenCari;
-        private KasaHareket _secilenKasaHareket, _yeniKasaHareket;
-        private int _secilenKasaId = 0, _secilenCariId = 0, _secilenKasaHareketId = 0;
-        private List<KasaView> _kasaHareketler;
+        private KasaHareket _secilenKasaHareket;
+        private decimal _girenCikanMiktar = 0;
 
         public KasaIslemTuru KasaIslemTuru { get; set; }
 
@@ -44,9 +33,9 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
         {
             InitializeComponent();
             _kasaService = kasaService;
+            _kasaHareketService = kasaHareketService;
             _cariService = cariService;
             KasaIslemTuru = KasaIslemTuru.Hepsi;
-            _kasaHareketService = kasaHareketService;
         }
 
         private void FrmKasaKayit_Load(object sender, EventArgs e)
@@ -66,10 +55,8 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
 
         private void ClearScreen()
         {
-            btnKasaBul.TabStop = false;
-            btnEvrakBul.TabStop = false;
-            btnCariBul.TabStop = false;
             uscKasaButtons.TabStop = false;
+
             txtKasaAd.Enabled = true;
             btnKasaBul.Enabled = true;
             txtKasaAd.Text = "00-Merkez Kasa";
@@ -85,6 +72,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
 
             txtMiktar.Enabled = false;
             txtMiktar.Text = "";
+
             txtAciklama.Enabled = false;
             txtAciklama.Text = "";
 
@@ -94,37 +82,42 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             uscKasaButtons.BtnDelete_Enable = false;
             uscKasaButtons.BtnSave_Enable = false;
             uscKasaButtons.BtnSave_Text = "Kaydet";
+
             _secilenKasa = null;
             _secilenCari = null;
             _secilenKasaHareket = null;
-            _yeniKasaHareket = new KasaHareket();
-            _kasaHareketler = _kasaHareketService.GetList().Data.Select(s => new KasaView
+
+            dgvKasaHareketler.DataSource = ListeyeYaz(_kasaHareketService.GetList(s => s.EvrakNo.StartsWith(KasaIslemTuru.ToCharString())).Data);
+            txtKasaAd.Focus();
+        }
+
+        private object ListeyeYaz(List<KasaHareket> kasaHareketler)
+        {
+            return kasaHareketler.Select(s => new
             {
-                Id = s.Id,
-                KasaId = s.KasaId,
+                s.Id,
+                s.KasaId,
                 KasaAd = _kasaService.GetById(s.KasaId).Data.Ad,
-                CariId = s.CariId,
-                CariAd = _cariService.GetById(s.CariId).Data.Unvan,
-                EvrakNo = s.EvrakNo,
-                GirenCikanMiktar = s.GirenCikanMiktar,
-                Tarih = s.Tarih,
-                Aciklama = s.Aciklama
+                s.CariId,
+                _cariService.GetById(s.CariId).Data.Unvan,
+                s.EvrakNo,
+                s.GirenCikanMiktar,
+                s.Tarih,
+                s.Aciklama
             }).ToList();
-            dgvKasaHareketler.DataSource = _kasaHareketler;
         }
 
         private void BtnKasaBul_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FrmKasaKart>();
             form.SecimIcin = true;
-            form.Show();
+            form.ShowDialog();
             try
             {
                 if (StaticPrimitives.SecilenKasaId > 0)
                 {
-                    _secilenKasaId = StaticPrimitives.SecilenKasaId;
+                    _secilenKasa = _kasaService.GetById(StaticPrimitives.SecilenKasaId).Data;
                     StaticPrimitives.SecilenKasaId = 0;
-                    _secilenKasa = _kasaService.GetById(_secilenKasaId).Data;
                     txtKasaAd.Text = _secilenKasa.Ad;
                 }
                 else txtKasaAd.Text = "";
@@ -132,7 +125,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -140,90 +133,77 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
         {
             var form = Program.Container.Resolve<FrmCariListe>();
             form.SecimIcin = true;
-            form.Show();
+            form.ShowDialog();
             try
             {
                 if (StaticPrimitives.SecilenCariId > 0)
                 {
-                    _secilenCariId = StaticPrimitives.SecilenCariId;
+                    _secilenCari = _cariService.GetById(StaticPrimitives.SecilenCariId).Data;
                     StaticPrimitives.SecilenCariId = 0;
-                    txtCariKod.Text = _cariService.GetById(_secilenCariId).Data.Kod;
+                    txtCariKod.Text = _secilenCari.Kod;
                 }
                 else txtCariKod.Text = "";
                 txtCariKod.Focus();
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
 
         private void BtnEvrakBul_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FrmKasaListe>();
-            form.SecimIcin = true;
-            form.Show();
+            form.KasaIslemTuru = KasaIslemTuru;
+            form.ShowDialog();
             try
             {
                 if (StaticPrimitives.SecilenKasaHareketId > 0)
                 {
-                    _secilenKasaHareketId = StaticPrimitives.SecilenKasaHareketId;
+                    _secilenKasaHareket = _kasaHareketService.GetById(StaticPrimitives.SecilenKasaHareketId).Data;
                     StaticPrimitives.SecilenKasaHareketId = 0;
-                    txtEvrakNo.Text = _kasaHareketService.GetById(_secilenKasaHareketId).Data.EvrakNo;
+                    txtEvrakNo.Text = _secilenKasaHareket.EvrakNo;
                 }
                 else txtEvrakNo.Text = "";
                 txtEvrakNo.Focus();
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
 
         private void UscKasaButtons_ClickClear(object sender, EventArgs e)
         {
             ClearScreen();
-            txtKasaAd.Focus();
         }
 
         private void UscKasaButtons_ClickSave(object sender, EventArgs e)
         {
             try
             {
-                if (_secilenKasaHareket == null)
-                {
-                    IResult result;
-                    if (KasaIslemTuru == KasaIslemTuru.Tahsilat)
-                    {
-                        result = _kasaHareketService.Add(_yeniKasaHareket);
-                    }
-                    else
-                    {
-                        _yeniKasaHareket.GirenCikanMiktar *= -1;
-                        result = _kasaHareketService.Add(_yeniKasaHareket);
-                    }
-                    ClearScreen();
-                    uscKasaButtons.LblStatus_Text = result.Message;
-                }
-                else
-                {
-                    IResult result;
-                    if (KasaIslemTuru == KasaIslemTuru.Tahsilat)
-                    {
-                        result = _kasaHareketService.Update(_secilenKasaHareket);
-                    }
-                    else
-                    {
-                        _secilenKasaHareket.GirenCikanMiktar *= -1;
-                        result = _kasaHareketService.Update(_secilenKasaHareket);
-                    }
-                    uscKasaButtons.LblStatus_Text = result.Message;
-                }
+                IResult result = _secilenKasaHareket == null 
+                    ? _kasaHareketService.Add(ReadKasaHareketFromForm()) 
+                    : _kasaHareketService.Update(_secilenKasaHareket);
+                uscKasaButtons.LblStatus_Text = result.Message;
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
+        }
+
+        private KasaHareket ReadKasaHareketFromForm()
+        {
+            return new KasaHareket
+            {
+                KasaId = _secilenKasa.Id,
+                CariId = _secilenCari.Id,
+                EvrakNo = txtEvrakNo.Text,
+                Aciklama = txtAciklama.Text,
+                GirenCikanMiktar = _girenCikanMiktar,
+                Tarih = dtpKasaTarih.Value
+            };
         }
 
         private void UscKasaButtons_ClickCancel(object sender, EventArgs e)
@@ -239,136 +219,165 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                ErrorMessageHelper.ErrorMessageBuilder(err);
             }
         }
 
-        private void TxtKasaAd_Leaved(object sender, EventArgs e)
+        private void ThrowLeaveOnlyWithTabKey(object sender, PreviewKeyDownEventArgs e)
         {
-            if (_secilenKasa == null)
+            if (e.KeyData == Keys.Tab)
             {
-                var resultKasa = _kasaService.GetByAd(txtKasaAd.Text);
-                if (resultKasa.Data != null)
-                    _secilenKasa = resultKasa.Data;
-                else
-                    throw new Exception(resultKasa.Message);
+                string controlName = ((Control)sender).Name.ToFirstLetterUpperCase();
+                controlName += "_Leaved";
+
+                MethodInfo methodInfo = this.GetType().GetMethod(controlName, BindingFlags.NonPublic | BindingFlags.Instance);
+                methodInfo.Invoke(this, null);
             }
-            txtEvrakNo.Enabled = true;
-            btnEvrakBul.Enabled = true;
-            uscKasaButtons.BtnClear_Visible = true;
-            _yeniKasaHareket.KasaId = _secilenKasa.Id;
-            //
-            List<string> evrakNoList;
-            var resultHareket = _kasaHareketService.GetListByKasaId(_secilenKasa.Id);
-            if (resultHareket.Data != null)
+        }
+
+        private void TxtKasaAd_Leaved()
+        {
+            try
             {
-                if (KasaIslemTuru == KasaIslemTuru.Tahsilat)
+                _secilenKasa ??= _kasaService.GetByAd(txtKasaAd.Text).Data;
+                if (_secilenKasa == null)
                 {
-                    var evrak = resultHareket.Data.Where(a => a.EvrakNo.StartsWith("T")).ToList();
-                    evrakNoList = evrak.Capacity != 0 ? evrak.Select(s => s.EvrakNo[1..]).ToList() : null;
+                    ErrorMessageHelper.ErrorMessageBuilder(Messages.KasaMessages.KasaBulunamadi, this.Text);
+                    txtKasaAd.Focus();
+                    return;
                 }
-                else
-                {
-                    var evrak = resultHareket.Data.Where(a => a.EvrakNo.StartsWith("O")).ToList();
-                    evrakNoList = evrak.Capacity != 0 ? evrak.Select(s => s.EvrakNo[1..]).ToList() : null;
-                }
-                int yenifis = evrakNoList != null ? evrakNoList.Select(s => s.TrimStart('0').ToInt()).ToList().Max() + 1 : 1;
-                txtEvrakNo.Text = yenifis.ToString();
+
+                txtEvrakNo.Enabled = true;
+                btnEvrakBul.Enabled = true;
+                uscKasaButtons.BtnClear_Visible = true;
+                //
+                KasaHareket yenifis = _kasaHareketService.GetList((s => s.KasaId == _secilenKasa.Id && s.EvrakNo.StartsWith(KasaIslemTuru.ToCharString()))).Data?.MaxBy(s => s.Id);
+                int fisNo = yenifis == null ? 1 : yenifis.EvrakNo[1..].Trim('0').ToInt() + 1;
+                txtEvrakNo.Text = fisNo.ToString();
+                //
+                txtKasaAd.Enabled = false;
+                btnKasaBul.Enabled = false;
             }
-            else
-                txtEvrakNo.Text = "1";
-            //
+            catch (Exception err)
+            {
+                ErrorMessageHelper.ErrorMessageBuilder(err);
+            }
             txtEvrakNo.Focus();
         }
 
         public bool IsFormattedEvrakNo(string value)
         {
-            if (KasaIslemTuru == KasaIslemTuru.Tahsilat)
-                return value.Length == 14 && value.StartsWith("T");
-            if (KasaIslemTuru == KasaIslemTuru.Tediye)
-                return value.Length == 14 && value.StartsWith("O");
-            return false;
+            return value.Length == 14 && value.StartsWith(KasaIslemTuru.ToCharString());
         }
 
         public string FormatEvrakNo(string value)
         {
-            if (IsFormattedEvrakNo(value))
-                return value;
-            else
+            string txt = "";
+            if (!IsFormattedEvrakNo(value))
             {
-                string txt = value;
-                value = KasaIslemTuru == KasaIslemTuru.Tahsilat ? "T" : "O";
-                for (int i = 0; i < 13 - txt.Length; i++)
+                txt = value;
+                value = KasaIslemTuru.ToCharString();
+                do
                     value += "0";
-                value += txt;
-                return value;
+                while (!IsFormattedEvrakNo(value + txt));
             }
+            return value += txt;
         }
 
-        private void TxtEvrakNo_Leaved(object sender, EventArgs e)
+        private void TxtEvrakNo_Leaved()
         {
-            string evrakNo = FormatEvrakNo(txtEvrakNo.Text);
+            string evrakNo = "";
+            if (txtEvrakNo.Text.Length > 12)
+            {
+                ErrorMessageHelper.ErrorMessageBuilder(Messages.KasaMessages.EvrakNoHatali, this.Text);
+                txtEvrakNo.Text = "";
+            }
+            else
+                evrakNo = FormatEvrakNo(txtEvrakNo.Text);
             if (_secilenKasaHareket == null)
             {
                 var result = _kasaHareketService.GetByEvrakNo(evrakNo);
                 if (result.Data != null)
                 {
                     _secilenKasaHareket = result.Data;
-                    WriteToScreen(_secilenKasaHareket);
+                    BringExistingKasaHareket(_secilenKasaHareket);
                 }
             }
             txtCariKod.Enabled = true;
             btnCariBul.Enabled = true;
-            _yeniKasaHareket.EvrakNo = evrakNo;
             txtEvrakNo.Text = evrakNo;
+            txtEvrakNo.Enabled = false;
+            btnEvrakBul.Enabled = false;
             txtCariKod.Focus();
         }
 
-        private void TxtCariKod_Leaved(object sender, EventArgs e)
+        private void TxtCariKod_Leaved()
         {
-            if (_secilenCari == null)
-            {
-                var result = _cariService.GetByKod(txtCariKod.Text);
-                if (result.Data != null)
-                    _secilenCari = result.Data;
-                else
-                    return;
-            }
-            txtMiktar.Enabled = true;
-            _yeniKasaHareket.CariId = _secilenCari.Id;
-            lblCariAd.Text = _secilenCari.Unvan;
-            txtMiktar.Focus();
-        }
-
-        private void TxtMiktar_Leaved(object sender, EventArgs e)
-        {
-            txtMiktar.Leave -= TxtMiktar_Leaved;
             try
             {
-                txtAciklama.Enabled = true;
-                _yeniKasaHareket.GirenCikanMiktar = txtMiktar.Text.ToDecimal();
+                if (_secilenCari == null)
+                {
+                    var result = _cariService.GetByKod(txtCariKod.Text);
+                    if (result.Data != null)
+                        _secilenCari = result.Data;
+                    else
+                        throw new Exception(Messages.CariMessages.KodYok);
+                }
+                txtMiktar.Enabled = true;
+                lblCariAd.Text = _secilenCari.Unvan;
+                txtCariKod.Enabled = false;
+                btnCariBul.Enabled = false;
             }
-            catch (Exception err)
+            catch(Exception err)
             {
-                MessageBox.Show("Miktar alanı boş geçilemez \n " + err.Message, "Veri Hatası");
+                ErrorMessageHelper.ErrorMessageBuilder(err);
+                txtCariKod.Focus();
             }
-            txtMiktar.Text = _yeniKasaHareket.GirenCikanMiktar.ToString("#,###.## TL");
-            txtAciklama.Focus();
-            txtMiktar.Leave += TxtMiktar_Leaved;
         }
 
-        private void TxtAciklama_Leaved(object sender, EventArgs e)
+        private void TxtMiktar_Leaved()
         {
-            dtpKasaTarih.Enabled = true;
-            _yeniKasaHareket.Aciklama = txtAciklama.Text;
-            dtpKasaTarih.Focus();
+            if(txtMiktar.Text.Length> 0)
+            { 
+                txtAciklama.Enabled = true;
+                _girenCikanMiktar = txtMiktar.Text.ToDecimal();
+                txtMiktar.Text = _girenCikanMiktar.ToString("#,###.## TL");
+                txtMiktar.Enabled = false;
+            }
+            else
+            {
+                ErrorMessageHelper.ErrorMessageBuilder(Messages.KasaMessages.MiktarBosGecilemez, this.Text);
+                txtMiktar.Focus();
+            }
         }
 
-        private void DtpTarih_Leaved(object sender, EventArgs e)
+        private void TxtAciklama_Leaved()
         {
-            uscKasaButtons.BtnSave_Enable = true;
-            _yeniKasaHareket.Tarih = dtpKasaTarih.Value;
-            uscKasaButtons.Focus();
+            if (txtAciklama.Text != "")
+            {
+                dtpKasaTarih.Enabled = true;
+                txtAciklama.Enabled = false;
+            }
+            else
+            {
+                ErrorMessageHelper.ErrorMessageBuilder(Messages.KasaMessages.AciklamaBosGecilemez, this.Text);
+                txtAciklama.Focus();
+            }
+        }
+
+        private void DtpKasaTarih_Leaved()
+        {
+            if (dtpKasaTarih.Value.Date < DateTime.Today.Date)
+            {
+                uscKasaButtons.TabStop = true;
+                uscKasaButtons.BtnSave_Enable = true;
+                dtpKasaTarih.Enabled = false;
+            }
+            else
+            {
+                ErrorMessageHelper.ErrorMessageBuilder(Messages.KasaMessages.TarihHatali, this.Text);
+                dtpKasaTarih.Focus();
+            }
         }
 
         private void HarfEngelle(object sender, KeyPressEventArgs e)
@@ -381,16 +390,15 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
 
         private void DgvKasaHareketler_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int secilenSatir = e.RowIndex;
-            if (secilenSatir > -1)
+            if (e.RowIndex > -1)
             {
-                _secilenKasaHareketId = (int)dgvKasaHareketler.Rows[secilenSatir].Cells["colId"].Value;
-                _secilenKasaHareket = _kasaHareketService.GetById(_secilenKasaHareketId).Data;
-                WriteToScreen(_secilenKasaHareket);
+                var id = (int)dgvKasaHareketler.Rows[e.RowIndex].Cells["colId"].Value;
+                _secilenKasaHareket = _kasaHareketService.GetById(id).Data;
+                BringExistingKasaHareket(_secilenKasaHareket);
             }
         }
 
-        private void WriteToScreen(KasaHareket secilenKasaHareket)
+        private void BringExistingKasaHareket(KasaHareket secilenKasaHareket)
         {
             txtKasaAd.Enabled = true;
             btnKasaBul.Enabled = true;
@@ -405,17 +413,16 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             uscKasaButtons.BtnDelete_Enable = true;
             uscKasaButtons.BtnSave_Enable = true;
 
-            _secilenKasa = _kasaService.GetById(secilenKasaHareket.KasaId).Data;
+            _secilenKasa = secilenKasaHareket.Kasa;
             txtKasaAd.Text = _secilenKasa.Ad;
             txtEvrakNo.Text = secilenKasaHareket.EvrakNo;
-            _secilenCari = _cariService.GetById(secilenKasaHareket.CariId).Data;
+            _secilenCari = secilenKasaHareket.CariHareket.Cari;
             txtCariKod.Text = _secilenCari.Kod;
             lblCariAd.Text = _secilenCari.Unvan;
             txtMiktar.Text = secilenKasaHareket.GirenCikanMiktar.ToString("#,###.## TL");
             dtpKasaTarih.Value = secilenKasaHareket.Tarih;
             txtAciklama.Text = secilenKasaHareket.Aciklama;
             uscKasaButtons.BtnSave_Text = "Güncelle";
-            _yeniKasaHareket = new KasaHareket();
         }
     }
 }

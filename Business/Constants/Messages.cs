@@ -110,7 +110,10 @@
             public static string KasaAdZatenMevcut => "Bu kasa ismi daha önce kullanılmış.";
             public static string KasaZatenMevcut => "Zaten var olan kasayı bir daha ekleyemezsiniz.";
             public static string KasaBulunamadi => "Kasa bulunamadı.";
-
+            public static string EvrakNoHatali => "Girilen hane sayısı 12'yi geçmemelidir.";
+            public static string AciklamaBosGecilemez => "Bir açıklama girilmelidir.";
+            public static string TarihHatali => "İleri tarihli kasa fişi girilemez.";
+            public static string MiktarBosGecilemez => "Miktar alanı boş geçilemez.";
         }
 
         public static class DegerliEvrakMessages

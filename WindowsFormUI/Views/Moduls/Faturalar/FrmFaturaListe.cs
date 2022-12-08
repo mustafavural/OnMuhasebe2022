@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
 using WindowsFormUI.Helpers;
+using WindowsFormUI.Views.UserExtensions;
 
 namespace WindowsFormUI.Views.Moduls.Faturalar
 {
@@ -14,63 +15,60 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
     {
 
         private readonly IFaturaService _faturaService;
-        private readonly ICariService _cariService;
         private List<Fatura> _faturalar;
-
-        private bool _ciftTiklandiMi = false;
 
         public FaturaTurleri FaturaTur { get; set; }
 
         public bool SecimIcin => (int)FaturaTur > 0;
 
-        public FrmFaturaListe(IFaturaService faturaService, ICariService cariService)
+        public FrmFaturaListe(IFaturaService faturaService)
         {
             InitializeComponent();
             _faturaService = faturaService;
-            _cariService = cariService;
             FaturaTur = FaturaTurleri.Hepsi;
-            _faturalar = _faturaService.GetList().Data;
-        }
-
-        private void WriteToScreen(List<Fatura> faturalar)
-        {
-            dgvFaturaListe.DataSource = faturalar.Select(s => new
-            {
-                s.Id,
-                s.No,
-                s.Tur,
-                _cariService.GetById(s.CariId).Data.Unvan,
-                Tutar = s.StokHareketler.Sum(a => a.NetTutar),
-                s.Tarih,
-                s.Aciklama
-            }).ToList();
+            dtpTarihBaslangic.Value = DateTime.Today.AddDays(-10);
         }
 
         private void FrmFaturaListe_Load(object sender, EventArgs e)
         {
-            dtpTarihBaslangic.Value = DateTime.Today.Add(new TimeSpan(-10, 0, 0, 0));
-            if (SecimIcin)
-                lblFaturaTurler.Text = FaturaTur == FaturaTurleri.Satis ? "Satış Faturası" : "Alış Faturası";
-            else
-                lblFaturaTurler.Text = "Tümü";
+            lblFaturaTurler.Text = FaturaTur.ToText() ?? "Tümü";
 
-            WriteToScreen(_faturalar);
-
+            _faturalar = _faturaService.GetList(f => f.Tur == FaturaTur.ToText()).Data;
             FaturaListe_TextChanged(sender, e);
+        }
+
+        private void WriteToScreen(List<Fatura> faturalar)
+        {
+            try
+            {
+                dgvFaturaListe.DataSource = faturalar.Select(s => new
+                {
+                    s.Id,
+                    s.No,
+                    s.Tur,
+                    s.Cari.Unvan,
+                    Tutar = s.StokHareketler.Sum(a => a.NetTutar),
+                    s.Tarih,
+                    s.Aciklama
+                }).ToList();
+            }
+            catch (Exception err)
+            {
+                ErrorMessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void FaturaListe_TextChanged(object sender, EventArgs e)
         {
-            string tur = FaturaTur == FaturaTurleri.Satis ? "Satış Faturası" : "Alış Faturası";
             try
             {
-                var result = _faturalar.Where(s => 
-                                                   s.No.ToLower().Contains(txtFaturaNo.Text.ToLower()) &&
-                                                   _cariService.GetById(s.CariId).Data.Unvan.ToLower().Contains(txtCariUnvan.Text.ToLower()) &&
-                                                   s.Tarih >= dtpTarihBaslangic.Value &&
-                                                   s.Tarih <= dtpTarihBitis.Value).ToList();
+                //var result = _faturalar.Where(s => s.Tur == (FaturaTur.ToText()??"") &&
+                //                                   s.No.ToLower().Contains(txtFaturaNo.Text.ToLower()) &&
+                //                                   s.Cari.Unvan.ToLower().Contains(txtCariUnvan.Text.ToLower()) &&
+                //                                   s.Tarih >= dtpTarihBaslangic.Value &&
+                //                                   s.Tarih <= dtpTarihBitis.Value).ToList();
 
-                WriteToScreen(result);
+                //WriteToScreen(result);
             }
             catch (Exception err)
             {
@@ -80,18 +78,11 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
 
         private void DgvFaturaListe_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > -1)
+            if (e.RowIndex > -1 && SecimIcin)
             {
                 StaticPrimitives.SecilenFaturaId = (int)dgvFaturaListe.Rows[e.RowIndex].Cells["colFaturaId"].Value;
-                _ciftTiklandiMi = true;
+                this.Close();
             }
-            if (SecimIcin) this.Close();
-        }
-
-        private void FrmFaturaListe_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (!_ciftTiklandiMi)
-                StaticPrimitives.SecilenFaturaId = 0;
         }
     }
 }

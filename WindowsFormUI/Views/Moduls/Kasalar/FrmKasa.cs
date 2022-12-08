@@ -38,6 +38,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
         {
             var form = Program.Container.Resolve<FrmKasaListe>();
             form.MdiParent = this;
+            form.KasaIslemTuru = KasaIslemTuru.Hepsi;
             form.Show();
         }
     }

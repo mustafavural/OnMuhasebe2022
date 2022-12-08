@@ -154,6 +154,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmKasaKart";
             this.Text = "Kasa Kartı";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmKasaKart_FormClosing);
             this.Load += new System.EventHandler(this.FrmKasaKart_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvKasalar)).EndInit();
             this.grpEkleGuncelle.ResumeLayout(false);

@@ -20,12 +20,23 @@ namespace Business.Concrete
             _cariService = cariService;
         }
 
+        private CariHareket Get(Expression<Func<CariHareket, bool>> filter)
+        {
+            var cariHareket = _cariHareketDal.Get(filter);
+            cariHareket.Cari = _cariService.GetById(cariHareket.CariId).Data;
+            return cariHareket;
+        }
+
+        private List<CariHareket> GetAll(Expression<Func<CariHareket, bool>>? filter = null)
+        {
+            var cariHareketler = _cariHareketDal.GetList(filter);
+            cariHareketler.ForEach(c => c.Cari = _cariService.GetById(c.CariId).Data);
+            return cariHareketler;
+        }
+
         public IDataResult<CariHareket> GetById(int id)
         {
-            var cariHareket = _cariHareketDal.GetById(id);
-            var cari = _cariService.GetById(cariHareket.CariId).Data;
-            cariHareket.Cari = cari;
-            return new SuccessDataResult<CariHareket>(cariHareket);
+            return new SuccessDataResult<CariHareket>(Get(c => c.Id == id));
         }
 
         public IDataResult<decimal> GetCariBakiye(string cariKod)
@@ -36,22 +47,12 @@ namespace Business.Concrete
 
         public IDataResult<List<CariHareket>> GetListByCariId(int cariId)
         {
-            var cariHareketler = _cariHareketDal.GetList(s => s.CariId == cariId);
-            foreach (var hareket in cariHareketler)
-            {
-                hareket.Cari = _cariService.GetById(cariId).Data;
-            }
-            return new SuccessDataResult<List<CariHareket>>(cariHareketler);
+            return new SuccessDataResult<List<CariHareket>>(GetAll(s => s.CariId == cariId));
         }
 
         public IDataResult<List<CariHareket>> GetList(Expression<Func<CariHareket, bool>>? filter = null)
         {
-            var cariHareketler = _cariHareketDal.GetList(filter);
-            foreach (var hareket in cariHareketler)
-            {
-                hareket.Cari = _cariService.GetById(hareket.CariId).Data;
-            }
-            return new SuccessDataResult<List<CariHareket>>(cariHareketler);
+            return new SuccessDataResult<List<CariHareket>>(GetAll(filter));
         }
 
         [ValidationAspect(typeof(CariHareketValidator), Priority = 1)]
