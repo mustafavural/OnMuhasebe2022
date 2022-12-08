@@ -165,7 +165,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -185,7 +185,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -205,7 +205,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
         #endregion
@@ -320,6 +320,21 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             };
         }
 
+        private Fatura ReadFaturaFromForm()
+        {
+            return new Fatura
+            {
+                No = txtFaturaNo.Text,
+                CariId = _secilenCari.Id,
+                Cari = _secilenCari,
+                KayitTarihi = DateTime.Now.Date,
+                Tarih = dtpTarih.Value,
+                Tur = lblFaturaTurEkran.Text,
+                Aciklama = txtFaturaAciklama.Text,
+                StokHareketler = FaturaKalemEntities
+            };
+        }
+
         private object HareketleriListeyeYaz(List<StokHareket> stokHareketler)
         {
             object result = null;
@@ -340,7 +355,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             }
             catch(Exception err) 
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
             return result;
         }
@@ -402,7 +417,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -425,27 +440,16 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         {
             try
             {
-                var fatura = new Fatura
-                {
-                    No = txtFaturaNo.Text,
-                    CariId = _secilenCari.Id,
-                    Cari = _secilenCari,
-                    KayitTarihi = DateTime.Now.Date,
-                    Tarih = dtpTarih.Value,
-                    Tur = lblFaturaTurEkran.Text,
-                    Aciklama = txtFaturaAciklama.Text,
-                    StokHareketler = FaturaKalemEntities
-                };
+                Fatura fatura = ReadFaturaFromForm();
                 IResult result = _faturaService.GetByNo(fatura.No).Data == null ? _faturaService.Add(fatura) : _faturaService.Update(fatura);
                 ClearScreen();
                 uscFaturaEkleSilGuncelle.LblStatus_Text = result.Message;
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
-
 
         private void UscFaturaEkleSilGuncelle_ClickCancel(object sender, EventArgs e)
         {
@@ -460,7 +464,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
     }

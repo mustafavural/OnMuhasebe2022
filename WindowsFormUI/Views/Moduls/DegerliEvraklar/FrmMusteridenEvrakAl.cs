@@ -17,14 +17,13 @@ namespace WindowsFormUI.Views.Moduls.DegerliEvraklar
 {
     public partial class FrmMusteridenEvrakAl : FrmBase
     {
-        IMusteriEvrakService _musteriEvrakService;
-        ICariService _cariService;
-        Cari _secilenCari;
-        List<MusteriEvrak> _musteriEvraklar;
+        private readonly IMusteriEvrakService _musteriEvrakService;
+        private readonly ICariService _cariService;
+        private Cari _secilenCari;
+        private List<MusteriEvrak> _musteriEvraklar;
         public FrmMusteridenEvrakAl(IMusteriEvrakService musteriEvrakService, ICariService cariService)
         {
             InitializeComponent();
-            this.Text = "Müşteriden Evrak Al";
             _musteriEvrakService = musteriEvrakService;
             _cariService = cariService;
         }
@@ -38,7 +37,7 @@ namespace WindowsFormUI.Views.Moduls.DegerliEvraklar
         {
             var form = Program.Container.Resolve<FrmCariListe>();
             form.SecimIcin = true;
-            form.Show();
+            form.ShowDialog();
             try
             {
                 if (StaticPrimitives.SecilenCariId > 0)
@@ -50,7 +49,7 @@ namespace WindowsFormUI.Views.Moduls.DegerliEvraklar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message, "Veri Hatası", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -165,13 +164,12 @@ namespace WindowsFormUI.Views.Moduls.DegerliEvraklar
         {
             try
             {
-                var result = _musteriEvrakService.MusteridenEvrakAl(_musteriEvraklar);
-
-                MessageBox.Show(result.Message, "Evrak Başarılı!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var result = _musteriEvrakService.MusteridenEvraklarAl(_musteriEvraklar);
+                MessageHelper.SuccessMessageBuilder(result.Message, "Evrak Başarılı!");
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message, "Validasyon Hatası!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageHelper.ErrorMessageBuilder(err);
             }
             ClearScreen();
         }

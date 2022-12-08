@@ -42,11 +42,31 @@ namespace Business.Concrete
         }
         #endregion
 
+        private DegerliEvrak Get(Expression<Func<DegerliEvrak, bool>> filter)
+        {
+            var degerliEvrak = _degerliEvrakDal.Get(filter);
+            if (degerliEvrak != null)
+            {
+                degerliEvrak.VerilenCariHareket = _cariHareketService.GetById(degerliEvrak.VerilenCariHareketId).Data;
+            }
+            return degerliEvrak;
+        }
+
+        private List<DegerliEvrak> GetAll(Expression<Func<DegerliEvrak, bool>>? filter = null)
+        {
+            var degerliEvraklar = _degerliEvrakDal.GetList(filter);
+            if (degerliEvraklar.Count > 0)
+            {
+                degerliEvraklar.ForEach(d => d.VerilenCariHareket = _cariHareketService.GetById(d.VerilenCariHareketId).Data);
+            }
+            return degerliEvraklar;
+        }
+
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<DegerliEvrak> GetById(int id)
         {
-            return new SuccessDataResult<DegerliEvrak>(_degerliEvrakDal.Get(s => s.Id == id));
+            return new SuccessDataResult<DegerliEvrak>(Get(s => s.Id == id));
         }
 
         [SecuredOperation("List,Admin")]
@@ -54,22 +74,22 @@ namespace Business.Concrete
         [CacheAspect(1)]
         public IDataResult<List<DegerliEvrak>> GetList(Expression<Func<DegerliEvrak, bool>>? filter = null)
         {
-            return new SuccessDataResult<List<DegerliEvrak>>(_degerliEvrakDal.GetList(filter));
+            return new SuccessDataResult<List<DegerliEvrak>>(GetAll(filter));
         }
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<DegerliEvrak> GetByKod(string kod)
         {
-            return new SuccessDataResult<DegerliEvrak>(_degerliEvrakDal.Get(s => s.Kod == kod));
+            return new SuccessDataResult<DegerliEvrak>(Get(s => s.Kod == kod));
         }
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         [CacheAspect(duration: 1)]
-        public IDataResult<List<DegerliEvrak>> GetListByVerilenCariId(int verilenCariId)
+        public IDataResult<List<DegerliEvrak>> GetListByVerilenCariHareketId(int verilenCariHareketId)
         {
-            return new SuccessDataResult<List<DegerliEvrak>>(_degerliEvrakDal.GetList(s => s.VerilenCariId == verilenCariId));
+            return new SuccessDataResult<List<DegerliEvrak>>(GetAll(s => s.VerilenCariHareketId == verilenCariHareketId));
         }
 
         [SecuredOperation("List,Admin")]
@@ -77,7 +97,7 @@ namespace Business.Concrete
         [CacheAspect(duration: 1)]
         public IDataResult<List<DegerliEvrak>> GetListByVade(DateTime vade)
         {
-            return new SuccessDataResult<List<DegerliEvrak>>(_degerliEvrakDal.GetList(s => s.Vade == vade));
+            return new SuccessDataResult<List<DegerliEvrak>>(GetAll(s => s.Vade == vade));
         }
 
         [SecuredOperation("List,Admin")]
@@ -85,7 +105,7 @@ namespace Business.Concrete
         [CacheAspect(duration: 1)]
         public IDataResult<List<DegerliEvrak>> GetListByCikisTarihi(DateTime cikisTarihi)
         {
-            return new SuccessDataResult<List<DegerliEvrak>>(_degerliEvrakDal.GetList(s => s.CikisTarihi == cikisTarihi));
+            return new SuccessDataResult<List<DegerliEvrak>>(GetAll(s => s.CikisTarihi == cikisTarihi));
         }
 
         [SecuredOperation("Add,Admin")]
@@ -94,21 +114,14 @@ namespace Business.Concrete
         [CacheRemoveAspect("IDegerliEvrakService.Get")]
         public IResult Add(DegerliEvrak entity)
         {
-            var result = BusinessRules.Run(KontrolCariIdMevcutMu(entity.VerilenCariId ?? 0),
+            var result = BusinessRules.Run(KontrolCariIdMevcutMu(entity.VerilenCariHareket.CariId),
                                            KontrolKodZatenVarMi(entity.Kod));
 
             if (!result.IsSuccess)
                 return result;
 
-            entity.VerilenCariHareket = new CariHareket
-            {
-                Aciklama = entity.Aciklama,
-                CariId = entity.VerilenCariId ?? 0,
-                Tarih = entity.CikisTarihi,
-                Tutar = entity.Tutar
-            };
             _cariHareketService.Add(entity.VerilenCariHareket);
-            entity.Id = entity.VerilenCariHareket.Id;
+            entity.VerilenCariHareketId = entity.VerilenCariHareket.Id;
             _degerliEvrakDal.Add(entity);
             return new SuccessResult(Messages.DegerliEvrakMessages.EvrakEklendi);
         }
@@ -124,7 +137,7 @@ namespace Business.Concrete
                 return result;
 
             _degerliEvrakDal.Delete(new DegerliEvrak { Id = entity.Id });
-            _cariHareketService.Delete(new CariHareket { Id = entity.Id });
+            _cariHareketService.Delete(new CariHareket { Id = entity.VerilenCariHareketId });
             return new SuccessResult(Messages.DegerliEvrakMessages.EvrakSilindi);
         }
 
@@ -133,20 +146,12 @@ namespace Business.Concrete
         [CacheRemoveAspect("IDegerliEvrakService.Get")]
         public IResult Update(DegerliEvrak entity)
         {
-            var result = BusinessRules.Run(KontrolCariIdMevcutMu(entity.VerilenCariId ?? 0),
+            var result = BusinessRules.Run(KontrolCariIdMevcutMu(entity.VerilenCariHareket.CariId),
                                            KontrolEvrakIdMevcutMu(entity.Id));
 
             if (!result.IsSuccess)
                 return result;
 
-            entity.VerilenCariHareket = new CariHareket
-            {
-                Aciklama = entity.Aciklama,
-                CariId = entity.VerilenCariId ?? 0,
-                Tarih = entity.CikisTarihi,
-                Tutar = entity.Tutar,
-                Id = entity.Id
-            };
             _degerliEvrakDal.Update(entity);
             _cariHareketService.Update(entity.VerilenCariHareket);
             return new SuccessResult(Messages.DegerliEvrakMessages.EvrakGuncellendi);

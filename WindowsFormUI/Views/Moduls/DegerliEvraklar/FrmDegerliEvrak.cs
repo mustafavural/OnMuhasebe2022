@@ -1,20 +1,13 @@
 ﻿using Autofac;
-using Business.Abstract;
 using System;
-using WindowsFormUI.Helpers;
-using WindowsFormUI.Views.Moduls.Kasalar;
 
 namespace WindowsFormUI.Views.Moduls.DegerliEvraklar
 {
     public partial class FrmDegerliEvrak : FrmMdiBase
     {
-        IMusteriEvrakService _musteriEvrakService;
-        ICariService _cariService;
-        public FrmDegerliEvrak(IMusteriEvrakService musteriEvrakService, ICariService cariService)
+        public FrmDegerliEvrak()
         {
             InitializeComponent();
-            _musteriEvrakService = musteriEvrakService;
-            _cariService = cariService;
         }
 
         private void TsmiKayitMusteridenEvrakAl_Click(object sender, EventArgs e)

@@ -4,6 +4,7 @@ using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Security;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.Utilities.Business;
@@ -169,7 +170,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IFaturaService.Get")]
         [ValidationAspect(typeof(FaturaValidator), Priority = 1)]
         [LogAspect(typeof(DatabaseLogger))]
-        //[TransactionScopeAspect()]
+        [TransactionScopeAspect()]
         public IResult Add(Fatura fatura)
         {
             var result = BusinessRules.Run(KontrolFaturaNoZatenVarMi(fatura.No),
@@ -191,7 +192,7 @@ namespace Business.Concrete
             fatura.CariHareket = new CariHareket
             {
                 CariId = fatura.CariId,
-                Tutar = (fatura.StokHareketler.Sum(s => s.NetTutar) ?? 0) * -1,
+                Tutar = (fatura.StokHareketler.Sum(s => s.NetTutar) ?? 0) * (fatura.Tur == "Satış Faturası" ? 1 : -1),
                 Tarih = fatura.Tarih,
                 Aciklama = $"{fatura.No} nolu {fatura.Tur}."
             };
@@ -214,7 +215,7 @@ namespace Business.Concrete
         [SecuredOperation("Delete,Admin")]
         [CacheRemoveAspect("IFaturaService.Get")]
         [LogAspect(typeof(DatabaseLogger))]
-        //[TransactionScopeAspect()]
+        [TransactionScopeAspect()]
         public IResult Delete(Fatura fatura)
         {
             var result = BusinessRules.Run(KontrolFaturaIdMevcutMu(fatura.Id),
@@ -235,7 +236,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IFaturaService.Get")]
         [ValidationAspect(typeof(FaturaValidator), Priority = 1)]
         [LogAspect(typeof(DatabaseLogger))]
-        //[TransactionScopeAspect()]
+        [TransactionScopeAspect()]
         public IResult Update(Fatura fatura)
         {
             var result = BusinessRules.Run(KontrolFaturaIdMevcutMu(fatura.Id),

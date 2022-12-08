@@ -54,7 +54,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -69,7 +69,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -91,7 +91,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -144,7 +144,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -168,7 +168,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 

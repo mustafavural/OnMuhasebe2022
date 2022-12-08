@@ -13,7 +13,7 @@ namespace WindowsFormUI.Views.UserExtensions
         public static string ToText(this FaturaTurleri faturaTurleri)
         {
             if (faturaTurleri == FaturaTurleri.Hepsi)
-                return null;
+                return string.Empty;
             else
                 return faturaTurleri == FaturaTurleri.Alis ? "Alış Faturası" : "Satış Faturası";
         }

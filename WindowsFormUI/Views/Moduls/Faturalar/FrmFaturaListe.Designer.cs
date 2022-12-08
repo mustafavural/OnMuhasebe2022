@@ -42,11 +42,16 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmFaturaListe));
             this.grpFaturaListe = new System.Windows.Forms.GroupBox();
             this.lblFaturaTurler = new System.Windows.Forms.Label();
+            this.grpTutar = new System.Windows.Forms.GroupBox();
+            this.lblTutarEnAz = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtTutarEnCok = new System.Windows.Forms.TextBox();
+            this.txtTutarEnAz = new System.Windows.Forms.TextBox();
             this.grpFaturaTarih = new System.Windows.Forms.GroupBox();
             this.lblTarihBaslangic = new System.Windows.Forms.Label();
-            this.dtpTarihBitis = new System.Windows.Forms.DateTimePicker();
+            this.dtpTarihSon = new System.Windows.Forms.DateTimePicker();
             this.lblTarihBitis = new System.Windows.Forms.Label();
-            this.dtpTarihBaslangic = new System.Windows.Forms.DateTimePicker();
+            this.dtpTarihIlk = new System.Windows.Forms.DateTimePicker();
             this.lblFaturaTur = new System.Windows.Forms.Label();
             this.txtCariUnvan = new System.Windows.Forms.TextBox();
             this.lblCariUnvan = new System.Windows.Forms.Label();
@@ -61,6 +66,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             this.colFaturaTarih = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpFaturaListe.SuspendLayout();
+            this.grpTutar.SuspendLayout();
             this.grpFaturaTarih.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFaturaListe)).BeginInit();
             this.SuspendLayout();
@@ -68,6 +74,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             // grpFaturaListe
             // 
             this.grpFaturaListe.Controls.Add(this.lblFaturaTurler);
+            this.grpFaturaListe.Controls.Add(this.grpTutar);
             this.grpFaturaListe.Controls.Add(this.grpFaturaTarih);
             this.grpFaturaListe.Controls.Add(this.lblFaturaTur);
             this.grpFaturaListe.Controls.Add(this.txtCariUnvan);
@@ -87,19 +94,66 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             this.lblFaturaTurler.Location = new System.Drawing.Point(6, 88);
             this.lblFaturaTurler.Name = "lblFaturaTurler";
             this.lblFaturaTurler.Size = new System.Drawing.Size(119, 33);
-            this.lblFaturaTurler.TabIndex = 11;
+            this.lblFaturaTurler.TabIndex = 3;
             this.lblFaturaTurler.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // grpTutar
+            // 
+            this.grpTutar.Controls.Add(this.lblTutarEnAz);
+            this.grpTutar.Controls.Add(this.label2);
+            this.grpTutar.Controls.Add(this.txtTutarEnCok);
+            this.grpTutar.Controls.Add(this.txtTutarEnAz);
+            this.grpTutar.Location = new System.Drawing.Point(6, 170);
+            this.grpTutar.Name = "grpTutar";
+            this.grpTutar.Size = new System.Drawing.Size(119, 133);
+            this.grpTutar.TabIndex = 6;
+            this.grpTutar.TabStop = false;
+            this.grpTutar.Text = "Fatura Tutarı";
+            // 
+            // lblTutarEnAz
+            // 
+            this.lblTutarEnAz.AutoSize = true;
+            this.lblTutarEnAz.Location = new System.Drawing.Point(20, 22);
+            this.lblTutarEnAz.Name = "lblTutarEnAz";
+            this.lblTutarEnAz.Size = new System.Drawing.Size(76, 17);
+            this.lblTutarEnAz.TabIndex = 0;
+            this.lblTutarEnAz.Text = "En Az Tutar";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 71);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(81, 17);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "En Çok Tutar";
+            // 
+            // txtTutarEnCok
+            // 
+            this.txtTutarEnCok.Location = new System.Drawing.Point(6, 91);
+            this.txtTutarEnCok.Name = "txtTutarEnCok";
+            this.txtTutarEnCok.Size = new System.Drawing.Size(107, 24);
+            this.txtTutarEnCok.TabIndex = 3;
+            this.txtTutarEnCok.TextChanged += new System.EventHandler(this.FaturaListe_TextChanged);
+            // 
+            // txtTutarEnAz
+            // 
+            this.txtTutarEnAz.Location = new System.Drawing.Point(6, 42);
+            this.txtTutarEnAz.Name = "txtTutarEnAz";
+            this.txtTutarEnAz.Size = new System.Drawing.Size(107, 24);
+            this.txtTutarEnAz.TabIndex = 1;
+            this.txtTutarEnAz.TextChanged += new System.EventHandler(this.FaturaListe_TextChanged);
             // 
             // grpFaturaTarih
             // 
             this.grpFaturaTarih.Controls.Add(this.lblTarihBaslangic);
-            this.grpFaturaTarih.Controls.Add(this.dtpTarihBitis);
+            this.grpFaturaTarih.Controls.Add(this.dtpTarihSon);
             this.grpFaturaTarih.Controls.Add(this.lblTarihBitis);
-            this.grpFaturaTarih.Controls.Add(this.dtpTarihBaslangic);
-            this.grpFaturaTarih.Location = new System.Drawing.Point(6, 172);
+            this.grpFaturaTarih.Controls.Add(this.dtpTarihIlk);
+            this.grpFaturaTarih.Location = new System.Drawing.Point(6, 309);
             this.grpFaturaTarih.Name = "grpFaturaTarih";
             this.grpFaturaTarih.Size = new System.Drawing.Size(119, 133);
-            this.grpFaturaTarih.TabIndex = 10;
+            this.grpFaturaTarih.TabIndex = 7;
             this.grpFaturaTarih.TabStop = false;
             this.grpFaturaTarih.Text = "Fatura Tarihi";
             // 
@@ -109,17 +163,17 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             this.lblTarihBaslangic.Location = new System.Drawing.Point(25, 22);
             this.lblTarihBaslangic.Name = "lblTarihBaslangic";
             this.lblTarihBaslangic.Size = new System.Drawing.Size(69, 17);
-            this.lblTarihBaslangic.TabIndex = 6;
+            this.lblTarihBaslangic.TabIndex = 0;
             this.lblTarihBaslangic.Text = "Başlangıç...";
             // 
-            // dtpTarihBitis
+            // dtpTarihSon
             // 
-            this.dtpTarihBitis.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpTarihBitis.Location = new System.Drawing.Point(18, 91);
-            this.dtpTarihBitis.Name = "dtpTarihBitis";
-            this.dtpTarihBitis.Size = new System.Drawing.Size(83, 24);
-            this.dtpTarihBitis.TabIndex = 9;
-            this.dtpTarihBitis.ValueChanged += new System.EventHandler(this.FaturaListe_TextChanged);
+            this.dtpTarihSon.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpTarihSon.Location = new System.Drawing.Point(18, 91);
+            this.dtpTarihSon.Name = "dtpTarihSon";
+            this.dtpTarihSon.Size = new System.Drawing.Size(83, 24);
+            this.dtpTarihSon.TabIndex = 3;
+            this.dtpTarihSon.ValueChanged += new System.EventHandler(this.FaturaListe_TextChanged);
             // 
             // lblTarihBitis
             // 
@@ -127,17 +181,17 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             this.lblTarihBitis.Location = new System.Drawing.Point(37, 71);
             this.lblTarihBitis.Name = "lblTarihBitis";
             this.lblTarihBitis.Size = new System.Drawing.Size(45, 17);
-            this.lblTarihBitis.TabIndex = 8;
+            this.lblTarihBitis.TabIndex = 2;
             this.lblTarihBitis.Text = "Bitiş...";
             // 
-            // dtpTarihBaslangic
+            // dtpTarihIlk
             // 
-            this.dtpTarihBaslangic.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpTarihBaslangic.Location = new System.Drawing.Point(18, 42);
-            this.dtpTarihBaslangic.Name = "dtpTarihBaslangic";
-            this.dtpTarihBaslangic.Size = new System.Drawing.Size(83, 24);
-            this.dtpTarihBaslangic.TabIndex = 7;
-            this.dtpTarihBaslangic.ValueChanged += new System.EventHandler(this.FaturaListe_TextChanged);
+            this.dtpTarihIlk.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpTarihIlk.Location = new System.Drawing.Point(18, 42);
+            this.dtpTarihIlk.Name = "dtpTarihIlk";
+            this.dtpTarihIlk.Size = new System.Drawing.Size(83, 24);
+            this.dtpTarihIlk.TabIndex = 1;
+            this.dtpTarihIlk.ValueChanged += new System.EventHandler(this.FaturaListe_TextChanged);
             // 
             // lblFaturaTur
             // 
@@ -215,6 +269,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             this.dgvFaturaListe.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvFaturaListe.Size = new System.Drawing.Size(716, 448);
             this.dgvFaturaListe.TabIndex = 1;
+            this.dgvFaturaListe.TabStop = false;
             this.dgvFaturaListe.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvFaturaListe_CellDoubleClick);
             // 
             // colFaturaId
@@ -227,7 +282,6 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             this.colFaturaId.Name = "colFaturaId";
             this.colFaturaId.ReadOnly = true;
             this.colFaturaId.Visible = false;
-            this.colFaturaId.Width = 27;
             // 
             // colFaturaNo
             // 
@@ -311,6 +365,8 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             this.Load += new System.EventHandler(this.FrmFaturaListe_Load);
             this.grpFaturaListe.ResumeLayout(false);
             this.grpFaturaListe.PerformLayout();
+            this.grpTutar.ResumeLayout(false);
+            this.grpTutar.PerformLayout();
             this.grpFaturaTarih.ResumeLayout(false);
             this.grpFaturaTarih.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFaturaListe)).EndInit();
@@ -329,8 +385,8 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         private System.Windows.Forms.TextBox txtFaturaNo;
         private System.Windows.Forms.Label lblFaturaNo;
         private System.Windows.Forms.Label lblTarihBitis;
-        private DateTimePicker dtpTarihBitis;
-        private DateTimePicker dtpTarihBaslangic;
+        private DateTimePicker dtpTarihSon;
+        private DateTimePicker dtpTarihIlk;
         private GroupBox grpFaturaTarih;
         private Label lblFaturaTurler;
         private DataGridViewTextBoxColumn colFaturaId;
@@ -340,5 +396,10 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         private DataGridViewTextBoxColumn colFaturaTutar;
         private DataGridViewTextBoxColumn colFaturaTarih;
         private DataGridViewTextBoxColumn colAciklama;
+        private GroupBox grpTutar;
+        private Label lblTutarEnAz;
+        private Label label2;
+        private TextBox txtTutarEnCok;
+        private TextBox txtTutarEnAz;
     }
 }

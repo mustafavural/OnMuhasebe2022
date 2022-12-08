@@ -263,9 +263,16 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             {
                 tabCariControl.TabPages.Insert(tabCariControl.TabPages.Count, tabCariHareket);
             }
-            var result = _cariHareketService.GetListByCariId(secilenCari.Id).Data;
-            dgvCariHareketler.DataSource = result.ToList();
-            grpCariHareketler.Text = $"{secilenCari.Unvan} ------------------ Mevcut Bakiye : {result.Sum(s => s.Tutar)}";
+            var result = _cariHareketService.GetListByCariId(secilenCari.Id).Data.Select(s => new
+            {
+                s.Id,
+                s.CariId,
+                s.Tarih,
+                s.Aciklama,
+                s.Tutar
+            }).ToList();
+            dgvCariHareketler.DataSource = result;
+            grpCariHareketler.Text = $"{secilenCari.Unvan} ------------------ Mevcut Bakiye : {result.Sum(s => s.Tutar):#,###.## TL}";
         }
 
         private void ClearScreen()

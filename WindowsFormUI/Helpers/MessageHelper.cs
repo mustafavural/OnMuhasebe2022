@@ -3,9 +3,10 @@ using System.Windows.Forms;
 
 namespace WindowsFormUI.Helpers
 {
-    public static class ErrorMessageHelper
+    public static class MessageHelper
     {
         private static string ErrorStringResult { get; set; }
+        private static string SuccessStringResult { get; set; }
 
         private static void Builder(Exception err)
         {
@@ -23,9 +24,9 @@ namespace WindowsFormUI.Helpers
             MessageBox.Show(ErrorStringResult, err.Source, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
         }
 
-        public static void ErrorMessageBuilder(string errorMessage, string caption)
+        public static void SuccessMessageBuilder(string successMessage, string caption)
         {
-            MessageBox.Show(errorMessage, caption, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+            MessageBox.Show(successMessage, caption, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
         }
     }
 }

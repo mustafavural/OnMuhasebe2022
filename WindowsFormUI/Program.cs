@@ -26,7 +26,7 @@ namespace WindowsFormUI
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //System.Transactions.TransactionManager.ImplicitDistributedTransactions = true;
+            System.Transactions.TransactionManager.ImplicitDistributedTransactions = true;
             Container = ConfigureContainer();
             ConfigureServices(new ServiceCollection());
             Application.Run(Container.Resolve<FrmWelcome>());
@@ -52,6 +52,9 @@ namespace WindowsFormUI
             builder.RegisterType<FrmKasaKayit>().AsSelf();
             builder.RegisterType<FrmKasaListe>().AsSelf();
             builder.RegisterType<FrmDegerliEvrak>().AsSelf();
+            builder.RegisterType<FrmMusteridenEvrakAl>().AsSelf();
+            builder.RegisterType<FrmMusteriyeEvrakCik>().AsSelf();
+            builder.RegisterType<FrmPortfoydekiEvraklar>().AsSelf();
             builder.RegisterType<FrmWelcome>().AsSelf();
             builder.RegisterType<FrmMdiBase>().AsSelf();
             builder.RegisterType<FrmBase>().AsSelf();

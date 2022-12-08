@@ -90,12 +90,12 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.tabCariHareket = new System.Windows.Forms.TabPage();
             this.grpCariHareketler = new System.Windows.Forms.GroupBox();
             this.dgvCariHareketler = new System.Windows.Forms.DataGridView();
+            this.imlCariKart = new System.Windows.Forms.ImageList(this.components);
             this.colHareketId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHareketCariId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHareketTarih = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHareketAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHareketTutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.imlCariKart = new System.Windows.Forms.ImageList(this.components);
             this.grpCari.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picCariLogo)).BeginInit();
             this.grpIletisim.SuspendLayout();
@@ -683,6 +683,14 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.dgvCariHareketler.Size = new System.Drawing.Size(796, 487);
             this.dgvCariHareketler.TabIndex = 1;
             // 
+            // imlCariKart
+            // 
+            this.imlCariKart.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imlCariKart.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imlCariKart.ImageStream")));
+            this.imlCariKart.TransparentColor = System.Drawing.Color.Transparent;
+            this.imlCariKart.Images.SetKeyName(0, "Cari_Kart32x32.ico");
+            this.imlCariKart.Images.SetKeyName(1, "Cari_Hareket32x32.ico");
+            // 
             // colHareketId
             // 
             this.colHareketId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -693,6 +701,7 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.colHareketId.ReadOnly = true;
             this.colHareketId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.colHareketId.Visible = false;
+            this.colHareketId.Width = 27;
             // 
             // colHareketCariId
             // 
@@ -704,6 +713,7 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.colHareketCariId.ReadOnly = true;
             this.colHareketCariId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.colHareketCariId.Visible = false;
+            this.colHareketCariId.Width = 54;
             // 
             // colHareketTarih
             // 
@@ -741,14 +751,6 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.colHareketTutar.ReadOnly = true;
             this.colHareketTutar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.colHareketTutar.Width = 200;
-            // 
-            // imlCariKart
-            // 
-            this.imlCariKart.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imlCariKart.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imlCariKart.ImageStream")));
-            this.imlCariKart.TransparentColor = System.Drawing.Color.Transparent;
-            this.imlCariKart.Images.SetKeyName(0, "Cari_Kart32x32.ico");
-            this.imlCariKart.Images.SetKeyName(1, "Cari_Hareket32x32.ico");
             // 
             // FrmCariKart
             // 
@@ -817,11 +819,6 @@ namespace WindowsFormUI.Views.Moduls.Cariler
         private System.Windows.Forms.Label lblAdres;
         private System.Windows.Forms.Label lblIlce;
         private System.Windows.Forms.Label lblIl;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colHareketId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colHareketCariId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colHareketTutar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colHareketTarih;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colHareketAciklama;
         private System.Windows.Forms.ImageList imlCariKart;
         private System.Windows.Forms.ComboBox cmbIlce;
         private System.Windows.Forms.ComboBox cmbSehir;
@@ -842,5 +839,10 @@ namespace WindowsFormUI.Views.Moduls.Cariler
         private System.Windows.Forms.TextBox txtTelefon2;
         private System.Windows.Forms.Label lblFax;
         private System.Windows.Forms.Label lblTelefon2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHareketId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHareketCariId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHareketTarih;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHareketAciklama;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colHareketTutar;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Extensions;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -26,15 +27,14 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             InitializeComponent();
             _faturaService = faturaService;
             FaturaTur = FaturaTurleri.Hepsi;
-            dtpTarihBaslangic.Value = DateTime.Today.AddDays(-10);
         }
 
         private void FrmFaturaListe_Load(object sender, EventArgs e)
         {
-            lblFaturaTurler.Text = FaturaTur.ToText() ?? "Tümü";
-
-            _faturalar = _faturaService.GetList(f => f.Tur == FaturaTur.ToText()).Data;
-            FaturaListe_TextChanged(sender, e);
+            var tur = FaturaTur.ToText();
+            lblFaturaTurler.Text = tur != "" ? tur : "Tümü";
+            _faturalar = _faturaService.GetList(f => f.Tur == tur || tur == "").Data;
+            dtpTarihIlk.Value = DateTime.Today.AddDays(-10);
         }
 
         private void WriteToScreen(List<Fatura> faturalar)
@@ -54,7 +54,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -62,17 +62,19 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         {
             try
             {
-                //var result = _faturalar.Where(s => s.Tur == (FaturaTur.ToText()??"") &&
-                //                                   s.No.ToLower().Contains(txtFaturaNo.Text.ToLower()) &&
-                //                                   s.Cari.Unvan.ToLower().Contains(txtCariUnvan.Text.ToLower()) &&
-                //                                   s.Tarih >= dtpTarihBaslangic.Value &&
-                //                                   s.Tarih <= dtpTarihBitis.Value).ToList();
-
-                //WriteToScreen(result);
+                var result = _faturalar.Where(s =>
+                                                   s.No.ToLower().Contains(txtFaturaNo.Text.ToLower()) &&
+                                                   (s.Tur == FaturaTur.ToText() || FaturaTur.ToText() == "") &&
+                                                   s.Cari.Unvan.ToLower().Contains(txtCariUnvan.Text.ToLower()) &&
+                                                   txtTutarEnAz.Text.ToDecimal() <= s.StokHareketler.Sum(a => a.NetTutar) &&
+                                                   txtTutarEnCok.Text.ToDecimal(1) >= s.StokHareketler.Sum(a => a.NetTutar) &&
+                                                   dtpTarihIlk.Value <= s.Tarih && s.Tarih <= dtpTarihSon.Value
+                                                   ).ToList();
+                WriteToScreen(result);
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 

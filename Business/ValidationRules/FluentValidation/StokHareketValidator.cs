@@ -8,7 +8,6 @@ namespace Business.ValidationRules.FluentValidation
         public StokHareketValidator()
         {
             RuleFor(s => s.Miktar).NotEmpty().WithMessage("Miktar boş geçilemez!");
-            RuleFor(s => s.Miktar).GreaterThan(0).WithMessage("Miktar 0(sıfır) veya negatif olamaz!");
             RuleFor(s => s.Birim).NotEmpty();
             RuleFor(s => s.Fiyat).NotEmpty();
             RuleFor(s => s.Fiyat).GreaterThanOrEqualTo(0).WithMessage("Fiyat negatif olamaz!");

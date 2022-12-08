@@ -125,7 +125,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -147,7 +147,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -169,7 +169,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -189,7 +189,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -219,7 +219,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -242,7 +242,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
                 _secilenKasa ??= _kasaService.GetByAd(txtKasaAd.Text).Data;
                 if (_secilenKasa == null)
                 {
-                    ErrorMessageHelper.ErrorMessageBuilder(Messages.KasaMessages.KasaBulunamadi, this.Text);
+                    MessageHelper.SuccessMessageBuilder(Messages.KasaMessages.KasaBulunamadi, this.Text);
                     txtKasaAd.Focus();
                     return;
                 }
@@ -260,7 +260,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch (Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
             }
             txtEvrakNo.Focus();
         }
@@ -289,7 +289,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             string evrakNo = "";
             if (txtEvrakNo.Text.Length > 12)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(Messages.KasaMessages.EvrakNoHatali, this.Text);
+                MessageHelper.SuccessMessageBuilder(Messages.KasaMessages.EvrakNoHatali, this.Text);
                 txtEvrakNo.Text = "";
             }
             else
@@ -330,7 +330,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             catch(Exception err)
             {
-                ErrorMessageHelper.ErrorMessageBuilder(err);
+                MessageHelper.ErrorMessageBuilder(err);
                 txtCariKod.Focus();
             }
         }
@@ -346,7 +346,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             else
             {
-                ErrorMessageHelper.ErrorMessageBuilder(Messages.KasaMessages.MiktarBosGecilemez, this.Text);
+                MessageHelper.SuccessMessageBuilder(Messages.KasaMessages.MiktarBosGecilemez, this.Text);
                 txtMiktar.Focus();
             }
         }
@@ -360,7 +360,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             else
             {
-                ErrorMessageHelper.ErrorMessageBuilder(Messages.KasaMessages.AciklamaBosGecilemez, this.Text);
+                MessageHelper.SuccessMessageBuilder(Messages.KasaMessages.AciklamaBosGecilemez, this.Text);
                 txtAciklama.Focus();
             }
         }
@@ -375,7 +375,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             }
             else
             {
-                ErrorMessageHelper.ErrorMessageBuilder(Messages.KasaMessages.TarihHatali, this.Text);
+                MessageHelper.SuccessMessageBuilder(Messages.KasaMessages.TarihHatali, this.Text);
                 dtpKasaTarih.Focus();
             }
         }

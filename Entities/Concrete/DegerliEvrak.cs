@@ -6,7 +6,7 @@ namespace Entities.Concrete
     {
         public int Id { get; set; }
         public string Kod { get; set; }
-        public int? VerilenCariId { get; set; }
+        public int VerilenCariHareketId { get; set; }
         public DateTime Vade { get; set; }
         public decimal Tutar { get; set; }
         public DateTime CikisTarihi { get; set; }
@@ -14,8 +14,7 @@ namespace Entities.Concrete
 
 
 
-        public virtual Cari? VerilenCari { get; set; }
-        public virtual CariHareket? VerilenCariHareket { get; set; }
+        public virtual CariHareket VerilenCariHareket { get; set; }
 
     }
 }
