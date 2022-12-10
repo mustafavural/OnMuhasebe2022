@@ -24,6 +24,11 @@ namespace WindowsFormUI.Helpers
             MessageBox.Show(ErrorStringResult, err.Source, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
         }
 
+        public static void ErrorMessageBuilder(string errorMessage, string caption)
+        {
+            MessageBox.Show(errorMessage, caption, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+        }
+
         public static void SuccessMessageBuilder(string successMessage, string caption)
         {
             MessageBox.Show(successMessage, caption, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);

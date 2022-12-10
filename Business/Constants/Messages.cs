@@ -126,5 +126,16 @@
             public static string KodZatenMevcut => "Girilen kod zaten mevcut.";
             public static string EvrakBulunamadi => "Girilen evrak bulunamadı.";
         }
+        public static class MusteriEvrakMessages
+        {
+            public static string CariBulunamadi => "Çıkış yapılacak cari bulunamadi";
+            public static string EvrakSilindi => "Değerli evrak başarıyla silindi.";
+            public static string EvrakBulunamadi => "Girilen evrak bulunamadı.";
+            public static string KodZatenMevcut => "Girilen kod zaten mevcut.";
+            public static string EvraklarAlindi => "Müşteriden evraklar başarıyla alındı.";
+            public static string EvraklarCariyeIslendi => "Değerli evraklar cariye gönderildi.";
+
+            public static string EvrakGuncellendi => "Değerli evrak başarıyla güncellendi.";
+        }
     }
 }

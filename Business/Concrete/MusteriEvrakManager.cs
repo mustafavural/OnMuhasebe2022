@@ -56,6 +56,13 @@ namespace Business.Concrete
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
+        public new IDataResult<MusteriEvrak> GetByKod(string kod)
+        {
+            return new SuccessDataResult<MusteriEvrak>(Get(s => s.Kod == kod));
+        }
+
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheAspect(duration: 1)]
         public IDataResult<List<MusteriEvrak>> GetListByAlinanCariHareketId(int alinanCariHareketId)
         {
@@ -128,7 +135,7 @@ namespace Business.Concrete
                 entity.AlinanCariHareketId = entity.AlinanCariHareket.Id;
                 _musteriEvrakDal.Add(entity);
             }
-            return new SuccessResult(Messages.DegerliEvrakMessages.EvrakEklendi);
+            return new SuccessResult(Messages.MusteriEvrakMessages.EvraklarAlindi);
         }
 
         [SecuredOperation("Update,Admin")]
@@ -162,7 +169,7 @@ namespace Business.Concrete
         {
             _musteriEvrakDal.Update(entity);
             _cariHareketService.Update(entity.AlinanCariHareket);
-            return new SuccessResult(Messages.DegerliEvrakMessages.EvrakGuncellendi);
+            return new SuccessResult(Messages.MusteriEvrakMessages.EvrakGuncellendi);
         }
 
         public IDataResult<List<MusteriEvrak>> GetListByAlinanCariId(int cariId)

@@ -28,8 +28,8 @@ namespace DataAccess.Configuration
             builder.HasIndex(x => x.Kod).HasDatabaseName("UK_MusteriEvrak_Kod").IsUnique();
 
             // Foreign keys
-            builder.HasOne(x => x.AlinanCariHareket).WithOne().HasForeignKey<MusteriEvrak>(x => x.AlinanCariHareketId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("CariHareket_1_1o0_MusteriEvrak");
-            builder.HasOne(x => x.VerilenCariHareket).WithOne().HasForeignKey<MusteriEvrak>(x => x.VerilenCariHareketId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("CariHareket_1_1o0_MusteriEvrak");
+            builder.HasOne(x => x.AlinanCariHareket).WithOne().HasForeignKey<MusteriEvrak>(x => x.AlinanCariHareketId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("CariHareket_1_1o0_AlinanMusteriHareket");
+            builder.HasOne(x => x.VerilenCariHareket).WithOne().HasForeignKey<MusteriEvrak>(x => x.VerilenCariHareketId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("CariHareket_1_1o0_VerilenMusteriHareket");
         }
     }
 }

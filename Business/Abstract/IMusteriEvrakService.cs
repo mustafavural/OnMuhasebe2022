@@ -15,5 +15,6 @@ namespace Business.Abstract
         IResult Update(MusteriEvrak entity);
         IResult MusteridenEvraklarAl(List<MusteriEvrak> evraklar);
         IResult MusteriyeEvraklarCik(List<MusteriEvrak> evraklar);
+        IDataResult<MusteriEvrak> GetByKod(string kod);
     }
 }
