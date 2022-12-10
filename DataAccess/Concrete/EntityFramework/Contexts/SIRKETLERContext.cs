@@ -39,8 +39,9 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<KasaHareket> KasaHareketler { get; set; }
 
 
-        public DbSet<DegerliEvrak> DegerliEvraklar { get; set; }
-        public DbSet<MusteriEvrak> MusteriEvraklar { get; set; }
+        public DbSet<KiymetliEvrakBordro> KiymetliEvrakBordrolar { get; set; }
+        public DbSet<MusteriCekSenet> MusteriCekSenetler { get; set; }
+        public DbSet<BorcCekSenet> BorcCekSenetler { get; set; }
 
 
         public DbSet<BankaHesap> BankaHesaplar { get; set; }
