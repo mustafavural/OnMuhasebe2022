@@ -28,7 +28,7 @@
 
         public static class CariMessages
         {
-            public static string KodYok => "Cari Bulunamadi.";
+            public static string CariYok => "Cari Bulunamadi.";
             public static string CategoryeEklendi => "Cariye grup kod başarıyla eklendi.";
             public static string CategorydenSilindi => "Cariden grup kod başarıyla silindi.";
             public static string CariEklendi => "Cari başarıyla eklendi.";
@@ -126,6 +126,28 @@
             public static string KodZatenMevcut => "Girilen kod zaten mevcut.";
             public static string EvrakBulunamadi => "Girilen evrak bulunamadı.";
         }
+
+        public static class KiymetliEvrakMessages
+        {
+            public static string BorcCekSenetEklendi => "Borç çeki/seneti başarıyla eklendi.";
+            public static string BorcCekSenetSilindi => "Borç çeki/seneti başarıyla silindi.";
+            public static string BorcCekSenetGuncellendi => "Borç çeki/seneti başarıyla güncellendi.";
+            public static string MusteriCekSenetEklendi => "Muşteri çeki/seneti başarıyla eklendi.";
+            public static string MusteriCekSenetSilindi => "Muşteri çeki/seneti başarıyla silindi.";
+            public static string MusteriCekSenetGuncellendi => "Muşteri çeki/seneti başarıyla güncellendi.";
+            public static string EvrakZatenMevcut => "Bu evrak daha önce girilmiş.";
+            public static string EvrakNoZatenMevcut => "Bu evrak numarası daha önce kullanılmış.";
+            public static string BordroNumarasiBulunamadi => "Kiymetli evrak bordro numarası mevcut değil.";
+            public static string EvrakYok => "Evrak bulunamadı.";
+            public static string BordroCariyeIslendi => "Evrak Bordrosu başarıyla cariye eklendi.";
+            public static string BordroGuncellendi => "Bordro başarıyla güncellendi.";
+            public static string BordroSilindi => "Bordro başarıyla silindi.";
+            public static string BordroZatenVar => "Bu bordro daha önce girilmiş.";
+            public static string BordroNoZatenMevcut => "Bu bordro numarası daha önce kullanılmış.";
+
+            public static string BordroKullanimda => "Bordro işlem görmüş silinemez.";
+        }
+
         public static class MusteriEvrakMessages
         {
             public static string CariBulunamadi => "Çıkış yapılacak cari bulunamadi";

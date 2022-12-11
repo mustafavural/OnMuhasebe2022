@@ -29,7 +29,7 @@ namespace Business.Concrete
         #region BusinessRules
         private IResult KontrolCariIdMevcutMu(int Id)
         {
-            return _cariDal.Get(c => c.Id == Id) != null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.KodYok);
+            return _cariDal.Get(c => c.Id == Id) != null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.CariYok);
         }
 
         private IResult KontrolCariKodZatenVarMi(string kod)

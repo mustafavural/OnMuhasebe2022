@@ -321,7 +321,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
                     if (result.Data != null)
                         _secilenCari = result.Data;
                     else
-                        throw new Exception(Messages.CariMessages.KodYok);
+                        throw new Exception(Messages.CariMessages.CariYok);
                 }
                 txtMiktar.Enabled = true;
                 lblCariAd.Text = _secilenCari.Unvan;

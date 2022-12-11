@@ -46,7 +46,7 @@ namespace Business.Concrete
         }
         private IResult KontrolCariIdMevcutMu(int cariId)
         {
-            return _cariService.GetById(cariId).Data != null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.KodYok);
+            return _cariService.GetById(cariId).Data != null ? new SuccessResult() : new ErrorResult(Messages.CariMessages.CariYok);
         }
         private IResult KontrolKalemlerBosMu(List<StokHareket>? stokHareketler)
         {

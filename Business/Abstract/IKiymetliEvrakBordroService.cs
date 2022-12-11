@@ -8,9 +8,11 @@ namespace Business.Abstract
     {
         IDataResult<KiymetliEvrakBordro> GetById(int id);
         IDataResult<KiymetliEvrakBordro> GetByNo(string no);
-        IDataResult<KiymetliEvrakBordro> GetByTur(string tur);
+        IDataResult<List<KiymetliEvrakBordro>> GetListByTur(string tur);
         IDataResult<List<KiymetliEvrakBordro>> GetListByCariId(int cariId);
-        IDataResult<List<KiymetliEvrakBordro>> GetListByBordroTediye(int tediyeId);
+        IDataResult<List<BorcCekSenet>> GetBorcCekSenetListById(int id);
+        IDataResult<List<MusteriCekSenet>> GetMusteriTahsilatCekSenetListById(int id);
+        IDataResult<List<MusteriCekSenet>> GetMusteriTediyeCekSenetListById(int id);
         IDataResult<List<KiymetliEvrakBordro>> GetListBetweenTarihler(DateTime ilk, DateTime son);
         IDataResult<List<KiymetliEvrakBordro>> GetList(Expression<Func<KiymetliEvrakBordro, bool>>? filter = null);
         IResult Add(KiymetliEvrakBordro entity);
