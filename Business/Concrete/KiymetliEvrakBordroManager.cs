@@ -131,7 +131,7 @@ namespace Business.Concrete
 
         [SecuredOperation("Add,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
-        [CacheRemoveAspect("IKiymetliEvrakBordroervice.Get")]
+        [CacheRemoveAspect("IKiymetliEvrakBordroService.Get")]
         public IResult Add(KiymetliEvrakBordro entity)
         {
             var result = BusinessRules.Run(KontrolBordroIdZatenVarMi(entity.Id),
