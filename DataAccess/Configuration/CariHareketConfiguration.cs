@@ -20,7 +20,7 @@ namespace DataAccess.Configuration
             builder.Property(x => x.Aciklama).HasColumnName(@"Aciklama").HasColumnType("nvarchar(500)").IsRequired(false).HasMaxLength(500);
 
             // Foreign keys
-            builder.HasOne(a => a.Cari).WithMany(b => b.CariHareketer).HasForeignKey(c => c.CariId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("Cari_1_M_CariHareketler");
+            builder.HasOne(a => a.Cari).WithMany(b => b.CariHareketler).HasForeignKey(c => c.CariId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("Cari_1_M_CariHareketler");
         }
     }
 }

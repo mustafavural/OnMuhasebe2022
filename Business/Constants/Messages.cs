@@ -134,6 +134,8 @@
             public static string BordroZatenVar => "Bu bordro daha önce girilmiş.";
             public static string BordroNoZatenMevcut => "Bu bordro numarası daha önce kullanılmış.";
             public static string BordroKullanimda => "Bordro işlem görmüş silinemez.";
+
+            public static string BordroBos => "Evrak girişi olmadan bordro eklenemez.";
         }
     }
 }

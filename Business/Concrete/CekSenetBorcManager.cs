@@ -16,12 +16,10 @@ namespace Business.Concrete
     public class CekSenetBorcManager : ICekSenetBorcService
     {
         private readonly ICekSenetBorcDal _borcCekSenetDal;
-        private readonly ICekSenetBordroService _kiymetliEvrakBordroService;
 
-        public CekSenetBorcManager(ICekSenetBorcDal borcCekSenetDal, ICekSenetBordroService kiymetliEvrakBordroService)
+        public CekSenetBorcManager(ICekSenetBorcDal borcCekSenetDal)
         {
             _borcCekSenetDal = borcCekSenetDal;
-            _kiymetliEvrakBordroService = kiymetliEvrakBordroService;
         }
 
         #region BusinessRules
@@ -33,11 +31,6 @@ namespace Business.Concrete
         private IResult KontrolEvrakNoZatenMevcutMu(string no)
         {
             return Get(b => b.No == no) != null ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.EvrakNoZatenMevcut);
-        }
-
-        private IResult KontrolBordroIdMevcutMu(int bordroTediyeId)
-        {
-            return _kiymetliEvrakBordroService.GetById(bordroTediyeId) != null ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.BordroNumarasiBulunamadi);
         }
 
         private IResult KontrolEvrakIdMevcutMu(int id)
@@ -89,11 +82,10 @@ namespace Business.Concrete
 
         [SecuredOperation("Add,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
-        [CacheRemoveAspect("IBorcCekSenetService.Get")]
+        [CacheRemoveAspect("ICekSenetBorcService.Get")]
         public IResult Add(CekSenetBorc entity)
         {
             var result = BusinessRules.Run(KontrolEvrakIdZatenVarMi(entity.Id),
-                                           KontrolBordroIdMevcutMu(entity.BordroTediyeId),
                                            KontrolEvrakNoZatenMevcutMu(entity.No));
             if (!result.IsSuccess)
                 return new ErrorResult(result.Message);
@@ -104,7 +96,7 @@ namespace Business.Concrete
 
         [SecuredOperation("Delete,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
-        [CacheRemoveAspect("IBorcCekSenetService.Get")]
+        [CacheRemoveAspect("ICekSenetBorcService.Get")]
         public IResult Delete(CekSenetBorc entity)
         {
             var result = BusinessRules.Run(KontrolEvrakIdMevcutMu(entity.Id));
@@ -117,11 +109,10 @@ namespace Business.Concrete
 
         [SecuredOperation("Update,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
-        [CacheRemoveAspect("IBorcCekSenetService.Get")]
+        [CacheRemoveAspect("ICekSenetBorcService.Get")]
         public IResult Update(CekSenetBorc entity)
         {
-            var result = BusinessRules.Run(KontrolEvrakIdMevcutMu(entity.Id),
-                                           KontrolBordroIdMevcutMu(entity.BordroTediyeId));
+            var result = BusinessRules.Run(KontrolEvrakIdMevcutMu(entity.Id));
             if (!result.IsSuccess)
                 return new ErrorResult(result.Message);
 

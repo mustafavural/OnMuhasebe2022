@@ -18,16 +18,23 @@ namespace Business.Concrete
         private readonly ICekSenetBordroDal _cekSenetBordroDal;
         private readonly ICariService _cariService;
         private readonly ICariHareketService _cariHareketService;
+        private readonly ICekSenetBorcService _cekSenetBorcService;
+        private readonly ICekSenetMusteriService _cekSenetMusteriService;
 
-        public CekSenetBordroManager(ICekSenetBordroDal kiymetliEvrakBordroDal, ICariService cariService, ICariHareketService cariHareketService)
+        public CekSenetBordroManager(ICekSenetBordroDal kiymetliEvrakBordroDal,
+                                     ICariService cariService,
+                                     ICariHareketService cariHareketService,
+                                     ICekSenetBorcService cekSenetBorcService,
+                                     ICekSenetMusteriService cekSenetMusteriService)
         {
             _cekSenetBordroDal = kiymetliEvrakBordroDal;
             _cariService = cariService;
             _cariHareketService = cariHareketService;
+            _cekSenetBorcService = cekSenetBorcService;
+            _cekSenetMusteriService = cekSenetMusteriService;
         }
 
         #region BusinessRules
-
         private IResult KontrolBordroIdZatenVarMi(int id)
         {
             return Get(k => k.Id == id) == null ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.BordroZatenVar);
@@ -43,11 +50,16 @@ namespace Business.Concrete
             return Get(k => k.No == no) == null ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.BordroNoZatenMevcut);
         }
 
+        private IResult KontrolBordroBosMu(CekSenetBordro entity)
+        {
+            return entity.CekSenetMusteriler.Count > 0 || entity.CekSenetBorclar.Count > 0 ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.BordroBos);
+        }
+
         private IResult KontrolBordroBosMu(int id)
         {
             return _cekSenetBordroDal.GetBorcCekSenetListById(id) == null &&
-                _cekSenetBordroDal.GetMusteriTahsilatCekSenetListById(id) == null &&
-                _cekSenetBordroDal.GetMusteriTediyeCekSenetListById(id) == null ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.BordroKullanimda);
+            _cekSenetBordroDal.GetMusteriTahsilatCekSenetListById(id) == null &&
+            _cekSenetBordroDal.GetMusteriTediyeCekSenetListById(id) == null ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.BordroKullanimda);
         }
 
         private IResult KontrolBordroIdMevcutMu(int id)
@@ -103,6 +115,11 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CekSenetBordro>>(GetAll(k => k.CariId == cariId));
         }
 
+        public IDataResult<List<CekSenetBordro>> GetListBetweenTarihler(DateTime ilk, DateTime son)
+        {
+            return new SuccessDataResult<List<CekSenetBordro>>(GetAll(k => k.Tarih >= ilk && k.Tarih <= son));
+        }
+
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<CekSenetBorc>> GetBorcCekSenetListById(int id)
@@ -124,49 +141,91 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CekSenetMusteri>>(_cekSenetBordroDal.GetMusteriTediyeCekSenetListById(id));
         }
 
-        public IDataResult<List<CekSenetBordro>> GetListBetweenTarihler(DateTime ilk, DateTime son)
-        {
-            return new SuccessDataResult<List<CekSenetBordro>>(GetAll(k => k.Tarih >= ilk && k.Tarih <= son));
-        }
-
         [PerformanceAspect(5)]
         public IDataResult<List<CekSenetBordro>> GetList(Expression<Func<CekSenetBordro, bool>>? filter = null)
         {
             return new SuccessDataResult<List<CekSenetBordro>>(GetAll(filter));
         }
 
+        /*
+            if (entity.CekSenetBorclar.Count > 0)
+            {
+                foreach (var evrak in entity.CekSenetBorclar)
+                {
+                    evrak.BordroTediyeId = entity.Id;
+                    _cekSenetBorcService.Add(evrak);
+                }
+            }
+            if (entity.CekSenetMusteriler.Count > 0)
+            {
+                foreach (var evrak in entity.CekSenetMusteriler)
+                {
+                    evrak.BordroTediyeId = evrak.BordroTediyeId == 0 ? entity.Id : 0;
+                    _cekSenetMusteriService.Add(evrak);
+                }
+            }*/
+
         [SecuredOperation("Add,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
-        [CacheRemoveAspect("IKiymetliEvrakBordroService.Get")]
+        [CacheRemoveAspect("ICekSenetBordroService.Get")]
         public IResult Add(CekSenetBordro entity)
         {
             var result = BusinessRules.Run(KontrolBordroIdZatenVarMi(entity.Id),
                                            KontrolCariIdMevcutMu(entity.CariId),
-                                           KontrolBordroNoZatenVarMi(entity.No));
-            if(!result.IsSuccess)
+                                           KontrolBordroNoZatenVarMi(entity.No),
+                                           KontrolBordroBosMu(entity));
+            if (!result.IsSuccess)
                 return new ErrorResult(result.Message);
-            
+
+            _cariHareketService.Add(entity.CariHareket);
             _cekSenetBordroDal.Add(entity);
+            switch (entity.Tur)
+            {
+                case "Tahsilat":
+                    {
+                        foreach (var evrak in entity.CekSenetMusteriler)
+                        {
+                            evrak.BordroTahsilatId = entity.Id;
+                            _cekSenetMusteriService.Add(evrak);
+                        }
+                        break;
+                    }
+                case "Tediye":
+                    {
+                        foreach (var evrak in entity.CekSenetMusteriler)
+                        {
+                            evrak.BordroTediyeId = entity.Id;
+                            _cekSenetMusteriService.Update(evrak);
+                        }
+                        foreach (var evrak in entity.CekSenetBorclar)
+                        {
+                            evrak.BordroTediyeId = entity.Id;
+                            _cekSenetBorcService.Add(evrak);
+                        }
+                        break;
+                    }
+            }
             return new SuccessResult(Messages.CekSenetMessages.BordroCariyeIslendi);
         }
 
         [SecuredOperation("Delete,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
-        [CacheRemoveAspect("IKiymetliEvrakBordroService.Get")]
+        [CacheRemoveAspect("ICekSenetBordroService.Get")]
         public IResult Delete(CekSenetBordro entity)
         {
             var result = BusinessRules.Run(KontrolBordroIdMevcutMu(entity.Id),
                                            KontrolBordroBosMu(entity.Id));
             if (!result.IsSuccess)
                 return new ErrorResult(result.Message);
-            
-            _cekSenetBordroDal.Delete(entity);
+
+            _cekSenetBordroDal.Delete(new() { Id = entity.Id });
+            _cariHareketService.Delete(new() { Id = entity.CariHareket.Id });
             return new SuccessResult(Messages.CekSenetMessages.BordroSilindi);
         }
 
         [SecuredOperation("Update,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
-        [CacheRemoveAspect("IKiymetliEvrakBordroService.Get")]
+        [CacheRemoveAspect("ICekSenetBordroService.Get")]
         public IResult Update(CekSenetBordro entity)
         {
             var result = BusinessRules.Run(KontrolCariIdMevcutMu(entity.CariId));
@@ -175,6 +234,7 @@ namespace Business.Concrete
                 return new ErrorResult(result.Message);
 
             _cekSenetBordroDal.Update(entity);
+            _cariHareketService.Update(entity.CariHareket);
             return new SuccessResult(Messages.CekSenetMessages.BordroGuncellendi);
         }
     }

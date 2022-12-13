@@ -114,14 +114,14 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
         {
             try
             {
+                _secilenTahsilatBordro.CekSenetMusteriler = _musteriCekSenetler;
                 _secilenTahsilatBordro.CariHareket = new CariHareket
                 {
                     CariId = _secilenTahsilatBordro.Cari.Id,
                     Tarih = _secilenTahsilatBordro.Tarih,
                     Tutar = _secilenTahsilatBordro.CekSenetMusteriler.Sum(c => c.Tutar) * -1,
-                    Aciklama = $"{_secilenTahsilatBordro.No} nolu müşteri evrağı"
+                    Aciklama = $"{_secilenTahsilatBordro.No} nolu evrak tahsilat bordrosu."
                 };
-                _secilenTahsilatBordro.CekSenetMusteriler = _musteriCekSenetler;
                 var result = _cekSenetBordroService.Add(_secilenTahsilatBordro);
                 MessageHelper.SuccessMessageBuilder(result.Message, Messages.CekSenetMessages.MusteriCekSenetEklendi);
             }
@@ -395,8 +395,8 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             ClearCurrentEvrak();
 
             txtCariKod.Text = "";
-            txtCariKod.Enabled = true;
-            btnCariBul.Enabled = true;
+            txtCariKod.Enabled = false;
+            btnCariBul.Enabled = false;
             lblCariUnvan.Text = "";
 
             txtEvrakNo.Enabled = false;
@@ -412,7 +412,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             uscMusteriyeEvrakCik.BtnSave_Enable = false;
             uscMusteriyeEvrakCik.BtnDelete_Enable = false;
 
-            txtCariKod.Focus();
+            txtBordroNo.Focus();
         }
 
         private void OpenNewBordro()
@@ -423,6 +423,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             ClearScreen();
             txtBordroNo.Text = bordro;
             txtBordroNo.Enabled = false;
+            btnBordroNoBul.Enabled = false;
             uscMusteriyeEvrakCik.BtnClear_Visible = true;
             uscMusteriyeEvrakCik.BtnSave_Enable = true;
             uscMusteriyeEvrakCik.BtnSave_Text = "Bordro Kaydet";
@@ -430,7 +431,6 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             txtCariKod.Enabled = true;
             btnCariBul.Enabled = true;
             lblCariUnvan.Text = "";
-            dtpAlisTarih.Enabled = true;
             dtpAlisTarih.Value = DateTime.Today;
             grpEvrakBilgiler.Enabled = false;
         }

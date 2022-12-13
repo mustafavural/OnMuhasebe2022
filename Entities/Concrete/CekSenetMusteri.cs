@@ -1,5 +1,5 @@
 ﻿using Core.Entities.Abstract;
-using Entities.Abstract;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Concrete
 {
@@ -11,10 +11,12 @@ namespace Entities.Concrete
         public DateTime Vade { get; set; }
         public decimal Tutar { get; set; }
         public string Aciklama { get; set; }
-        public int BordroTediyeId { get; set; }
+        public int? BordroTediyeId { get; set; }
         public string AsilBorclu { get; set; }
 
+        [NotMapped]
         public virtual CekSenetBordro BordroTahsilat { get; set; }
+        [NotMapped]
         public virtual CekSenetBordro BordroTediye { get; set; }
     }
 }

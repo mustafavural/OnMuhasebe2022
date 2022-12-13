@@ -16,13 +16,13 @@ namespace Entities.Concrete
         [NotMapped]
         public virtual List<CariCategory> CariCategoryler { get; set; }
         public virtual List<CariGrup> CariGruplar { get; set; }
-        public virtual List<CariHareket> CariHareketer { get; set; }
+        public virtual List<CariHareket> CariHareketler { get; set; }
 
         public Cari()
         {
             CariCategoryler = new();
             CariGruplar = new();
-            CariHareketer= new();
+            CariHareketler= new();
         }
     }
 }

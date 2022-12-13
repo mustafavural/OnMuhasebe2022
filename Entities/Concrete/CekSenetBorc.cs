@@ -1,5 +1,6 @@
 ﻿using Core.Entities.Abstract;
 using Entities.Abstract;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Concrete
 {
@@ -12,6 +13,7 @@ namespace Entities.Concrete
         public decimal Tutar { get; set; }
         public string Aciklama { get; set; }
 
+        [NotMapped]
         public virtual CekSenetBordro BordroTediye { get; set; }
     }
 }

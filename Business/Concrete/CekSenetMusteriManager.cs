@@ -15,29 +15,17 @@ namespace Business.Concrete
 {
     public class CekSenetMusteriManager : ICekSenetMusteriService
     {
-        private readonly ICekSenetMusteriDal _borcCekSenetDal;
-        private readonly ICekSenetBordroService _kiymetliEvrakBordroService;
+        private readonly ICekSenetMusteriDal _cekSenetMusteriDal;
 
-        public CekSenetMusteriManager(ICekSenetMusteriDal borcCekSenetDal, ICekSenetBordroService kiymetliEvrakBordroService)
+        public CekSenetMusteriManager(ICekSenetMusteriDal borcCekSenetDal)
         {
-            _borcCekSenetDal = borcCekSenetDal;
-            _kiymetliEvrakBordroService = kiymetliEvrakBordroService;
+            _cekSenetMusteriDal = borcCekSenetDal;
         }
 
         #region BusinessRules
-        private IResult KontrolEvrakIdZatenVarMi(int id)
+        private IResult KontrolEvrakNoZatenVarMi(string no)
         {
-            return Get(b => b.Id == id) == null ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.EvrakZatenMevcut);
-        }
-
-        private IResult KontrolEvrakNoZatenMevcutMu(string no)
-        {
-            return Get(b => b.No == no) != null ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.EvrakNoZatenMevcut);
-        }
-
-        private IResult KontrolBordroIdMevcutMu(int bordroId)
-        {
-            return _kiymetliEvrakBordroService.GetById(bordroId) != null ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.BordroNumarasiBulunamadi);
+            return Get(b => b.No == no) == null ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.EvrakNoZatenMevcut);
         }
 
         private IResult KontrolEvrakIdMevcutMu(int id)
@@ -50,7 +38,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         private CekSenetMusteri Get(Expression<Func<CekSenetMusteri, bool>> filter)
         {
-            return _borcCekSenetDal.Get(filter);
+            return _cekSenetMusteriDal.Get(filter);
         }
 
         [SecuredOperation("List,Admin")]
@@ -58,7 +46,7 @@ namespace Business.Concrete
         [CacheAspect(1)]
         private List<CekSenetMusteri> GetAll(Expression<Func<CekSenetMusteri, bool>>? filter = null)
         {
-            return _borcCekSenetDal.GetList(filter);
+            return _cekSenetMusteriDal.GetList(filter);
         }
 
         public IDataResult<CekSenetMusteri> GetById(int id)
@@ -102,13 +90,11 @@ namespace Business.Concrete
         [CacheRemoveAspect("IMusteriCekSenetService.Get")]
         public IResult Add(CekSenetMusteri entity)
         {
-            var result = BusinessRules.Run(KontrolEvrakIdZatenVarMi(entity.Id),
-                                           KontrolBordroIdMevcutMu(entity.BordroTediyeId),
-                                           KontrolEvrakNoZatenMevcutMu(entity.No));
+            var result = BusinessRules.Run(KontrolEvrakNoZatenVarMi(entity.No));
             if (!result.IsSuccess)
                 return new ErrorResult(result.Message);
 
-            _borcCekSenetDal.Add(entity);
+            _cekSenetMusteriDal.Add(entity);
             return new SuccessResult(Messages.CekSenetMessages.MusteriCekSenetEklendi);
         }
 
@@ -121,7 +107,7 @@ namespace Business.Concrete
             if (!result.IsSuccess)
                 return new ErrorResult(result.Message);
 
-            _borcCekSenetDal.Delete(entity);
+            _cekSenetMusteriDal.Delete(entity);
             return new SuccessResult(Messages.CekSenetMessages.MusteriCekSenetSilindi);
         }
 
@@ -130,12 +116,11 @@ namespace Business.Concrete
         [CacheRemoveAspect("IMusteriCekSenetService.Get")]
         public IResult Update(CekSenetMusteri entity)
         {
-            var result = BusinessRules.Run(KontrolEvrakIdMevcutMu(entity.Id),
-                                           KontrolBordroIdMevcutMu(entity.BordroTediyeId));
+            var result = BusinessRules.Run(KontrolEvrakIdMevcutMu(entity.Id));
             if (!result.IsSuccess)
                 return new ErrorResult(result.Message);
 
-            _borcCekSenetDal.Update(entity);
+            _cekSenetMusteriDal.Update(entity);
             return new SuccessResult(Messages.CekSenetMessages.MusteriCekSenetGuncellendi);
         }
     }

@@ -15,7 +15,9 @@ namespace Entities.Concrete
         public virtual Cari Cari { get; set; }
         [NotMapped]
         public virtual CariHareket CariHareket { get; set; }
+        [NotMapped]
         public List<CekSenetMusteri> CekSenetMusteriler { get; set; }
+        [NotMapped]
         public List<CekSenetBorc> CekSenetBorclar { get; set; }
 
         public CekSenetBordro()
