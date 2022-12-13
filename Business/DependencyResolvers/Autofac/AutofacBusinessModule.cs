@@ -28,9 +28,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<KasaManager>().As<IKasaService>();
             builder.RegisterType<KasaHareketManager>().As<IKasaHareketService>();
 
-            builder.RegisterType<BorcCekSenetManager>().As<IBorcCekSenetService>();
-            builder.RegisterType<MusteriCekSenetManager>().As<IMusteriCekSenetService>();
-            builder.RegisterType<KiymetliEvrakBordroManager>().As<IKiymetliEvrakBordroService>();
+            builder.RegisterType<CekSenetBorcManager>().As<ICekSenetBorcService>();
+            builder.RegisterType<CekSenetMusteriManager>().As<ICekSenetMusteriService>();
+            builder.RegisterType<CekSenetBordroManager>().As<ICekSenetBordroService>();
 
             builder.RegisterType<BankaHesapManager>().As<IBankaHesapService>();
             builder.RegisterType<BankaHareketManager>().As<IBankaHareketService>();
@@ -56,9 +56,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfKasaDal>().As<IKasaDal>();
             builder.RegisterType<EfKasaHareketDal>().As<IKasaHareketDal>();
 
-            builder.RegisterType<EfBorcCekSenetDal>().As<IBorcCekSenetDal>();
-            builder.RegisterType<EfMusteriCekSenetDal>().As<IMusteriCekSenetDal>();
-            builder.RegisterType<EfKiymetliEvrakBordroDal>().As<IKiymetliEvrakBordroDal>();
+            builder.RegisterType<EfCekSenetBorcDal>().As<ICekSenetBorcDal>();
+            builder.RegisterType<EfCekSenetMusteriDal>().As<ICekSenetMusteriDal>();
+            builder.RegisterType<EfCekSenetBordroDal>().As<ICekSenetBordroDal>();
 
             builder.RegisterType<EfBankaHesapDal>().As<IBankaHesapDal>();
             builder.RegisterType<EfBankaHareketDal>().As<IBankaHareketDal>();

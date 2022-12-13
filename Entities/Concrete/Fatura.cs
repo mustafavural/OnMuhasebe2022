@@ -13,8 +13,6 @@ namespace Entities.Concrete
         public DateTime KayitTarihi { get; set; }
         public string? Aciklama { get; set; }
 
-
-
         public virtual Cari? Cari { get; set; }
         [NotMapped]
         public virtual CariHareket? CariHareket { get; set; }

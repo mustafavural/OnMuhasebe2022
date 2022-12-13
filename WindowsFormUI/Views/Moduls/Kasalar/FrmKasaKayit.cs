@@ -265,25 +265,6 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             txtEvrakNo.Focus();
         }
 
-        public bool IsFormattedEvrakNo(string value)
-        {
-            return value.Length == 14 && value.StartsWith(KasaIslemTuru.ToCharString());
-        }
-
-        public string FormatEvrakNo(string value)
-        {
-            string txt = "";
-            if (!IsFormattedEvrakNo(value))
-            {
-                txt = value;
-                value = KasaIslemTuru.ToCharString();
-                do
-                    value += "0";
-                while (!IsFormattedEvrakNo(value + txt));
-            }
-            return value += txt;
-        }
-
         private void TxtEvrakNo_Leaved()
         {
             string evrakNo = "";
@@ -293,7 +274,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
                 txtEvrakNo.Text = "";
             }
             else
-                evrakNo = FormatEvrakNo(txtEvrakNo.Text);
+                evrakNo = ModulExtensions.FormatNoString(txtEvrakNo.Text, 14, 'K');
             if (_secilenKasaHareket == null)
             {
                 var result = _kasaHareketService.GetByEvrakNo(evrakNo);

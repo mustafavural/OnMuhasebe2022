@@ -31,7 +31,7 @@ namespace WindowsFormUI.Helpers
 
         public static void SuccessMessageBuilder(string successMessage, string caption)
         {
-            MessageBox.Show(successMessage, caption, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+            MessageBox.Show(successMessage, caption, MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
         }
     }
 }

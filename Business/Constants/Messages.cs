@@ -116,18 +116,7 @@
             public static string MiktarBosGecilemez => "Miktar alanı boş geçilemez.";
         }
 
-        public static class DegerliEvrakMessages
-        {
-            public static string CariBulunamadi => "Çıkış yapılacak cari bulunamadi";
-            public static string EvrakEklendi => "Değerli evrak başarıyla eklendi.";
-            public static string EvrakSilindi => "Değerli evrak başarıyla silindi.";
-            public static string EvrakGuncellendi => "Değerli evrak başarıyla güncellendi.";
-            public static string EvraklarCariyeIslendi => "Değerli evraklar cariye gönderildi.";
-            public static string KodZatenMevcut => "Girilen kod zaten mevcut.";
-            public static string EvrakBulunamadi => "Girilen evrak bulunamadı.";
-        }
-
-        public static class KiymetliEvrakMessages
+        public static class CekSenetMessages
         {
             public static string BorcCekSenetEklendi => "Borç çeki/seneti başarıyla eklendi.";
             public static string BorcCekSenetSilindi => "Borç çeki/seneti başarıyla silindi.";
@@ -144,20 +133,7 @@
             public static string BordroSilindi => "Bordro başarıyla silindi.";
             public static string BordroZatenVar => "Bu bordro daha önce girilmiş.";
             public static string BordroNoZatenMevcut => "Bu bordro numarası daha önce kullanılmış.";
-
             public static string BordroKullanimda => "Bordro işlem görmüş silinemez.";
-        }
-
-        public static class MusteriEvrakMessages
-        {
-            public static string CariBulunamadi => "Çıkış yapılacak cari bulunamadi";
-            public static string EvrakSilindi => "Değerli evrak başarıyla silindi.";
-            public static string EvrakBulunamadi => "Girilen evrak bulunamadı.";
-            public static string KodZatenMevcut => "Girilen kod zaten mevcut.";
-            public static string EvraklarAlindi => "Müşteriden evraklar başarıyla alındı.";
-            public static string EvraklarCariyeIslendi => "Değerli evraklar cariye gönderildi.";
-
-            public static string EvrakGuncellendi => "Değerli evrak başarıyla güncellendi.";
         }
     }
 }

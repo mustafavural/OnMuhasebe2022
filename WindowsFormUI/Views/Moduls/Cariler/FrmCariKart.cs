@@ -13,17 +13,15 @@ namespace WindowsFormUI.Views.Moduls.Cariler
     {
         private readonly ICariService _cariService;
         private readonly ICariHareketService _cariHareketService;
-        private readonly IAdresService _adresService;
         private readonly IIlceService _ilceService;
         private readonly ISehirService _sehirService;
         private Cari _secilenCari;
 
-        public FrmCariKart(ICariService cariService, ICariHareketService cariHareketService, IAdresService adresService, IIlceService ilceService, ISehirService sehirService)
+        public FrmCariKart(ICariService cariService, ICariHareketService cariHareketService, IIlceService ilceService, ISehirService sehirService)
         {
             InitializeComponent();
             _cariService = cariService;
             _cariHareketService = cariHareketService;
-            _adresService = adresService;
             _ilceService = ilceService;
             _sehirService = sehirService;
             cmbSehir.Items.Add("<<Seçiniz>>");

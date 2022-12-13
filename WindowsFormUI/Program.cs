@@ -7,7 +7,7 @@ using System;
 using System.Windows.Forms;
 using WindowsFormUI.Views;
 using WindowsFormUI.Views.Moduls.Cariler;
-using WindowsFormUI.Views.Moduls.DegerliEvraklar;
+using WindowsFormUI.Views.Moduls.CekSenetler;
 using WindowsFormUI.Views.Moduls.Faturalar;
 using WindowsFormUI.Views.Moduls.Kasalar;
 using WindowsFormUI.Views.Moduls.Stoklar;
@@ -36,6 +36,9 @@ namespace WindowsFormUI
             var builder = new ContainerBuilder();
 
             builder.RegisterModule(new AutofacBusinessModule());
+            builder.RegisterType<FrmBase>().AsSelf();
+            builder.RegisterType<FrmMdiBase>().AsSelf();
+            builder.RegisterType<FrmWelcome>().AsSelf();
             builder.RegisterType<FrmStok>().AsSelf();
             builder.RegisterType<FrmStokKart>().AsSelf();
             builder.RegisterType<FrmStokGrup>().AsSelf();
@@ -51,13 +54,11 @@ namespace WindowsFormUI
             builder.RegisterType<FrmKasaKart>().AsSelf();
             builder.RegisterType<FrmKasaKayit>().AsSelf();
             builder.RegisterType<FrmKasaListe>().AsSelf();
-            builder.RegisterType<FrmDegerliEvrak>().AsSelf();
+            builder.RegisterType<FrmBordroListe>().AsSelf();
+            builder.RegisterType<FrmCekSenet>().AsSelf();
             builder.RegisterType<FrmMusteridenEvrakAl>().AsSelf();
             builder.RegisterType<FrmMusteriyeEvrakCik>().AsSelf();
             builder.RegisterType<FrmPortfoydekiEvraklar>().AsSelf();
-            builder.RegisterType<FrmWelcome>().AsSelf();
-            builder.RegisterType<FrmMdiBase>().AsSelf();
-            builder.RegisterType<FrmBase>().AsSelf();
 
             return builder.Build();
         }

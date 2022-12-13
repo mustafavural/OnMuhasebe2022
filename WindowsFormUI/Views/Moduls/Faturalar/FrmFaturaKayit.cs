@@ -79,7 +79,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
         {
             if (txtFaturaNo.Text.Length != 0)
             {
-                txtFaturaNo.Text = FormatFaturaNo(txtFaturaNo.Text);
+                txtFaturaNo.Text = ModulExtensions.FormatNoString(txtFaturaNo.Text, 14, 'F');
                 var result = _faturaService.GetByNo(txtFaturaNo.Text);
                 if (result.Data != null)
                 {
@@ -232,29 +232,6 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             txtStokKod.Focus();
         }
 
-        public bool IsFormattedFaturaNo(string value)
-        {
-            if (value.Length == 14 && value.StartsWith("F"))
-                return true;
-            else
-                return false;
-        }
-
-        public string FormatFaturaNo(string value)
-        {
-            if (this.IsFormattedFaturaNo(value))
-                return value;
-            else
-            {
-                string txt = value;
-                value = "F";
-                for (int i = 0; i < 13 - txt.Length; i++)
-                    value += "0";
-                value += txt;
-                return value;
-            }
-        }
-
         private void ClearScreen()
         {
             ClearItems();
@@ -367,15 +344,15 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             string fNo = txtFaturaNo.Text;
             ClearScreen();
             txtFaturaNo.Text = fNo;
-            uscFaturaEkleSilGuncelle.BtnClear_Visible = true;
             txtFaturaNo.Enabled = false;
+            uscFaturaEkleSilGuncelle.BtnClear_Visible = true;
             uscFaturaEkleSilGuncelle.BtnSave_Enable = true;
             uscFaturaEkleSilGuncelle.BtnSave_Text = "Fatura Kes";
             txtCariKod.Text = "";
             txtCariKod.Enabled = true;
             btnCariBul.Enabled = true;
             dtpTarih.Enabled = true;
-            dtpTarih.Value = DateTime.Now;
+            dtpTarih.Value = DateTime.Today;
             lblCariAd.Text = "";
         }
 

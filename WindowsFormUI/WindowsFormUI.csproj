@@ -39,6 +39,9 @@
     <Compile Update="Views\Moduls\Cariler\FrmCariListe.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Views\Moduls\CekSenetler\FrmBordroListe.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Views\Moduls\Faturalar\FrmFaturaListe.cs">
       <SubType>Form</SubType>
     </Compile>

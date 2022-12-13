@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 using WindowsFormUI.Views.Moduls.Cariler;
-using WindowsFormUI.Views.Moduls.DegerliEvraklar;
+using WindowsFormUI.Views.Moduls.CekSenetler;
 using WindowsFormUI.Views.Moduls.Faturalar;
 using WindowsFormUI.Views.Moduls.Kasalar;
 using WindowsFormUI.Views.Moduls.Stoklar;
@@ -43,7 +43,7 @@ namespace WindowsFormUI.Views
 
         private void BtnWelcomeCek_Click(object sender, EventArgs e)
         {
-            Program.Container.Resolve<FrmDegerliEvrak>().Show();
+            Program.Container.Resolve<FrmCekSenet>().Show();
         }
 
         private void BtnWelcomeBanka_Click(object sender, EventArgs e)
