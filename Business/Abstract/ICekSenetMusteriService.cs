@@ -16,5 +16,6 @@ namespace Business.Abstract
         IResult Add(CekSenetMusteri entity);
         IResult Delete(CekSenetMusteri entity);
         IResult Update(CekSenetMusteri entity);
+        IDataResult<List<CekSenetMusteri>> GetListPortfoydekiler();
     }
 }

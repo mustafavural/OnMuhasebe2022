@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMusteridenEvrakAl));
             this.grpEvrakBilgiler = new System.Windows.Forms.GroupBox();
             this.uscEvrakEkleGuncelleSil = new WindowsFormUI.Views.UserControls.UscFormButtons();
@@ -60,7 +60,7 @@
             this.colTutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAsilBorclu = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.uscMusteriyeEvrakCik = new WindowsFormUI.Views.UserControls.UscFormButtons();
+            this.uscMusteridenEvrakAl = new WindowsFormUI.Views.UserControls.UscFormButtons();
             this.pnlUstBilgiler = new System.Windows.Forms.Panel();
             this.grpBordroBilgiler = new System.Windows.Forms.GroupBox();
             this.lblBordroKod = new System.Windows.Forms.Label();
@@ -144,6 +144,7 @@
             this.txtTutar.Name = "txtTutar";
             this.txtTutar.Size = new System.Drawing.Size(120, 24);
             this.txtTutar.TabIndex = 5;
+            this.txtTutar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtDecimalHarfEngelle);
             this.txtTutar.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // txtEvrakNo
@@ -152,6 +153,7 @@
             this.txtEvrakNo.Name = "txtEvrakNo";
             this.txtEvrakNo.Size = new System.Drawing.Size(114, 24);
             this.txtEvrakNo.TabIndex = 1;
+            this.txtEvrakNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtBelgeNoHarfEngelle);
             this.txtEvrakNo.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // lblVade
@@ -221,7 +223,7 @@
             // 
             this.btnCariBul.BackgroundImage = global::WindowsFormUI.Properties.Resources.Cari32x32;
             this.btnCariBul.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnCariBul.Location = new System.Drawing.Point(192, 48);
+            this.btnCariBul.Location = new System.Drawing.Point(190, 48);
             this.btnCariBul.Name = "btnCariBul";
             this.btnCariBul.Size = new System.Drawing.Size(25, 24);
             this.btnCariBul.TabIndex = 2;
@@ -262,14 +264,14 @@
             this.dgvMusteridenEvrakAl.AllowUserToResizeRows = false;
             this.dgvMusteridenEvrakAl.BackgroundColor = System.Drawing.Color.White;
             this.dgvMusteridenEvrakAl.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMusteridenEvrakAl.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMusteridenEvrakAl.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvMusteridenEvrakAl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvMusteridenEvrakAl.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -307,9 +309,9 @@
             // colNo
             // 
             this.colNo.DataPropertyName = "No";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
-            this.colNo.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.colNo.DefaultCellStyle = dataGridViewCellStyle8;
             this.colNo.HeaderText = "No";
             this.colNo.Name = "colNo";
             this.colNo.ReadOnly = true;
@@ -317,10 +319,10 @@
             // colVade
             // 
             this.colVade.DataPropertyName = "Vade";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Format = "d";
-            dataGridViewCellStyle3.NullValue = null;
-            this.colVade.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Format = "d";
+            dataGridViewCellStyle9.NullValue = null;
+            this.colVade.DefaultCellStyle = dataGridViewCellStyle9;
             this.colVade.HeaderText = "Vadesi";
             this.colVade.Name = "colVade";
             this.colVade.ReadOnly = true;
@@ -328,10 +330,10 @@
             // colTutar
             // 
             this.colTutar.DataPropertyName = "Tutar";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle4.Format = "#,###.## TL";
-            dataGridViewCellStyle4.NullValue = null;
-            this.colTutar.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle10.Format = "#,###.## TL";
+            dataGridViewCellStyle10.NullValue = null;
+            this.colTutar.DefaultCellStyle = dataGridViewCellStyle10;
             this.colTutar.HeaderText = "Tutarı";
             this.colTutar.Name = "colTutar";
             this.colTutar.ReadOnly = true;
@@ -339,9 +341,9 @@
             // colAsilBorclu
             // 
             this.colAsilBorclu.DataPropertyName = "AsilBorclu";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
-            this.colAsilBorclu.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.colAsilBorclu.DefaultCellStyle = dataGridViewCellStyle11;
             this.colAsilBorclu.HeaderText = "Asıl Borçlu";
             this.colAsilBorclu.Name = "colAsilBorclu";
             this.colAsilBorclu.ReadOnly = true;
@@ -351,30 +353,30 @@
             // 
             this.colAciklama.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colAciklama.DataPropertyName = "Aciklama";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
-            this.colAciklama.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.colAciklama.DefaultCellStyle = dataGridViewCellStyle12;
             this.colAciklama.HeaderText = "Açıklama";
             this.colAciklama.Name = "colAciklama";
             this.colAciklama.ReadOnly = true;
             // 
-            // uscMusteriyeEvrakCik
+            // uscMusteridenEvrakAl
             // 
-            this.uscMusteriyeEvrakCik.BtnClear_Visible = true;
-            this.uscMusteriyeEvrakCik.BtnDelete_Enable = true;
-            this.uscMusteriyeEvrakCik.BtnDelete_Text = "Sil     ";
-            this.uscMusteriyeEvrakCik.BtnSave_Enable = true;
-            this.uscMusteriyeEvrakCik.BtnSave_Text = "Kaydet";
-            this.uscMusteriyeEvrakCik.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.uscMusteriyeEvrakCik.LblStatus_Text = "";
-            this.uscMusteriyeEvrakCik.Location = new System.Drawing.Point(0, 346);
-            this.uscMusteriyeEvrakCik.Name = "uscMusteriyeEvrakCik";
-            this.uscMusteriyeEvrakCik.Size = new System.Drawing.Size(756, 44);
-            this.uscMusteriyeEvrakCik.TabIndex = 1;
-            this.uscMusteriyeEvrakCik.TabStop = false;
-            this.uscMusteriyeEvrakCik.ClickClear += new System.EventHandler(this.UscMusteriyeEvrakCik_ClickClear);
-            this.uscMusteriyeEvrakCik.ClickSave += new System.EventHandler(this.UscMusteriyeEvrakCik_ClickSave);
-            this.uscMusteriyeEvrakCik.ClickCancel += new System.EventHandler(this.UscMusteriyeEvrakCik_ClickCancel);
+            this.uscMusteridenEvrakAl.BtnClear_Visible = true;
+            this.uscMusteridenEvrakAl.BtnDelete_Enable = true;
+            this.uscMusteridenEvrakAl.BtnDelete_Text = "Sil     ";
+            this.uscMusteridenEvrakAl.BtnSave_Enable = true;
+            this.uscMusteridenEvrakAl.BtnSave_Text = "Kaydet";
+            this.uscMusteridenEvrakAl.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.uscMusteridenEvrakAl.LblStatus_Text = "";
+            this.uscMusteridenEvrakAl.Location = new System.Drawing.Point(0, 346);
+            this.uscMusteridenEvrakAl.Name = "uscMusteridenEvrakAl";
+            this.uscMusteridenEvrakAl.Size = new System.Drawing.Size(756, 44);
+            this.uscMusteridenEvrakAl.TabIndex = 1;
+            this.uscMusteridenEvrakAl.TabStop = false;
+            this.uscMusteridenEvrakAl.ClickClear += new System.EventHandler(this.UscMusteridenEvrakAl_ClickClear);
+            this.uscMusteridenEvrakAl.ClickSave += new System.EventHandler(this.UscMusteridenEvrakAl_ClickSave);
+            this.uscMusteridenEvrakAl.ClickCancel += new System.EventHandler(this.UscMusteridenEvrakAl_ClickCancel);
             // 
             // pnlUstBilgiler
             // 
@@ -420,7 +422,7 @@
             // 
             this.btnBordroNoBul.BackgroundImage = global::WindowsFormUI.Properties.Resources.Cek_Bordo32x32;
             this.btnBordroNoBul.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnBordroNoBul.Location = new System.Drawing.Point(192, 18);
+            this.btnBordroNoBul.Location = new System.Drawing.Point(190, 18);
             this.btnBordroNoBul.Name = "btnBordroNoBul";
             this.btnBordroNoBul.Size = new System.Drawing.Size(25, 24);
             this.btnBordroNoBul.TabIndex = 2;
@@ -442,6 +444,7 @@
             this.txtBordroNo.Name = "txtBordroNo";
             this.txtBordroNo.Size = new System.Drawing.Size(111, 24);
             this.txtBordroNo.TabIndex = 1;
+            this.txtBordroNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtBelgeNoHarfEngelle);
             this.txtBordroNo.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // lblBordroAciklama
@@ -460,7 +463,7 @@
             this.ClientSize = new System.Drawing.Size(756, 390);
             this.Controls.Add(this.dgvMusteridenEvrakAl);
             this.Controls.Add(this.pnlUstBilgiler);
-            this.Controls.Add(this.uscMusteriyeEvrakCik);
+            this.Controls.Add(this.uscMusteridenEvrakAl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(772, 556);
             this.MinimumSize = new System.Drawing.Size(772, 429);
@@ -499,7 +502,7 @@
         private System.Windows.Forms.TextBox txtAciklama;
         private System.Windows.Forms.Label lblAciklama;
         private System.Windows.Forms.DataGridView dgvMusteridenEvrakAl;
-        private UserControls.UscFormButtons uscMusteriyeEvrakCik;
+        private UserControls.UscFormButtons uscMusteridenEvrakAl;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel pnlUstBilgiler;
         private System.Windows.Forms.GroupBox grpBordroBilgiler;

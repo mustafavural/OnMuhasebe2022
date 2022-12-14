@@ -17,7 +17,7 @@ namespace DataAccess.Configuration
             builder.Property(x => x.BordroTediyeId).HasColumnName(@"BordroTediyeId").HasColumnType("int").IsRequired(false);
             builder.Property(x => x.AsilBorclu).HasColumnName(@"AsilBorclu").HasColumnType("nvarchar(250)").IsRequired(false).HasMaxLength(250);
             builder.Property(x => x.Vade).HasColumnName(@"Vade").HasColumnType("date").IsRequired();
-            builder.Property(x => x.Tutar).HasColumnName(@"Tutar").HasColumnType("nvarchar(50)").IsRequired();
+            builder.Property(x => x.Tutar).HasColumnName(@"Tutar").HasColumnType("money").IsRequired();
             builder.Property(x => x.Aciklama).HasColumnName(@"Aciklama").HasColumnType("nvarchar(250)").IsRequired(false).HasMaxLength(250);
 
             builder.HasIndex(x => x.No).HasDatabaseName("UK_CekSenetBordrolar_No").IsUnique();

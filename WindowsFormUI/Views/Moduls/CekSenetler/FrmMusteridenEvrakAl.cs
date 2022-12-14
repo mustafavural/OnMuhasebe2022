@@ -20,6 +20,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
     {
         private readonly ICekSenetBordroService _cekSenetBordroService;
         private readonly ICariService _cariService;
+        private readonly ICekSenetMusteriService _cekSenetMusteriService;
         private readonly List<CekSenetMusteri> _musteriCekSenetler;
         private CekSenetBordro _secilenTahsilatBordro;
         private Cari _secilenCari;
@@ -28,22 +29,42 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
         private bool isUpdate = false;
 
         public FrmMusteridenEvrakAl(ICekSenetBordroService cekSenetBordroService,
-                                    ICariService cariService)
+                                    ICariService cariService,
+                                    ICekSenetMusteriService cekSenetMusteriService)
         {
             InitializeComponent();
             _cekSenetBordroService = cekSenetBordroService;
             _cariService = cariService;
+            _cekSenetMusteriService = cekSenetMusteriService;
             _musteriCekSenetler = new List<CekSenetMusteri>();
         }
 
         private void FrmMusteridenEvrakAl_Load(object sender, EventArgs e)
         {
             ClearScreen();
+            //
+            CekSenetBordro yeniBordro = _cekSenetBordroService.GetList().Data?.MaxBy(s => s.Id);
+            int bordroNo = yeniBordro == null ? 1 : yeniBordro.No[1..].Trim('0').ToInt() + 1;
+            txtBordroNo.Text = bordroNo.ToString();
+            //
         }
 
         private void DtpInputEngelle(object sender, KeyPressEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void TxtDecimalHarfEngelle(object sender, KeyPressEventArgs e)
+        {
+            if (((TextBox)sender).Text.Contains(','))
+                e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+            else
+                e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ',';
+        }
+
+        private void TxtBelgeNoHarfEngelle(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
         private void BtnBordroNoBul_Click(object sender, EventArgs e)
@@ -100,17 +121,17 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
 
             ClearCurrentEvrak();
 
-            uscMusteriyeEvrakCik.BtnClear_Visible = true;
-            uscMusteriyeEvrakCik.BtnDelete_Enable = true;
-            uscMusteriyeEvrakCik.BtnSave_Enable = true;
+            uscMusteridenEvrakAl.BtnClear_Visible = true;
+            uscMusteridenEvrakAl.BtnDelete_Enable = true;
+            uscMusteridenEvrakAl.BtnSave_Enable = true;
         }
 
-        private void UscMusteriyeEvrakCik_ClickClear(object sender, EventArgs e)
+        private void UscMusteridenEvrakAl_ClickClear(object sender, EventArgs e)
         {
             ClearScreen();
         }
 
-        private void UscMusteriyeEvrakCik_ClickSave(object sender, EventArgs e)
+        private void UscMusteridenEvrakAl_ClickSave(object sender, EventArgs e)
         {
             try
             {
@@ -132,7 +153,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             ClearScreen();
         }
 
-        private void UscMusteriyeEvrakCik_ClickCancel(object sender, EventArgs e)
+        private void UscMusteridenEvrakAl_ClickCancel(object sender, EventArgs e)
         {
             ClearScreen();
             this.Close();
@@ -228,6 +249,11 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
                 txtBordroAciklama.Enabled = false;
                 grpEvrakBilgiler.Enabled = true;
                 _secilenTahsilatBordro = ReadCekSenetBordroFromForm();
+
+                var yenifis = _cekSenetMusteriService.GetList().Data?.MaxBy(s => s.Id);
+                int fisNo = yenifis == null ? 1 : yenifis.No[1..].Trim('0').ToInt() + 1;
+                txtEvrakNo.Text = fisNo.ToString();
+
                 txtEvrakNo.Enabled = true;
                 txtEvrakNo.Focus();
             }
@@ -408,9 +434,9 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             _musteriCekSenetler.Clear();
             _secilenTahsilatBordro = null;
 
-            uscMusteriyeEvrakCik.BtnClear_Visible = false;
-            uscMusteriyeEvrakCik.BtnSave_Enable = false;
-            uscMusteriyeEvrakCik.BtnDelete_Enable = false;
+            uscMusteridenEvrakAl.BtnClear_Visible = false;
+            uscMusteridenEvrakAl.BtnSave_Enable = false;
+            uscMusteridenEvrakAl.BtnDelete_Enable = false;
 
             txtBordroNo.Focus();
         }
@@ -424,9 +450,9 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             txtBordroNo.Text = bordro;
             txtBordroNo.Enabled = false;
             btnBordroNoBul.Enabled = false;
-            uscMusteriyeEvrakCik.BtnClear_Visible = true;
-            uscMusteriyeEvrakCik.BtnSave_Enable = true;
-            uscMusteriyeEvrakCik.BtnSave_Text = "Bordro Kaydet";
+            uscMusteridenEvrakAl.BtnClear_Visible = true;
+            uscMusteridenEvrakAl.BtnSave_Enable = true;
+            uscMusteridenEvrakAl.BtnSave_Text = "Bordro Kaydet";
             txtCariKod.Text = "";
             txtCariKod.Enabled = true;
             btnCariBul.Enabled = true;
@@ -453,10 +479,10 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             WriteEvraklarToDgv(secilenBordro.CekSenetMusteriler);
 
             grpEvrakBilgiler.Enabled = true;
-            uscMusteriyeEvrakCik.BtnClear_Visible = true;
-            uscMusteriyeEvrakCik.BtnDelete_Enable = true;
-            uscMusteriyeEvrakCik.BtnSave_Enable = true;
-            uscMusteriyeEvrakCik.BtnSave_Text = "Güncelle";
+            uscMusteridenEvrakAl.BtnClear_Visible = true;
+            uscMusteridenEvrakAl.BtnDelete_Enable = true;
+            uscMusteridenEvrakAl.BtnSave_Enable = true;
+            uscMusteridenEvrakAl.BtnSave_Text = "Güncelle";
         }
     }
 }

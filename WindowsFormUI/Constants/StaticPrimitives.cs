@@ -10,5 +10,6 @@
         public static int SecilenKasaId { get; set; }
         public static int SecilenKasaHareketId { get; set; }
         public static int SecilenBordroId { get; set; }
+        public static int SecilenMusteriEvrakId { get; set; }
     }
 }

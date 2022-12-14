@@ -16,10 +16,12 @@ namespace Business.Concrete
     public class CekSenetMusteriManager : ICekSenetMusteriService
     {
         private readonly ICekSenetMusteriDal _cekSenetMusteriDal;
+        private readonly ICariService _cariService;
 
-        public CekSenetMusteriManager(ICekSenetMusteriDal borcCekSenetDal)
+        public CekSenetMusteriManager(ICekSenetMusteriDal borcCekSenetDal, ICariService cariService)
         {
             _cekSenetMusteriDal = borcCekSenetDal;
+            _cariService = cariService;
         }
 
         #region BusinessRules
@@ -77,6 +79,11 @@ namespace Business.Concrete
         public IDataResult<List<CekSenetMusteri>> GetListByVade(DateTime vade)
         {
             return new SuccessDataResult<List<CekSenetMusteri>>(GetAll(b => b.Vade == vade));
+        }
+
+        public IDataResult<List<CekSenetMusteri>> GetListPortfoydekiler()
+        {
+            return new SuccessDataResult<List<CekSenetMusteri>>(GetAll(m => m.BordroTediyeId == null));
         }
 
         [PerformanceAspect(5)]
