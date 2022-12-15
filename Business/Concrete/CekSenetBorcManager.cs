@@ -5,6 +5,7 @@ using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Security;
 using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
+using Core.Extensions;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -62,6 +63,12 @@ namespace Business.Concrete
         public IDataResult<CekSenetBorc> GetByNo(string no)
         {
             return new SuccessDataResult<CekSenetBorc>(Get(b => b.No == no));
+        }
+
+        public IDataResult<int> GetLastRowIndex()
+        {
+            var evrak = GetAll().MaxBy(s => s.Id);
+            return new SuccessDataResult<int>(evrak == null ? 1 : evrak.No[1..].Trim('0').ToInt() + 1);
         }
 
         public IDataResult<List<CekSenetBorc>> GetListByBordroTediye(int tediyeId)

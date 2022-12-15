@@ -5,6 +5,7 @@ using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Security;
 using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
+using Core.Extensions;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -77,6 +78,8 @@ namespace Business.Concrete
             {
                 bordro.CariHareket = _cariHareketService.GetById(bordro.Id).Data;
                 bordro.Cari = bordro.CariHareket.Cari;
+                bordro.CekSenetMusteriler = GetMusteriTahsilatCekSenetListById(bordro.Id).Data;
+                bordro.CekSenetBorclar = GetBorcCekSenetListById(bordro.Id).Data;
             }
             return bordro;
         }
@@ -91,6 +94,8 @@ namespace Business.Concrete
             {
                 bordrolar.ForEach(k => k.CariHareket = _cariHareketService.GetById(k.Id).Data);
                 bordrolar.ForEach(k => k.Cari = k.CariHareket.Cari);
+                bordrolar.ForEach(k => k.CekSenetBorclar = GetBorcCekSenetListById(k.Id).Data);
+                bordrolar.ForEach(k => k.CekSenetMusteriler = GetMusteriTahsilatCekSenetListById(k.Id).Data);
             }
             return bordrolar;
         }
@@ -103,6 +108,12 @@ namespace Business.Concrete
         public IDataResult<CekSenetBordro> GetByNo(string no)
         {
             return new SuccessDataResult<CekSenetBordro>(Get(k => k.No == no));
+        }
+
+        public IDataResult<int> GetLastRowIndex()
+        {
+            var evrak = GetAll().MaxBy(s => s.Id);
+            return new SuccessDataResult<int>(evrak == null ? 1 : evrak.No[1..].Trim('0').ToInt() + 1);
         }
 
         public IDataResult<List<CekSenetBordro>> GetListByTur(string tur)

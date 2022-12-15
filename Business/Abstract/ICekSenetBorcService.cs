@@ -8,6 +8,7 @@ namespace Business.Abstract
     {
         IDataResult<CekSenetBorc> GetById(int id);
         IDataResult<CekSenetBorc> GetByNo(string no);
+        IDataResult<int> GetLastRowIndex();
         IDataResult<List<CekSenetBorc>> GetListByBordroTediye(int tediyeId);
         IDataResult<List<CekSenetBorc>> GetListByVade(DateTime vade);
         IDataResult<List<CekSenetBorc>> GetList(Expression<Func<CekSenetBorc, bool>>? filter = null);

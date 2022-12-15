@@ -9,6 +9,7 @@ namespace Business.Abstract
         IDataResult<CekSenetMusteri> GetById(int id);
         IDataResult<CekSenetMusteri> GetByNo(string no);
         IDataResult<CekSenetMusteri> GetByAsilBorclu(string asilBorclu);
+        IDataResult<int> GetLastRowIndex();
         IDataResult<List<CekSenetMusteri>> GetListByBordroTahsilat(int tahsilatId);
         IDataResult<List<CekSenetMusteri>> GetListByBordroTediye(int tediyeId);
         IDataResult<List<CekSenetMusteri>> GetListByVade(DateTime vade);
