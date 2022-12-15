@@ -6,18 +6,6 @@ namespace WindowsFormUI.Views.UserExtensions
     public static class FaturaExtensions
     {
         /// <summary>
-        /// List generik yapısındaki veri tablolarına Update işlemini gerçekleyen ilave method.
-        /// </summary>
-        /// <typeparam name="T">Dönüş tipini belirler "Veri tabanı objesi (tablo/entity)"</typeparam>
-        /// <param name="entities">listenin kendisi</param>
-        /// <param name="index">hangi index nolu kaydın güncelleneceğini belirler</param>
-        /// <param name="newT">hengi veriyle güncelleneceğini belirler</param>
-        public static void Update<T>(this List<T> entities, int index, T newT) where T : class, new()
-        {
-            entities[index] = newT;
-        }
-
-        /// <summary>
         /// Fatura Türleri enum tipi için toString methodu: seçilen verinin adını string formatında döndürür.
         /// </summary>
         /// <param name="faturaTurleri">veri tipi</param>

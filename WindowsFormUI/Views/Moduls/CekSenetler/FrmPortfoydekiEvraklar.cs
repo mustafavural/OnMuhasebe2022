@@ -52,7 +52,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             }
         }
 
-        private void _TextChanged(object sender, EventArgs e)
+        private void TxtTextChanged(object sender, EventArgs e)
         {
             try
             {

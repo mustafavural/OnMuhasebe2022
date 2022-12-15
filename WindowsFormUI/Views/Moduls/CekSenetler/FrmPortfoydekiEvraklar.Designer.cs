@@ -225,7 +225,7 @@
             this.txtTutarEnCok.Name = "txtTutarEnCok";
             this.txtTutarEnCok.Size = new System.Drawing.Size(107, 24);
             this.txtTutarEnCok.TabIndex = 3;
-            this.txtTutarEnCok.TextChanged += new System.EventHandler(this._TextChanged);
+            this.txtTutarEnCok.TextChanged += new System.EventHandler(this.TxtTextChanged);
             // 
             // txtTutarEnAz
             // 
@@ -233,7 +233,7 @@
             this.txtTutarEnAz.Name = "txtTutarEnAz";
             this.txtTutarEnAz.Size = new System.Drawing.Size(107, 24);
             this.txtTutarEnAz.TabIndex = 1;
-            this.txtTutarEnAz.TextChanged += new System.EventHandler(this._TextChanged);
+            this.txtTutarEnAz.TextChanged += new System.EventHandler(this.TxtTextChanged);
             // 
             // txtAciklama
             // 
@@ -241,7 +241,7 @@
             this.txtAciklama.Name = "txtAciklama";
             this.txtAciklama.Size = new System.Drawing.Size(119, 24);
             this.txtAciklama.TabIndex = 9;
-            this.txtAciklama.TextChanged += new System.EventHandler(this._TextChanged);
+            this.txtAciklama.TextChanged += new System.EventHandler(this.TxtTextChanged);
             // 
             // grpVade
             // 
@@ -272,7 +272,7 @@
             this.dtpVadeSon.Name = "dtpVadeSon";
             this.dtpVadeSon.Size = new System.Drawing.Size(83, 24);
             this.dtpVadeSon.TabIndex = 3;
-            this.dtpVadeSon.ValueChanged += new System.EventHandler(this._TextChanged);
+            this.dtpVadeSon.ValueChanged += new System.EventHandler(this.TxtTextChanged);
             // 
             // lblVadeBitis
             // 
@@ -290,7 +290,7 @@
             this.dtpVadeIlk.Name = "dtpVadeIlk";
             this.dtpVadeIlk.Size = new System.Drawing.Size(83, 24);
             this.dtpVadeIlk.TabIndex = 1;
-            this.dtpVadeIlk.ValueChanged += new System.EventHandler(this._TextChanged);
+            this.dtpVadeIlk.ValueChanged += new System.EventHandler(this.TxtTextChanged);
             // 
             // lblAciklama
             // 
@@ -307,7 +307,7 @@
             this.txtAsilBorclu.Name = "txtAsilBorclu";
             this.txtAsilBorclu.Size = new System.Drawing.Size(119, 24);
             this.txtAsilBorclu.TabIndex = 5;
-            this.txtAsilBorclu.TextChanged += new System.EventHandler(this._TextChanged);
+            this.txtAsilBorclu.TextChanged += new System.EventHandler(this.TxtTextChanged);
             // 
             // lblAsilBorclu
             // 
@@ -324,7 +324,7 @@
             this.txtCariUnvan.Name = "txtCariUnvan";
             this.txtCariUnvan.Size = new System.Drawing.Size(119, 24);
             this.txtCariUnvan.TabIndex = 3;
-            this.txtCariUnvan.TextChanged += new System.EventHandler(this._TextChanged);
+            this.txtCariUnvan.TextChanged += new System.EventHandler(this.TxtTextChanged);
             // 
             // lblCariUnvan
             // 
@@ -341,7 +341,7 @@
             this.txtEvrakNo.Name = "txtEvrakNo";
             this.txtEvrakNo.Size = new System.Drawing.Size(119, 24);
             this.txtEvrakNo.TabIndex = 1;
-            this.txtEvrakNo.TextChanged += new System.EventHandler(this._TextChanged);
+            this.txtEvrakNo.TextChanged += new System.EventHandler(this.TxtTextChanged);
             // 
             // lblEvrakNo
             // 

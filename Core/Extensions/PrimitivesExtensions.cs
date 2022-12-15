@@ -9,7 +9,9 @@
                 return Convert.ToDecimal(value);
             }
             catch (FormatException)
-            { return minOrMax == 0 ? decimal.MinValue : decimal.MaxValue; }
+            {
+                return minOrMax == 0 ? decimal.MinValue : decimal.MaxValue;
+            }
         }
 
         public static int ToInt(this string value)
