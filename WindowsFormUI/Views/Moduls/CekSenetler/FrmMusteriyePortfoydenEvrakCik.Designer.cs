@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormUI.Views.Moduls.CekSenetler
 {
-    partial class FrmMusteriyeEvrakCik
+    partial class FrmMusteriyePortfoydenEvrakCik
     {
         /// <summary>
         /// Required designer variable.
@@ -34,7 +34,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMusteriyeEvrakCik));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMusteriyePortfoydenEvrakCik));
             this.dgvMusteridenEvrakAl = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNo = new System.Windows.Forms.DataGridViewTextBoxColumn();

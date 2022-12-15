@@ -30,7 +30,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
         private void FrmBordroListe_Load(object sender, EventArgs e)
         {
             var tur = BordroTur.ToText();
-            lblBordroTurler.Text = tur != "" ? tur : "Tümü";
+            lblBordroTurler.Text = tur != "" ? tur : "Hepsi";
             _bordrolar = _bordroService.GetList(f => f.Tur == tur || tur == "").Data;
             dtpTarihIlk.Value = DateTime.Today.AddDays(-10);
         }
@@ -45,7 +45,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
                     s.No,
                     s.Tur,
                     s.Cari.Unvan,
-                    Tutar = s.CekSenetBorclar.Sum(a => a.Tutar),
+                    Tutar = s.Tur == BordroTur.ToText() ? s.CekSenetBorclar.Sum(a => a.Tutar) : s.CekSenetMusteriler.Sum(a => a.Tutar),
                     s.Tarih,
                     s.Aciklama
                 }).ToList();

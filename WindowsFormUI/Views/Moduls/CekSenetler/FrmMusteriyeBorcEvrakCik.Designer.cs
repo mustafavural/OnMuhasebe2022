@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormUI.Views.Moduls.CekSenetler
 {
-    partial class FrmEvrakAl
+    partial class FrmMusteriyeBorcEvrakCik
     {
         /// <summary>
         /// Required designer variable.
@@ -28,39 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEvrakAl));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMusteriyeBorcEvrakCik));
             this.grpEvrakBilgiler = new System.Windows.Forms.GroupBox();
             this.uscEvrakEkleGuncelleSil = new WindowsFormUI.Views.UserControls.UscFormButtons();
             this.dtpVade = new System.Windows.Forms.DateTimePicker();
-            this.txtAsilBorclu = new System.Windows.Forms.TextBox();
             this.txtAciklama = new System.Windows.Forms.TextBox();
             this.txtTutar = new System.Windows.Forms.TextBox();
             this.txtEvrakNo = new System.Windows.Forms.TextBox();
             this.lblVade = new System.Windows.Forms.Label();
             this.lblAciklama = new System.Windows.Forms.Label();
-            this.lblAsilBorclu = new System.Windows.Forms.Label();
             this.lblTutar = new System.Windows.Forms.Label();
             this.lblEvrakNo = new System.Windows.Forms.Label();
-            this.dtpAlisTarih = new System.Windows.Forms.DateTimePicker();
+            this.dtpCikisTarih = new System.Windows.Forms.DateTimePicker();
             this.txtCariKod = new System.Windows.Forms.TextBox();
             this.btnCariBul = new System.Windows.Forms.Button();
-            this.lblAlisTarih = new System.Windows.Forms.Label();
+            this.lblCikisTarih = new System.Windows.Forms.Label();
             this.lblCariUnvan = new System.Windows.Forms.Label();
             this.lblCariKod = new System.Windows.Forms.Label();
-            this.dgvEvrakAl = new System.Windows.Forms.DataGridView();
+            this.dgvEvrakCik = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colVade = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAsilBorclu = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.uscEvrakAl = new WindowsFormUI.Views.UserControls.UscFormButtons();
+            this.uscBorcEvrakCik = new WindowsFormUI.Views.UserControls.UscFormButtons();
             this.pnlUstBilgiler = new System.Windows.Forms.Panel();
             this.grpBordroBilgiler = new System.Windows.Forms.GroupBox();
             this.lblBordroKod = new System.Windows.Forms.Label();
@@ -69,7 +65,7 @@
             this.txtBordroNo = new System.Windows.Forms.TextBox();
             this.lblBordroAciklama = new System.Windows.Forms.Label();
             this.grpEvrakBilgiler.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEvrakAl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEvrakCik)).BeginInit();
             this.pnlUstBilgiler.SuspendLayout();
             this.grpBordroBilgiler.SuspendLayout();
             this.SuspendLayout();
@@ -78,13 +74,11 @@
             // 
             this.grpEvrakBilgiler.Controls.Add(this.uscEvrakEkleGuncelleSil);
             this.grpEvrakBilgiler.Controls.Add(this.dtpVade);
-            this.grpEvrakBilgiler.Controls.Add(this.txtAsilBorclu);
             this.grpEvrakBilgiler.Controls.Add(this.txtAciklama);
             this.grpEvrakBilgiler.Controls.Add(this.txtTutar);
             this.grpEvrakBilgiler.Controls.Add(this.txtEvrakNo);
             this.grpEvrakBilgiler.Controls.Add(this.lblVade);
             this.grpEvrakBilgiler.Controls.Add(this.lblAciklama);
-            this.grpEvrakBilgiler.Controls.Add(this.lblAsilBorclu);
             this.grpEvrakBilgiler.Controls.Add(this.lblTutar);
             this.grpEvrakBilgiler.Controls.Add(this.lblEvrakNo);
             this.grpEvrakBilgiler.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -119,20 +113,12 @@
             this.dtpVade.Name = "dtpVade";
             this.dtpVade.Size = new System.Drawing.Size(100, 24);
             this.dtpVade.TabIndex = 3;
-            this.dtpVade.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DtpInputEngelle);
+            this.dtpVade.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtBelgeNoHarfEngelle);
             this.dtpVade.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
-            // 
-            // txtAsilBorclu
-            // 
-            this.txtAsilBorclu.Location = new System.Drawing.Point(87, 53);
-            this.txtAsilBorclu.Name = "txtAsilBorclu";
-            this.txtAsilBorclu.Size = new System.Drawing.Size(446, 24);
-            this.txtAsilBorclu.TabIndex = 7;
-            this.txtAsilBorclu.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // txtAciklama
             // 
-            this.txtAciklama.Location = new System.Drawing.Point(87, 83);
+            this.txtAciklama.Location = new System.Drawing.Point(87, 53);
             this.txtAciklama.Name = "txtAciklama";
             this.txtAciklama.Size = new System.Drawing.Size(446, 24);
             this.txtAciklama.TabIndex = 9;
@@ -168,20 +154,11 @@
             // lblAciklama
             // 
             this.lblAciklama.AutoSize = true;
-            this.lblAciklama.Location = new System.Drawing.Point(12, 86);
+            this.lblAciklama.Location = new System.Drawing.Point(12, 56);
             this.lblAciklama.Name = "lblAciklama";
             this.lblAciklama.Size = new System.Drawing.Size(56, 17);
             this.lblAciklama.TabIndex = 8;
             this.lblAciklama.Text = "Açıklama";
-            // 
-            // lblAsilBorclu
-            // 
-            this.lblAsilBorclu.AutoSize = true;
-            this.lblAsilBorclu.Location = new System.Drawing.Point(12, 56);
-            this.lblAsilBorclu.Name = "lblAsilBorclu";
-            this.lblAsilBorclu.Size = new System.Drawing.Size(70, 17);
-            this.lblAsilBorclu.TabIndex = 6;
-            this.lblAsilBorclu.Text = "Asıl Borçlu";
             // 
             // lblTutar
             // 
@@ -201,15 +178,15 @@
             this.lblEvrakNo.TabIndex = 0;
             this.lblEvrakNo.Text = "Evrak Kodu";
             // 
-            // dtpAlisTarih
+            // dtpCikisTarih
             // 
-            this.dtpAlisTarih.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpAlisTarih.Location = new System.Drawing.Point(78, 78);
-            this.dtpAlisTarih.Name = "dtpAlisTarih";
-            this.dtpAlisTarih.Size = new System.Drawing.Size(133, 24);
-            this.dtpAlisTarih.TabIndex = 4;
-            this.dtpAlisTarih.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DtpInputEngelle);
-            this.dtpAlisTarih.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
+            this.dtpCikisTarih.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpCikisTarih.Location = new System.Drawing.Point(78, 78);
+            this.dtpCikisTarih.Name = "dtpCikisTarih";
+            this.dtpCikisTarih.Size = new System.Drawing.Size(133, 24);
+            this.dtpCikisTarih.TabIndex = 4;
+            this.dtpCikisTarih.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtBelgeNoHarfEngelle);
+            this.dtpCikisTarih.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // txtCariKod
             // 
@@ -231,14 +208,14 @@
             this.btnCariBul.UseVisualStyleBackColor = true;
             this.btnCariBul.Click += new System.EventHandler(this.BtnCariBul_Click);
             // 
-            // lblAlisTarih
+            // lblCikisTarih
             // 
-            this.lblAlisTarih.AutoSize = true;
-            this.lblAlisTarih.Location = new System.Drawing.Point(6, 81);
-            this.lblAlisTarih.Name = "lblAlisTarih";
-            this.lblAlisTarih.Size = new System.Drawing.Size(68, 17);
-            this.lblAlisTarih.TabIndex = 3;
-            this.lblAlisTarih.Text = "Alış Tarihi";
+            this.lblCikisTarih.AutoSize = true;
+            this.lblCikisTarih.Location = new System.Drawing.Point(6, 81);
+            this.lblCikisTarih.Name = "lblCikisTarih";
+            this.lblCikisTarih.Size = new System.Drawing.Size(73, 17);
+            this.lblCikisTarih.TabIndex = 3;
+            this.lblCikisTarih.Text = "Çıkış Tarihi";
             // 
             // lblCariUnvan
             // 
@@ -257,44 +234,43 @@
             this.lblCariKod.TabIndex = 0;
             this.lblCariKod.Text = "Cari Kodu";
             // 
-            // dgvEvrakAl
+            // dgvEvrakCik
             // 
-            this.dgvEvrakAl.AllowUserToAddRows = false;
-            this.dgvEvrakAl.AllowUserToDeleteRows = false;
-            this.dgvEvrakAl.AllowUserToResizeRows = false;
-            this.dgvEvrakAl.BackgroundColor = System.Drawing.Color.White;
-            this.dgvEvrakAl.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvEvrakAl.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            this.dgvEvrakAl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvEvrakAl.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvEvrakCik.AllowUserToAddRows = false;
+            this.dgvEvrakCik.AllowUserToDeleteRows = false;
+            this.dgvEvrakCik.AllowUserToResizeRows = false;
+            this.dgvEvrakCik.BackgroundColor = System.Drawing.Color.White;
+            this.dgvEvrakCik.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvEvrakCik.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvEvrakCik.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvEvrakCik.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
             this.colNo,
             this.colVade,
             this.colTutar,
-            this.colAsilBorclu,
             this.colAciklama});
-            this.dgvEvrakAl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvEvrakAl.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvEvrakAl.EnableHeadersVisualStyles = false;
-            this.dgvEvrakAl.Location = new System.Drawing.Point(0, 175);
-            this.dgvEvrakAl.MultiSelect = false;
-            this.dgvEvrakAl.Name = "dgvEvrakAl";
-            this.dgvEvrakAl.ReadOnly = true;
-            this.dgvEvrakAl.RowHeadersVisible = false;
-            this.dgvEvrakAl.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgvEvrakAl.RowTemplate.Height = 25;
-            this.dgvEvrakAl.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvEvrakAl.Size = new System.Drawing.Size(756, 171);
-            this.dgvEvrakAl.TabIndex = 2;
-            this.dgvEvrakAl.TabStop = false;
-            this.dgvEvrakAl.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvEvrakAl_CellDoubleClick);
+            this.dgvEvrakCik.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvEvrakCik.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvEvrakCik.EnableHeadersVisualStyles = false;
+            this.dgvEvrakCik.Location = new System.Drawing.Point(0, 175);
+            this.dgvEvrakCik.MultiSelect = false;
+            this.dgvEvrakCik.Name = "dgvEvrakCik";
+            this.dgvEvrakCik.ReadOnly = true;
+            this.dgvEvrakCik.RowHeadersVisible = false;
+            this.dgvEvrakCik.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvEvrakCik.RowTemplate.Height = 25;
+            this.dgvEvrakCik.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvEvrakCik.Size = new System.Drawing.Size(756, 171);
+            this.dgvEvrakCik.TabIndex = 2;
+            this.dgvEvrakCik.TabStop = false;
+            this.dgvEvrakCik.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvMusteriyeBorcEvrakCik_CellDoubleClick);
             // 
             // colId
             // 
@@ -309,9 +285,9 @@
             // colNo
             // 
             this.colNo.DataPropertyName = "No";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
-            this.colNo.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.colNo.DefaultCellStyle = dataGridViewCellStyle2;
             this.colNo.HeaderText = "No";
             this.colNo.Name = "colNo";
             this.colNo.ReadOnly = true;
@@ -319,10 +295,10 @@
             // colVade
             // 
             this.colVade.DataPropertyName = "Vade";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Format = "d";
-            dataGridViewCellStyle9.NullValue = null;
-            this.colVade.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            this.colVade.DefaultCellStyle = dataGridViewCellStyle3;
             this.colVade.HeaderText = "Vadesi";
             this.colVade.Name = "colVade";
             this.colVade.ReadOnly = true;
@@ -330,53 +306,42 @@
             // colTutar
             // 
             this.colTutar.DataPropertyName = "Tutar";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle10.Format = "#,###.## TL";
-            dataGridViewCellStyle10.NullValue = null;
-            this.colTutar.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle4.Format = "#,###.## TL";
+            dataGridViewCellStyle4.NullValue = null;
+            this.colTutar.DefaultCellStyle = dataGridViewCellStyle4;
             this.colTutar.HeaderText = "Tutarı";
             this.colTutar.Name = "colTutar";
             this.colTutar.ReadOnly = true;
-            // 
-            // colAsilBorclu
-            // 
-            this.colAsilBorclu.DataPropertyName = "AsilBorclu";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
-            this.colAsilBorclu.DefaultCellStyle = dataGridViewCellStyle11;
-            this.colAsilBorclu.HeaderText = "Asıl Borçlu";
-            this.colAsilBorclu.Name = "colAsilBorclu";
-            this.colAsilBorclu.ReadOnly = true;
-            this.colAsilBorclu.Width = 200;
             // 
             // colAciklama
             // 
             this.colAciklama.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colAciklama.DataPropertyName = "Aciklama";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
-            this.colAciklama.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.colAciklama.DefaultCellStyle = dataGridViewCellStyle5;
             this.colAciklama.HeaderText = "Açıklama";
             this.colAciklama.Name = "colAciklama";
             this.colAciklama.ReadOnly = true;
             // 
-            // uscEvrakAl
+            // uscBorcEvrakCik
             // 
-            this.uscEvrakAl.BtnClear_Visible = true;
-            this.uscEvrakAl.BtnDelete_Enable = true;
-            this.uscEvrakAl.BtnDelete_Text = "Sil     ";
-            this.uscEvrakAl.BtnSave_Enable = true;
-            this.uscEvrakAl.BtnSave_Text = "Kaydet";
-            this.uscEvrakAl.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.uscEvrakAl.LblStatus_Text = "";
-            this.uscEvrakAl.Location = new System.Drawing.Point(0, 346);
-            this.uscEvrakAl.Name = "uscEvrakAl";
-            this.uscEvrakAl.Size = new System.Drawing.Size(756, 44);
-            this.uscEvrakAl.TabIndex = 1;
-            this.uscEvrakAl.TabStop = false;
-            this.uscEvrakAl.ClickClear += new System.EventHandler(this.UscEvrakAl_ClickClear);
-            this.uscEvrakAl.ClickSave += new System.EventHandler(this.UscEvrakAl_ClickSave);
-            this.uscEvrakAl.ClickCancel += new System.EventHandler(this.UscEvrakAl_ClickCancel);
+            this.uscBorcEvrakCik.BtnClear_Visible = true;
+            this.uscBorcEvrakCik.BtnDelete_Enable = true;
+            this.uscBorcEvrakCik.BtnDelete_Text = "Sil     ";
+            this.uscBorcEvrakCik.BtnSave_Enable = true;
+            this.uscBorcEvrakCik.BtnSave_Text = "Kaydet";
+            this.uscBorcEvrakCik.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.uscBorcEvrakCik.LblStatus_Text = "";
+            this.uscBorcEvrakCik.Location = new System.Drawing.Point(0, 346);
+            this.uscBorcEvrakCik.Name = "uscBorcEvrakCik";
+            this.uscBorcEvrakCik.Size = new System.Drawing.Size(756, 44);
+            this.uscBorcEvrakCik.TabIndex = 1;
+            this.uscBorcEvrakCik.TabStop = false;
+            this.uscBorcEvrakCik.ClickClear += new System.EventHandler(this.UscMusteriyeBorcEvrakCik_ClickClear);
+            this.uscBorcEvrakCik.ClickSave += new System.EventHandler(this.UscMusteriyeBorcEvrakCik_ClickSave);
+            this.uscBorcEvrakCik.ClickCancel += new System.EventHandler(this.UscMusteriyeBorcEvrakCik_ClickCancel);
             // 
             // pnlUstBilgiler
             // 
@@ -392,14 +357,14 @@
             // 
             this.grpBordroBilgiler.Controls.Add(this.lblBordroKod);
             this.grpBordroBilgiler.Controls.Add(this.lblCariKod);
-            this.grpBordroBilgiler.Controls.Add(this.dtpAlisTarih);
+            this.grpBordroBilgiler.Controls.Add(this.dtpCikisTarih);
             this.grpBordroBilgiler.Controls.Add(this.btnBordroNoBul);
             this.grpBordroBilgiler.Controls.Add(this.btnCariBul);
             this.grpBordroBilgiler.Controls.Add(this.txtBordroAciklama);
             this.grpBordroBilgiler.Controls.Add(this.txtBordroNo);
             this.grpBordroBilgiler.Controls.Add(this.txtCariKod);
             this.grpBordroBilgiler.Controls.Add(this.lblCariUnvan);
-            this.grpBordroBilgiler.Controls.Add(this.lblAlisTarih);
+            this.grpBordroBilgiler.Controls.Add(this.lblCikisTarih);
             this.grpBordroBilgiler.Controls.Add(this.lblBordroAciklama);
             this.grpBordroBilgiler.Dock = System.Windows.Forms.DockStyle.Left;
             this.grpBordroBilgiler.Location = new System.Drawing.Point(0, 0);
@@ -456,24 +421,24 @@
             this.lblBordroAciklama.TabIndex = 5;
             this.lblBordroAciklama.Text = "Açıklama";
             // 
-            // FrmEvrakAl
+            // FrmMusteriyeBorcEvrakCik
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(756, 390);
-            this.Controls.Add(this.dgvEvrakAl);
+            this.Controls.Add(this.dgvEvrakCik);
             this.Controls.Add(this.pnlUstBilgiler);
-            this.Controls.Add(this.uscEvrakAl);
+            this.Controls.Add(this.uscBorcEvrakCik);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(772, 556);
             this.MinimumSize = new System.Drawing.Size(772, 429);
-            this.Name = "FrmEvrakAl";
+            this.Name = "FrmMusteriyeBorcEvrakCik";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "Muşteriden Evrak Al";
-            this.Load += new System.EventHandler(this.FrmEvrakAl_Load);
+            this.Text = "Muşteriye Borç Evrağı Ver";
+            this.Load += new System.EventHandler(this.FrmMusteriyeBorcEvrakCik_Load);
             this.grpEvrakBilgiler.ResumeLayout(false);
             this.grpEvrakBilgiler.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEvrakAl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEvrakCik)).EndInit();
             this.pnlUstBilgiler.ResumeLayout(false);
             this.grpBordroBilgiler.ResumeLayout(false);
             this.grpBordroBilgiler.PerformLayout();
@@ -491,31 +456,28 @@
         private System.Windows.Forms.TextBox txtEvrakNo;
         private System.Windows.Forms.Label lblEvrakNo;
         private System.Windows.Forms.DateTimePicker dtpVade;
-        private System.Windows.Forms.TextBox txtAsilBorclu;
         private System.Windows.Forms.TextBox txtTutar;
         private System.Windows.Forms.Label lblVade;
-        private System.Windows.Forms.Label lblAsilBorclu;
         private System.Windows.Forms.Label lblTutar;
-        private System.Windows.Forms.DateTimePicker dtpAlisTarih;
-        private System.Windows.Forms.Label lblAlisTarih;
+        private System.Windows.Forms.DateTimePicker dtpCikisTarih;
+        private System.Windows.Forms.Label lblCikisTarih;
         private UserControls.UscFormButtons uscEvrakEkleGuncelleSil;
         private System.Windows.Forms.TextBox txtAciklama;
         private System.Windows.Forms.Label lblAciklama;
-        private System.Windows.Forms.DataGridView dgvEvrakAl;
-        private UserControls.UscFormButtons uscEvrakAl;
+        private System.Windows.Forms.DataGridView dgvEvrakCik;
+        private UserControls.UscFormButtons uscBorcEvrakCik;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel pnlUstBilgiler;
         private System.Windows.Forms.GroupBox grpBordroBilgiler;
         private System.Windows.Forms.TextBox txtBordroAciklama;
         private System.Windows.Forms.Label lblBordroAciklama;
+        private System.Windows.Forms.Label lblBordroKod;
+        private System.Windows.Forms.Button btnBordroNoBul;
+        private System.Windows.Forms.TextBox txtBordroNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colVade;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTutar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colAsilBorclu;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAciklama;
-        private System.Windows.Forms.Label lblBordroKod;
-        private System.Windows.Forms.Button btnBordroNoBul;
-        private System.Windows.Forms.TextBox txtBordroNo;
     }
 }

@@ -30,14 +30,14 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmBordroListe));
             this.grpBordroListe = new System.Windows.Forms.GroupBox();
             this.lblBordroTurler = new System.Windows.Forms.Label();
@@ -241,14 +241,14 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             this.dgvBordroListe.AllowUserToDeleteRows = false;
             this.dgvBordroListe.AllowUserToResizeRows = false;
             this.dgvBordroListe.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvBordroListe.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvBordroListe.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvBordroListe.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBordroListe.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colBordroId,
@@ -275,19 +275,20 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             // 
             this.colBordroId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colBordroId.DataPropertyName = "Id";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colBordroId.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colBordroId.DefaultCellStyle = dataGridViewCellStyle2;
             this.colBordroId.HeaderText = "Id";
             this.colBordroId.Name = "colBordroId";
             this.colBordroId.ReadOnly = true;
             this.colBordroId.Visible = false;
+            this.colBordroId.Width = 27;
             // 
             // colBordroNo
             // 
             this.colBordroNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colBordroNo.DataPropertyName = "No";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colBordroNo.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colBordroNo.DefaultCellStyle = dataGridViewCellStyle3;
             this.colBordroNo.HeaderText = "No";
             this.colBordroNo.Name = "colBordroNo";
             this.colBordroNo.ReadOnly = true;
@@ -297,8 +298,8 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             // 
             this.colBordroTur.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colBordroTur.DataPropertyName = "Tur";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colBordroTur.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colBordroTur.DefaultCellStyle = dataGridViewCellStyle4;
             this.colBordroTur.HeaderText = "Tür";
             this.colBordroTur.Name = "colBordroTur";
             this.colBordroTur.ReadOnly = true;
@@ -307,8 +308,8 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             // colCariUnvan
             // 
             this.colCariUnvan.DataPropertyName = "Unvan";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            this.colCariUnvan.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            this.colCariUnvan.DefaultCellStyle = dataGridViewCellStyle5;
             this.colCariUnvan.HeaderText = "Unvan";
             this.colCariUnvan.Name = "colCariUnvan";
             this.colCariUnvan.ReadOnly = true;
@@ -318,10 +319,10 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             // 
             this.colBordroTutar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colBordroTutar.DataPropertyName = "Tutar";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle14.Format = "#,###.## TL";
-            dataGridViewCellStyle14.NullValue = "0";
-            this.colBordroTutar.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle6.Format = "#,###.## TL";
+            dataGridViewCellStyle6.NullValue = "0";
+            this.colBordroTutar.DefaultCellStyle = dataGridViewCellStyle6;
             this.colBordroTutar.HeaderText = "Tutar";
             this.colBordroTutar.Name = "colBordroTutar";
             this.colBordroTutar.ReadOnly = true;
@@ -331,8 +332,8 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             // 
             this.colBordroTarih.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colBordroTarih.DataPropertyName = "Tarih";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colBordroTarih.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colBordroTarih.DefaultCellStyle = dataGridViewCellStyle7;
             this.colBordroTarih.HeaderText = "Tarih";
             this.colBordroTarih.Name = "colBordroTarih";
             this.colBordroTarih.ReadOnly = true;
@@ -342,8 +343,8 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             // 
             this.colBordroAciklama.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colBordroAciklama.DataPropertyName = "Aciklama";
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            this.colBordroAciklama.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            this.colBordroAciklama.DefaultCellStyle = dataGridViewCellStyle8;
             this.colBordroAciklama.HeaderText = "Aciklama";
             this.colBordroAciklama.Name = "colBordroAciklama";
             this.colBordroAciklama.ReadOnly = true;

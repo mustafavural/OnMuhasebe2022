@@ -1,20 +1,20 @@
-﻿using Business.Abstract;
+﻿using Autofac;
+using Business.Abstract;
 using Core.Extensions;
 using Entities.Concrete;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using System;
 using WindowsFormUI.Constants;
 using WindowsFormUI.Helpers;
-using WindowsFormUI.Views.UserExtensions;
-using System.Linq;
-using Autofac;
 using WindowsFormUI.Views.Moduls.Cariler;
+using WindowsFormUI.Views.UserExtensions;
 
 namespace WindowsFormUI.Views.Moduls.CekSenetler
 {
-    public partial class FrmMusteriyeEvrakCik : FrmBase
+    public partial class FrmMusteriyePortfoydenEvrakCik : FrmBase
     {
         private readonly ICekSenetBordroService _cekSenetBordroService;
         private readonly ICekSenetMusteriService _cekSenetMusteriService;
@@ -25,7 +25,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
         private Cari _secilenCari;
         private int _secilenMusteriEvrakIndex;
 
-        public FrmMusteriyeEvrakCik(ICekSenetBordroService cekSenetBordroService, ICariService cariService, ICekSenetMusteriService cekSenetMusteriService, ICariHareketService cariHareketService)
+        public FrmMusteriyePortfoydenEvrakCik(ICekSenetBordroService cekSenetBordroService, ICariService cariService, ICekSenetMusteriService cekSenetMusteriService, ICariHareketService cariHareketService)
         {
             InitializeComponent();
             _cekSenetBordroService = cekSenetBordroService;
@@ -44,7 +44,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
         private void BtnBordroNoBul_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FrmBordroListe>();
-            form.BordroTur = BordroTurleri.Tediye;
+            form.BordroTur = BordroTurleri.MusteriTediye;
             form.ShowDialog();
             try
             {
@@ -366,7 +366,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
                 {
                     _secilenTediyeBordro.Id = 0;
                     _secilenTediyeBordro.No = txtBordroNo.Text;
-                    _secilenTediyeBordro.Tur = "Tediye";
+                    _secilenTediyeBordro.Tur = "Muşteri Tediye";
                     _secilenTediyeBordro.CariId = _secilenCari.Id;
                     _secilenTediyeBordro.Cari = _secilenCari;
                     _secilenTediyeBordro.CariHareket = new()

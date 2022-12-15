@@ -13,10 +13,19 @@ namespace WindowsFormUI.Views.UserExtensions
         /// <returns>Enum tipinin seçilen nesnesinin adını döndürür</returns>
         public static string ToText(this BordroTurleri bordroTurleri)
         {
-            if (bordroTurleri == BordroTurleri.Hepsi)
-                return string.Empty;
-            else
-                return bordroTurleri == BordroTurleri.Tahsilat ? "Tahsilat Bordrosu" : "Tediye Bordrosu";
+            switch (bordroTurleri)
+            {
+                case BordroTurleri.Tahsilat:
+                    return "Tahsilat Bordrosu";
+                case BordroTurleri.MusteriTediye:
+                    return "Ciro Tediye Bordrosu";
+                case BordroTurleri.BorcTediye:
+                    return "Borc Tediye Bordrosu";
+                case BordroTurleri.Hepsi:
+                    return "";
+                default:
+                    return "";
+            }
         }
     }
 }

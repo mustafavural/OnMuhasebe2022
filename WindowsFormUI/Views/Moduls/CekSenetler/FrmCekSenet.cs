@@ -3,7 +3,7 @@ using System;
 
 namespace WindowsFormUI.Views.Moduls.CekSenetler
 {
-    public enum BordroTurleri { Hepsi = 0, Tahsilat = 1, Tediye = 2 }
+    public enum BordroTurleri { Hepsi = 0, Tahsilat = 1, MusteriTediye = 2, BorcTediye = 3 }
     public partial class FrmCekSenet : FrmMdiBase
     {
         public FrmCekSenet()
@@ -13,14 +13,14 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
 
         private void TsmiKayitMusteridenEvrakAl_Click(object sender, EventArgs e)
         {
-            var form = Program.Container.Resolve<FrmMusteridenEvrakAl>();
+            var form = Program.Container.Resolve<FrmEvrakAl>();
             form.MdiParent = this;
             form.Show();
         }
 
         private void TsmiKayitMusteriyeEvrakCik_Click(object sender, EventArgs e)
         {
-            var form = Program.Container.Resolve<FrmMusteriyeEvrakCik>();
+            var form = Program.Container.Resolve<FrmMusteriyePortfoydenEvrakCik>();
             form.MdiParent = this;
             form.Show();
         }

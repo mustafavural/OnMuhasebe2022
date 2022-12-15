@@ -56,8 +56,8 @@ namespace WindowsFormUI
             builder.RegisterType<FrmKasaListe>().AsSelf();
             builder.RegisterType<FrmBordroListe>().AsSelf();
             builder.RegisterType<FrmCekSenet>().AsSelf();
-            builder.RegisterType<FrmMusteridenEvrakAl>().AsSelf();
-            builder.RegisterType<FrmMusteriyeEvrakCik>().AsSelf();
+            builder.RegisterType<FrmEvrakAl>().AsSelf();
+            builder.RegisterType<FrmMusteriyePortfoydenEvrakCik>().AsSelf();
             builder.RegisterType<FrmPortfoydekiEvraklar>().AsSelf();
 
             return builder.Build();

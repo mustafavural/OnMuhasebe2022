@@ -16,30 +16,30 @@ using WindowsFormUI.Views.UserExtensions;
 
 namespace WindowsFormUI.Views.Moduls.CekSenetler
 {
-    public partial class FrmEvrakAl : FrmBase
+    public partial class FrmMusteriyeBorcEvrakCik : FrmBase
     {
         private readonly ICekSenetBordroService _cekSenetBordroService;
         private readonly ICariService _cariService;
-        private readonly ICekSenetMusteriService _cekSenetMusteriService;
-        private readonly List<CekSenetMusteri> _musteriCekSenetler;
-        private CekSenetBordro _secilenTahsilatBordro;
+        private readonly ICekSenetBorcService _cekSenetBorcService;
+        private readonly List<CekSenetBorc> _borcCekSenetler;
+        private CekSenetBordro _secilenTediyeBordro;
         private Cari _secilenCari;
-        private int _secilenMusteriEvrakIndex = -1;
+        private int _secilenBorcEvrakIndex = -1;
         private decimal _evrakTutar;
         private bool isUpdate = false;
 
-        public FrmEvrakAl(ICekSenetBordroService cekSenetBordroService,
+        public FrmMusteriyeBorcEvrakCik(ICekSenetBordroService cekSenetBordroService,
                                     ICariService cariService,
-                                    ICekSenetMusteriService cekSenetMusteriService)
+                                    ICekSenetBorcService cekSenetBorcService)
         {
             InitializeComponent();
             _cekSenetBordroService = cekSenetBordroService;
             _cariService = cariService;
-            _cekSenetMusteriService = cekSenetMusteriService;
-            _musteriCekSenetler = new List<CekSenetMusteri>();
+            _cekSenetBorcService = cekSenetBorcService;
+            _borcCekSenetler = new();
         }
 
-        private void FrmEvrakAl_Load(object sender, EventArgs e)
+        private void FrmMusteriyeBorcEvrakCik_Load(object sender, EventArgs e)
         {
             ClearScreen();
             //
@@ -47,11 +47,6 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             int bordroNo = yeniBordro == null ? 1 : yeniBordro.No[1..].Trim('0').ToInt() + 1;
             txtBordroNo.Text = bordroNo.ToString();
             //
-        }
-
-        private void DtpInputEngelle(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = true;
         }
 
         private void TxtDecimalHarfEngelle(object sender, KeyPressEventArgs e)
@@ -70,14 +65,14 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
         private void BtnBordroNoBul_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FrmBordroListe>();
-            form.BordroTur = BordroTurleri.Tahsilat;
+            form.BordroTur = BordroTurleri.BorcTediye;
             form.ShowDialog();
             try
             {
                 if (StaticPrimitives.SecilenBordroId > 0)
                 {
-                    _secilenTahsilatBordro = _cekSenetBordroService.GetById(StaticPrimitives.SecilenBordroId).Data;
-                    txtBordroNo.Text = _secilenTahsilatBordro.No;
+                    _secilenTediyeBordro = _cekSenetBordroService.GetById(StaticPrimitives.SecilenBordroId).Data;
+                    txtBordroNo.Text = _secilenTediyeBordro.No;
                     txtBordroNo.Focus();
                 }
             }
@@ -96,8 +91,8 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             {
                 if (StaticPrimitives.SecilenCariId > 0)
                 {
-                    _secilenTahsilatBordro.Cari = _cariService.GetById(StaticPrimitives.SecilenCariId).Data;
-                    txtCariKod.Text = _secilenTahsilatBordro.Cari.Kod;
+                    _secilenTediyeBordro.Cari = _cariService.GetById(StaticPrimitives.SecilenCariId).Data;
+                    txtCariKod.Text = _secilenTediyeBordro.Cari.Kod;
                     txtCariKod.Focus();
                 }
             }
@@ -114,36 +109,37 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
 
         private void UscEvrakEkleGuncelleSil_ClickSave(object sender, EventArgs e)
         {
+            var evrak = ReadCekSenetBorcFromForm();
             if (isUpdate)
-                _musteriCekSenetler.Update(_secilenMusteriEvrakIndex, ReadCekSenetMusteriFromForm());
+                _borcCekSenetler.Update(_secilenBorcEvrakIndex, evrak);
             else
-                _musteriCekSenetler.Add(ReadCekSenetMusteriFromForm());
+                _borcCekSenetler.Add(evrak);
 
             ClearCurrentEvrak();
 
-            uscEvrakAl.BtnClear_Visible = true;
-            uscEvrakAl.BtnDelete_Enable = true;
-            uscEvrakAl.BtnSave_Enable = true;
+            uscBorcEvrakCik.BtnClear_Visible = true;
+            uscBorcEvrakCik.BtnDelete_Enable = true;
+            uscBorcEvrakCik.BtnSave_Enable = true;
         }
 
-        private void UscEvrakAl_ClickClear(object sender, EventArgs e)
+        private void UscMusteriyeBorcEvrakCik_ClickClear(object sender, EventArgs e)
         {
             ClearScreen();
         }
 
-        private void UscEvrakAl_ClickSave(object sender, EventArgs e)
+        private void UscMusteriyeBorcEvrakCik_ClickSave(object sender, EventArgs e)
         {
             try
             {
-                _secilenTahsilatBordro.CekSenetMusteriler = _musteriCekSenetler;
-                _secilenTahsilatBordro.CariHareket = new CariHareket
+                _secilenTediyeBordro.CekSenetBorclar = _borcCekSenetler;
+                _secilenTediyeBordro.CariHareket = new CariHareket
                 {
-                    CariId = _secilenTahsilatBordro.Cari.Id,
-                    Tarih = _secilenTahsilatBordro.Tarih,
-                    Tutar = _secilenTahsilatBordro.CekSenetMusteriler.Sum(c => c.Tutar) * -1,
-                    Aciklama = $"{_secilenTahsilatBordro.No} nolu evrak tahsilat bordrosu."
+                    CariId = _secilenTediyeBordro.Cari.Id,
+                    Tarih = _secilenTediyeBordro.Tarih,
+                    Tutar = _secilenTediyeBordro.CekSenetMusteriler.Sum(c => c.Tutar) * -1,
+                    Aciklama = $"{_secilenTediyeBordro.No} nolu evrak tahsilat bordrosu."
                 };
-                var result = _cekSenetBordroService.Add(_secilenTahsilatBordro);
+                var result = _cekSenetBordroService.Add(_secilenTediyeBordro);
                 MessageHelper.SuccessMessageBuilder(result.Message, Messages.CekSenetMessages.MusteriCekSenetEklendi);
             }
             catch (Exception err)
@@ -153,22 +149,22 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             ClearScreen();
         }
 
-        private void UscEvrakAl_ClickCancel(object sender, EventArgs e)
+        private void UscMusteriyeBorcEvrakCik_ClickCancel(object sender, EventArgs e)
         {
             ClearScreen();
             this.Close();
         }
 
-        private void DgvEvrakAl_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvMusteriyeBorcEvrakCik_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex > -1)
             {
-                var secilenMusteriEvrak = _musteriCekSenetler[e.RowIndex];
+                var secilenMusteriEvrak = _borcCekSenetler[e.RowIndex];
                 WriteCekSenetMusteriToForm(secilenMusteriEvrak);
                 uscEvrakEkleGuncelleSil.BtnSave_Text = "Güncelle";
                 uscEvrakEkleGuncelleSil.BtnSave_Enable = true;
                 isUpdate = true;
-                _secilenMusteriEvrakIndex = e.RowIndex;
+                _secilenBorcEvrakIndex = e.RowIndex;
             }
         }
 
@@ -192,8 +188,8 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
                 var result = _cekSenetBordroService.GetByNo(txtBordroNo.Text);
                 if (result.Data != null)
                 {
-                    _secilenTahsilatBordro = result.Data;
-                    BringExistingBordro(_secilenTahsilatBordro);
+                    _secilenTediyeBordro = result.Data;
+                    BringExistingBordro(_secilenTediyeBordro);
                 }
                 else
                     OpenNewBordro();
@@ -213,8 +209,8 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
                     btnCariBul.Enabled = false;
                     lblCariUnvan.Text = _secilenCari.Unvan;
                     uscEvrakEkleGuncelleSil.BtnClear_Visible = true;
-                    dtpAlisTarih.Enabled = true;
-                    dtpAlisTarih.Focus();
+                    dtpCikisTarih.Enabled = true;
+                    dtpCikisTarih.Focus();
                 }
                 else
                 {
@@ -227,18 +223,18 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             }
         }
 
-        private void DtpAlisTarih_Leave()
+        private void DtpCikisTarih_Leave()
         {
-            if (dtpAlisTarih.Value == DateTime.Today.Date)
+            if (dtpCikisTarih.Value == DateTime.Today.Date)
             {
-                dtpAlisTarih.Enabled = false;
+                dtpCikisTarih.Enabled = false;
                 txtBordroAciklama.Enabled = true;
                 txtBordroAciklama.Focus();
             }
             else
             {
                 MessageHelper.ErrorMessageBuilder("Geçmiş tarihli evrak kabulu yapılamaz.", "Tarih Hatası");
-                dtpAlisTarih.Focus();
+                dtpCikisTarih.Focus();
             }
         }
 
@@ -248,9 +244,9 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             {
                 txtBordroAciklama.Enabled = false;
                 grpEvrakBilgiler.Enabled = true;
-                _secilenTahsilatBordro = ReadCekSenetBordroFromForm();
+                _secilenTediyeBordro = ReadCekSenetBordroFromForm();
 
-                var yenifis = _cekSenetMusteriService.GetList().Data?.MaxBy(s => s.Id);
+                var yenifis = _cekSenetBorcService.GetList().Data?.MaxBy(s => s.Id);
                 int fisNo = yenifis == null ? 1 : yenifis.No[1..].Trim('0').ToInt() + 1;
                 txtEvrakNo.Text = fisNo.ToString();
 
@@ -304,28 +300,13 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
                 _evrakTutar = txtTutar.Text.ToDecimal();
                 txtTutar.Text = _evrakTutar.ToString("#,###.## TL");
                 txtTutar.Enabled = false;
-                txtAsilBorclu.Enabled = true;
-                txtAsilBorclu.Focus();
-            }
-            else
-            {
-                MessageHelper.ErrorMessageBuilder("Tutar bilgisi boş geçilemez.", "Veri Hatası");
-                txtTutar.Focus();
-            }
-        }
-
-        private void TxtAsilBorclu_Leave()
-        {
-            if (txtAsilBorclu.Text.Length > 0)
-            {
-                txtAsilBorclu.Enabled = false;
                 txtAciklama.Enabled = true;
                 txtAciklama.Focus();
             }
             else
             {
-                MessageHelper.ErrorMessageBuilder("Evrağın asıl borçlusunu giriniz!.. Evrak müşterinize ait ise kendisi olark belirtiniz.", "Veri hatası");
-                txtAsilBorclu.Focus();
+                MessageHelper.ErrorMessageBuilder("Tutar bilgisi boş geçilemez.", "Veri Hatası");
+                txtTutar.Focus();
             }
         }
 
@@ -344,52 +325,49 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             }
         }
 
-        private CekSenetBordro ReadCekSenetBordroFromForm() => new CekSenetBordro()
+        private CekSenetBordro ReadCekSenetBordroFromForm() => new()
         {
             No = txtBordroNo.Text,
             Cari = _secilenCari,
             CariId = _secilenCari.Id,
-            Tarih = dtpAlisTarih.Value,
-            Tur = "Tahsilat",
+            Tarih = dtpCikisTarih.Value,
+            Tur = "Borç Tediye",
             Aciklama = txtBordroAciklama.Text
         };
 
-        private CekSenetMusteri ReadCekSenetMusteriFromForm() => new CekSenetMusteri()
+        private CekSenetBorc ReadCekSenetBorcFromForm() => new()
         {
             No = txtEvrakNo.Text,
             Vade = dtpVade.Value,
             Tutar = _evrakTutar,
-            AsilBorclu = txtAsilBorclu.Text,
             Aciklama = txtAciklama.Text
         };
 
-        private void WriteCekSenetMusteriToForm(CekSenetMusteri secilenMusteriEvrak)
+        private void WriteCekSenetMusteriToForm(CekSenetBorc secilenBorcEvrak)
         {
             ClearCurrentEvrak();
-            txtEvrakNo.Text = secilenMusteriEvrak.No;
-            dtpVade.Value = secilenMusteriEvrak.Vade;
-            txtTutar.Text = secilenMusteriEvrak.Tutar.ToString("#,###.## TL");
-            txtAsilBorclu.Text = secilenMusteriEvrak.AsilBorclu;
-            txtAciklama.Text = secilenMusteriEvrak.Aciklama;
+            txtEvrakNo.Text = secilenBorcEvrak.No;
+            dtpVade.Value = secilenBorcEvrak.Vade;
+            txtTutar.Text = secilenBorcEvrak.Tutar.ToString("#,###.## TL");
+            txtAciklama.Text = secilenBorcEvrak.Aciklama;
             txtEvrakNo.Focus();
         }
 
-        private void WriteEvraklarToDgv(List<CekSenetMusteri> musteriEvraklar)
+        private void WriteEvraklarToDgv(List<CekSenetBorc> borcEvraklar)
         {
-            dgvEvrakAl.DataSource = musteriEvraklar.Select(s => new
+            dgvEvrakCik.DataSource = borcEvraklar.Select(s => new
             {
                 s.Id,
                 s.No,
                 s.Vade,
                 Tutar = s.Tutar.ToString("#,###.## TL"),
-                s.AsilBorclu,
                 s.Aciklama
             }).ToList();
         }
 
         private void ClearCurrentEvrak()
         {
-            WriteEvraklarToDgv(_musteriCekSenetler);
+            WriteEvraklarToDgv(_borcCekSenetler);
 
             txtEvrakNo.Text = "";
             txtEvrakNo.Enabled = true;
@@ -400,14 +378,11 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             txtTutar.Text = "";
             txtTutar.Enabled = false;
 
-            txtAsilBorclu.Text = "";
-            txtAsilBorclu.Enabled = false;
-
             txtAciklama.Text = "";
             txtAciklama.Enabled = false;
 
             isUpdate = false;
-            _secilenMusteriEvrakIndex = -1;
+            _secilenBorcEvrakIndex = -1;
             uscEvrakEkleGuncelleSil.BtnClear_Visible = false;
             uscEvrakEkleGuncelleSil.BtnSave_Enable = false;
             uscEvrakEkleGuncelleSil.BtnSave_Text = "Ekle";
@@ -426,17 +401,17 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             lblCariUnvan.Text = "";
 
             txtEvrakNo.Enabled = false;
-            dtpAlisTarih.Enabled = false;
+            dtpCikisTarih.Enabled = false;
             txtBordroAciklama.Enabled = false;
-            dtpAlisTarih.Value = DateTime.Today;
+            dtpCikisTarih.Value = DateTime.Today;
             txtAciklama.Text = "";
 
-            _musteriCekSenetler.Clear();
-            _secilenTahsilatBordro = null;
+            _borcCekSenetler.Clear();
+            _secilenTediyeBordro = null;
 
-            uscEvrakAl.BtnClear_Visible = false;
-            uscEvrakAl.BtnSave_Enable = false;
-            uscEvrakAl.BtnDelete_Enable = false;
+            uscBorcEvrakCik.BtnClear_Visible = false;
+            uscBorcEvrakCik.BtnSave_Enable = false;
+            uscBorcEvrakCik.BtnDelete_Enable = false;
 
             txtBordroNo.Focus();
         }
@@ -444,20 +419,20 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
         private void OpenNewBordro()
         {
             StaticPrimitives.SecilenBordroId = -1;
-            _secilenTahsilatBordro = new();
+            _secilenTediyeBordro = new();
             var bordro = txtBordroNo.Text;
             ClearScreen();
             txtBordroNo.Text = bordro;
             txtBordroNo.Enabled = false;
             btnBordroNoBul.Enabled = false;
-            uscEvrakAl.BtnClear_Visible = true;
-            uscEvrakAl.BtnSave_Enable = true;
-            uscEvrakAl.BtnSave_Text = "Bordro Kaydet";
+            uscBorcEvrakCik.BtnClear_Visible = true;
+            uscBorcEvrakCik.BtnSave_Enable = true;
+            uscBorcEvrakCik.BtnSave_Text = "Kaydet";
             txtCariKod.Text = "";
             txtCariKod.Enabled = true;
             btnCariBul.Enabled = true;
             lblCariUnvan.Text = "";
-            dtpAlisTarih.Value = DateTime.Today;
+            dtpCikisTarih.Value = DateTime.Today;
             grpEvrakBilgiler.Enabled = false;
         }
 
@@ -471,18 +446,18 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             txtCariKod.Text = secilenBordro.Cari.Kod;
             txtCariKod.Enabled = false;
             btnCariBul.Enabled = false;
-            dtpAlisTarih.Enabled = false;
-            dtpAlisTarih.Value = secilenBordro.Tarih;
+            dtpCikisTarih.Enabled = false;
+            dtpCikisTarih.Value = secilenBordro.Tarih;
             txtBordroAciklama.Text = secilenBordro.Aciklama;
             lblCariUnvan.Text = secilenBordro.Cari.Unvan;
 
-            WriteEvraklarToDgv(secilenBordro.CekSenetMusteriler);
+            WriteEvraklarToDgv(secilenBordro.CekSenetBorclar);
 
             grpEvrakBilgiler.Enabled = true;
-            uscEvrakAl.BtnClear_Visible = true;
-            uscEvrakAl.BtnDelete_Enable = true;
-            uscEvrakAl.BtnSave_Enable = true;
-            uscEvrakAl.BtnSave_Text = "Güncelle";
+            uscBorcEvrakCik.BtnClear_Visible = true;
+            uscBorcEvrakCik.BtnDelete_Enable = true;
+            uscBorcEvrakCik.BtnSave_Enable = true;
+            uscBorcEvrakCik.BtnSave_Text = "Güncelle";
         }
     }
 }
