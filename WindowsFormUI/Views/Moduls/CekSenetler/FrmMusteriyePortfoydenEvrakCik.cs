@@ -376,7 +376,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
                         Cari = _secilenCari,
                         Tutar = _musteriCekSenetler.Sum(s => s.Tutar),
                         Tarih = dtpCikisTarih.Value,
-                        Aciklama = $"{_secilenTediyeBordro.No} numaralı müşteriye ciro bordrosu."
+                        Aciklama = $"{_secilenTediyeBordro.No} nolu musteri evrak tediye bordrosu."
                     };
                     _secilenTediyeBordro.Tarih = dtpCikisTarih.Value;
                     _secilenTediyeBordro.CekSenetMusteriler = _musteriCekSenetler;

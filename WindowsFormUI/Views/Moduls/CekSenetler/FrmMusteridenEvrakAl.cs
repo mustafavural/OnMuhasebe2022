@@ -37,21 +37,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             _cariService = cariService;
             _cekSenetMusteriService = cekSenetMusteriService;
             _musteriCekSenetler = new List<CekSenetMusteri>();
-        }
-
-        private void FrmEvrakAl_Load(object sender, EventArgs e)
-        {
             ClearScreen();
-            //
-            CekSenetBordro yeniBordro = _cekSenetBordroService.GetList().Data?.MaxBy(s => s.Id);
-            int bordroNo = yeniBordro == null ? 1 : yeniBordro.No[1..].Trim('0').ToInt() + 1;
-            txtBordroNo.Text = bordroNo.ToString();
-            //
-        }
-
-        private void DtpInputEngelle(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = true;
         }
 
         private void TxtDecimalHarfEngelle(object sender, KeyPressEventArgs e)
@@ -250,10 +236,6 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
                 grpEvrakBilgiler.Enabled = true;
                 _secilenTahsilatBordro = ReadCekSenetBordroFromForm();
 
-                var yenifis = _cekSenetMusteriService.GetList().Data?.MaxBy(s => s.Id);
-                int fisNo = yenifis == null ? 1 : yenifis.No[1..].Trim('0').ToInt() + 1;
-                txtEvrakNo.Text = fisNo.ToString();
-
                 txtEvrakNo.Enabled = true;
                 txtEvrakNo.Focus();
             }
@@ -413,6 +395,10 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             uscEvrakEkleGuncelleSil.BtnSave_Text = "Ekle";
             uscEvrakEkleGuncelleSil.BtnDelete_Enable = false;
 
+            var yenifis = _cekSenetMusteriService.GetList().Data?.MaxBy(s => s.Id);
+            int fisNo = yenifis == null ? 1 : yenifis.No[1..].Trim('0').ToInt() + 1;
+            txtEvrakNo.Text = fisNo.ToString();
+
             txtEvrakNo.Focus();
         }
 
@@ -437,6 +423,10 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             uscEvrakAl.BtnClear_Visible = false;
             uscEvrakAl.BtnSave_Enable = false;
             uscEvrakAl.BtnDelete_Enable = false;
+
+            CekSenetBordro yeniBordro = _cekSenetBordroService.GetList().Data?.MaxBy(s => s.Id);
+            int bordroNo = yeniBordro == null ? 1 : yeniBordro.No[1..].Trim('0').ToInt() + 1;
+            txtBordroNo.Text = bordroNo.ToString();
 
             txtBordroNo.Focus();
         }

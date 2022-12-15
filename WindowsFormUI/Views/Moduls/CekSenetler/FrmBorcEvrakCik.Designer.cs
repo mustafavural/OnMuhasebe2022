@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormUI.Views.Moduls.CekSenetler
 {
-    partial class FrmMusteriyeBorcEvrakCik
+    partial class FrmBorcEvrakCik
     {
         /// <summary>
         /// Required designer variable.
@@ -33,7 +33,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMusteriyeBorcEvrakCik));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmBorcEvrakCik));
             this.grpEvrakBilgiler = new System.Windows.Forms.GroupBox();
             this.uscEvrakEkleGuncelleSil = new WindowsFormUI.Views.UserControls.UscFormButtons();
             this.dtpVade = new System.Windows.Forms.DateTimePicker();
@@ -270,7 +270,7 @@
             this.dgvEvrakCik.Size = new System.Drawing.Size(756, 171);
             this.dgvEvrakCik.TabIndex = 2;
             this.dgvEvrakCik.TabStop = false;
-            this.dgvEvrakCik.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvMusteriyeBorcEvrakCik_CellDoubleClick);
+            this.dgvEvrakCik.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvBorcEvrakCik_CellDoubleClick);
             // 
             // colId
             // 
@@ -339,9 +339,9 @@
             this.uscBorcEvrakCik.Size = new System.Drawing.Size(756, 44);
             this.uscBorcEvrakCik.TabIndex = 1;
             this.uscBorcEvrakCik.TabStop = false;
-            this.uscBorcEvrakCik.ClickClear += new System.EventHandler(this.UscMusteriyeBorcEvrakCik_ClickClear);
-            this.uscBorcEvrakCik.ClickSave += new System.EventHandler(this.UscMusteriyeBorcEvrakCik_ClickSave);
-            this.uscBorcEvrakCik.ClickCancel += new System.EventHandler(this.UscMusteriyeBorcEvrakCik_ClickCancel);
+            this.uscBorcEvrakCik.ClickClear += new System.EventHandler(this.UscBorcEvrakCik_ClickClear);
+            this.uscBorcEvrakCik.ClickSave += new System.EventHandler(this.UscBorcEvrakCik_ClickSave);
+            this.uscBorcEvrakCik.ClickCancel += new System.EventHandler(this.UscBorcEvrakCik_ClickCancel);
             // 
             // pnlUstBilgiler
             // 
@@ -435,7 +435,7 @@
             this.Name = "FrmMusteriyeBorcEvrakCik";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Muşteriye Borç Evrağı Ver";
-            this.Load += new System.EventHandler(this.FrmMusteriyeBorcEvrakCik_Load);
+            this.Load += new System.EventHandler(this.FrmBorcEvrakCik_Load);
             this.grpEvrakBilgiler.ResumeLayout(false);
             this.grpEvrakBilgiler.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEvrakCik)).EndInit();

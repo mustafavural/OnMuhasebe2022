@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEvrakAl));
             this.grpEvrakBilgiler = new System.Windows.Forms.GroupBox();
             this.uscEvrakEkleGuncelleSil = new WindowsFormUI.Views.UserControls.UscFormButtons();
@@ -119,7 +119,7 @@
             this.dtpVade.Name = "dtpVade";
             this.dtpVade.Size = new System.Drawing.Size(100, 24);
             this.dtpVade.TabIndex = 3;
-            this.dtpVade.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DtpInputEngelle);
+            this.dtpVade.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtBelgeNoHarfEngelle);
             this.dtpVade.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // txtAsilBorclu
@@ -208,7 +208,7 @@
             this.dtpAlisTarih.Name = "dtpAlisTarih";
             this.dtpAlisTarih.Size = new System.Drawing.Size(133, 24);
             this.dtpAlisTarih.TabIndex = 4;
-            this.dtpAlisTarih.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DtpInputEngelle);
+            this.dtpAlisTarih.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtBelgeNoHarfEngelle);
             this.dtpAlisTarih.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // txtCariKod
@@ -264,14 +264,14 @@
             this.dgvEvrakAl.AllowUserToResizeRows = false;
             this.dgvEvrakAl.BackgroundColor = System.Drawing.Color.White;
             this.dgvEvrakAl.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvEvrakAl.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvEvrakAl.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvEvrakAl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvEvrakAl.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -309,9 +309,9 @@
             // colNo
             // 
             this.colNo.DataPropertyName = "No";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
-            this.colNo.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.colNo.DefaultCellStyle = dataGridViewCellStyle2;
             this.colNo.HeaderText = "No";
             this.colNo.Name = "colNo";
             this.colNo.ReadOnly = true;
@@ -319,10 +319,10 @@
             // colVade
             // 
             this.colVade.DataPropertyName = "Vade";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Format = "d";
-            dataGridViewCellStyle9.NullValue = null;
-            this.colVade.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            this.colVade.DefaultCellStyle = dataGridViewCellStyle3;
             this.colVade.HeaderText = "Vadesi";
             this.colVade.Name = "colVade";
             this.colVade.ReadOnly = true;
@@ -330,10 +330,10 @@
             // colTutar
             // 
             this.colTutar.DataPropertyName = "Tutar";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle10.Format = "#,###.## TL";
-            dataGridViewCellStyle10.NullValue = null;
-            this.colTutar.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle4.Format = "#,###.## TL";
+            dataGridViewCellStyle4.NullValue = null;
+            this.colTutar.DefaultCellStyle = dataGridViewCellStyle4;
             this.colTutar.HeaderText = "Tutarı";
             this.colTutar.Name = "colTutar";
             this.colTutar.ReadOnly = true;
@@ -341,9 +341,9 @@
             // colAsilBorclu
             // 
             this.colAsilBorclu.DataPropertyName = "AsilBorclu";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
-            this.colAsilBorclu.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.colAsilBorclu.DefaultCellStyle = dataGridViewCellStyle5;
             this.colAsilBorclu.HeaderText = "Asıl Borçlu";
             this.colAsilBorclu.Name = "colAsilBorclu";
             this.colAsilBorclu.ReadOnly = true;
@@ -353,9 +353,9 @@
             // 
             this.colAciklama.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colAciklama.DataPropertyName = "Aciklama";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
-            this.colAciklama.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.colAciklama.DefaultCellStyle = dataGridViewCellStyle6;
             this.colAciklama.HeaderText = "Açıklama";
             this.colAciklama.Name = "colAciklama";
             this.colAciklama.ReadOnly = true;
@@ -470,7 +470,6 @@
             this.Name = "FrmEvrakAl";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Muşteriden Evrak Al";
-            this.Load += new System.EventHandler(this.FrmEvrakAl_Load);
             this.grpEvrakBilgiler.ResumeLayout(false);
             this.grpEvrakBilgiler.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEvrakAl)).EndInit();
