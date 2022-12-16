@@ -126,7 +126,7 @@
             public static string MusteriCekSenetGuncellendi => "Muşteri çeki/seneti başarıyla güncellendi.";
             public static string EvrakZatenMevcut => "Bu evrak daha önce girilmiş.";
             public static string EvrakNoZatenMevcut => "Bu evrak numarası daha önce kullanılmış.";
-            public static string BordroNumarasiBulunamadi => "Kiymetli evrak bordro numarası mevcut değil.";
+            public static string BordroNumarasiBulunamadi => "Evrak bordro numarası bulunamadı.";
             public static string EvrakYok => "Evrak bulunamadı.";
             public static string BordroCariyeIslendi => "Evrak Bordrosu başarıyla cariye eklendi.";
             public static string BordroGuncellendi => "Bordro başarıyla güncellendi.";

@@ -5,8 +5,8 @@ namespace DataAccess.Abstract
 {
     public interface ICekSenetBordroDal : IEntityRepository<CekSenetBordro>
     {
-        List<CekSenetBorc> GetBorcCekSenetListById(int id);
-        List<CekSenetMusteri> GetMusteriTahsilatCekSenetListById(int id);
-        List<CekSenetMusteri> GetMusteriTediyeCekSenetListById(int id);
+        List<CekSenetBorc> GetBorcTediyeCekSenetListById(int id);
+        List<CekSenetMusteri> GetTahsilatCekSenetListById(int id);
+        List<CekSenetMusteri> GetCiroTediyeCekSenetListById(int id);
     }
 }

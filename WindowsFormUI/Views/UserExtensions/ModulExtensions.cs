@@ -1,5 +1,7 @@
 ﻿using Core.Entities.Abstract;
 using System.Collections.Generic;
+using System.Windows.Forms;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WindowsFormUI.Views.UserExtensions
 {
@@ -52,6 +54,21 @@ namespace WindowsFormUI.Views.UserExtensions
                 while (!IsFormattedNoString(value + txt, length, noCode));
             }
             return value += txt;
+        }
+
+        /// <summary>
+        /// DataGridView üzerinde, verilen sütun adında, verilen değer ile arama yaparak bulunan sonucun indexini döndürür.
+        /// </summary>
+        /// <param name="dataGridView">arama yapılacak datagridview</param>
+        /// <param name="columnName">üzerinde arama yapıalcak sütun ismi</param>
+        /// <param name="value">arama değeri</param>
+        /// <returns>aranan değer bulunursa değerin index i, bulunmazsa -1 döner.</returns>
+        public static int FindRowIndexWithColumnValue(this DataGridView dataGridView, string columnName, string value)
+        {
+            foreach (DataGridViewRow item in dataGridView.Rows)
+                if (item.Cells[columnName].Value.ToString() == value)
+                    return item.Index;
+            return -1;
         }
     }
 }

@@ -58,9 +58,10 @@ namespace Business.Concrete
 
         private IResult KontrolBordroBosMu(int id)
         {
-            return _cekSenetBordroDal.GetBorcCekSenetListById(id) == null &&
-            _cekSenetBordroDal.GetMusteriTahsilatCekSenetListById(id) == null &&
-            _cekSenetBordroDal.GetMusteriTediyeCekSenetListById(id) == null ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.BordroKullanimda);
+            return _cekSenetBordroDal.GetBorcTediyeCekSenetListById(id).Count == 0 &&
+            _cekSenetBordroDal.GetTahsilatCekSenetListById(id).Count == 0 &&
+            _cekSenetBordroDal.GetCiroTediyeCekSenetListById(id).Count == 0 ? new SuccessResult()
+                                                                              : new ErrorResult(Messages.CekSenetMessages.BordroKullanimda);
         }
 
         private IResult KontrolBordroIdMevcutMu(int id)
@@ -78,8 +79,18 @@ namespace Business.Concrete
             {
                 bordro.CariHareket = _cariHareketService.GetById(bordro.Id).Data;
                 bordro.Cari = bordro.CariHareket.Cari;
-                bordro.CekSenetMusteriler = GetMusteriTahsilatCekSenetListById(bordro.Id).Data;
-                bordro.CekSenetBorclar = GetBorcCekSenetListById(bordro.Id).Data;
+                switch (bordro.Tur)
+                {
+                    case "Tahsilat Bordrosu":
+                        bordro.CekSenetMusteriler = GetTahsilatCekSenetListById(bordro.Id).Data;
+                        break;
+                    case "Ciro Tediye Bordrosu":
+                        bordro.CekSenetMusteriler = GetCiroTediyeCekSenetListById(bordro.Id).Data;
+                        break;
+                    case "Borc Tediye Bordrosu":
+                        bordro.CekSenetBorclar = GetBorcTediyeCekSenetListById(bordro.Id).Data;
+                        break;
+                }
             }
             return bordro;
         }
@@ -94,15 +105,15 @@ namespace Business.Concrete
             {
                 bordrolar.ForEach(k => k.CariHareket = _cariHareketService.GetById(k.Id).Data);
                 bordrolar.ForEach(k => k.Cari = k.CariHareket.Cari);
-                bordrolar.ForEach(k => k.CekSenetBorclar = GetBorcCekSenetListById(k.Id).Data);
-                bordrolar.ForEach(k => k.CekSenetMusteriler = GetMusteriTahsilatCekSenetListById(k.Id).Data);
+                bordrolar.ForEach(k => k.CekSenetBorclar = GetBorcTediyeCekSenetListById(k.Id).Data);
+                bordrolar.ForEach(k => k.CekSenetMusteriler = GetTahsilatCekSenetListById(k.Id).Data);
             }
             return bordrolar;
         }
 
         public IDataResult<CekSenetBordro> GetById(int id)
         {
-            return new SuccessDataResult<CekSenetBordro>(Get(k=>k.Id== id));
+            return new SuccessDataResult<CekSenetBordro>(Get(k => k.Id == id));
         }
 
         public IDataResult<CekSenetBordro> GetByNo(string no)
@@ -133,23 +144,23 @@ namespace Business.Concrete
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
-        public IDataResult<List<CekSenetBorc>> GetBorcCekSenetListById(int id)
+        public IDataResult<List<CekSenetBorc>> GetBorcTediyeCekSenetListById(int id)
         {
-            return new SuccessDataResult<List<CekSenetBorc>>(_cekSenetBordroDal.GetBorcCekSenetListById(id));
+            return new SuccessDataResult<List<CekSenetBorc>>(_cekSenetBordroDal.GetBorcTediyeCekSenetListById(id));
         }
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
-        public IDataResult<List<CekSenetMusteri>> GetMusteriTahsilatCekSenetListById(int id)
+        public IDataResult<List<CekSenetMusteri>> GetTahsilatCekSenetListById(int id)
         {
-            return new SuccessDataResult<List<CekSenetMusteri>>(_cekSenetBordroDal.GetMusteriTahsilatCekSenetListById(id));
+            return new SuccessDataResult<List<CekSenetMusteri>>(_cekSenetBordroDal.GetTahsilatCekSenetListById(id));
         }
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
-        public IDataResult<List<CekSenetMusteri>> GetMusteriTediyeCekSenetListById(int id)
+        public IDataResult<List<CekSenetMusteri>> GetCiroTediyeCekSenetListById(int id)
         {
-            return new SuccessDataResult<List<CekSenetMusteri>>(_cekSenetBordroDal.GetMusteriTediyeCekSenetListById(id));
+            return new SuccessDataResult<List<CekSenetMusteri>>(_cekSenetBordroDal.GetCiroTediyeCekSenetListById(id));
         }
 
         [PerformanceAspect(5)]
@@ -157,24 +168,6 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<CekSenetBordro>>(GetAll(filter));
         }
-
-        /*
-            if (entity.CekSenetBorclar.Count > 0)
-            {
-                foreach (var evrak in entity.CekSenetBorclar)
-                {
-                    evrak.BordroTediyeId = entity.Id;
-                    _cekSenetBorcService.Add(evrak);
-                }
-            }
-            if (entity.CekSenetMusteriler.Count > 0)
-            {
-                foreach (var evrak in entity.CekSenetMusteriler)
-                {
-                    evrak.BordroTediyeId = evrak.BordroTediyeId == 0 ? entity.Id : 0;
-                    _cekSenetMusteriService.Add(evrak);
-                }
-            }*/
 
         [SecuredOperation("Add,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
@@ -192,7 +185,7 @@ namespace Business.Concrete
             _cekSenetBordroDal.Add(entity);
             switch (entity.Tur)
             {
-                case "Tahsilat":
+                case "Tahsilat Bordrosu":
                     {
                         foreach (var evrak in entity.CekSenetMusteriler)
                         {
@@ -201,13 +194,17 @@ namespace Business.Concrete
                         }
                         break;
                     }
-                case "Tediye":
+                case "Ciro Tediye Bordrosu":
                     {
                         foreach (var evrak in entity.CekSenetMusteriler)
                         {
                             evrak.BordroTediyeId = entity.Id;
                             _cekSenetMusteriService.Update(evrak);
                         }
+                        break;
+                    }
+                case "Borc Tediye Bordrosu":
+                    {
                         foreach (var evrak in entity.CekSenetBorclar)
                         {
                             evrak.BordroTediyeId = entity.Id;
@@ -244,6 +241,36 @@ namespace Business.Concrete
             if (!result.IsSuccess)
                 return new ErrorResult(result.Message);
 
+            switch (entity.Tur)
+            {
+                case "Borc Tediye Bordrosu":
+                    {
+                        foreach (var evrak in entity.CekSenetBorclar)
+                        {
+                            evrak.BordroTediyeId = entity.Id;
+                            if (evrak.Id > 0) _cekSenetBorcService.Update(evrak); else _cekSenetBorcService.Add(evrak);
+                        }
+                        break;
+                    }
+                case "Ciro Tediye Bordrosu":
+                    {
+                        foreach (var evrak in entity.CekSenetMusteriler)
+                        {
+                            evrak.BordroTediyeId = entity.Id;
+                            if (evrak.Id > 0) _cekSenetMusteriService.Update(evrak); else _cekSenetMusteriService.Add(evrak);
+                        }
+                        break;
+                    }
+                case "Tahsilat Bordrosu":
+                    {
+                        foreach (var evrak in entity.CekSenetMusteriler)
+                        {
+                            evrak.BordroTahsilatId = entity.Id;
+                            if (evrak.Id > 0) _cekSenetMusteriService.Update(evrak); else _cekSenetMusteriService.Add(evrak);
+                        }
+                        break;
+                    }
+            }
             _cekSenetBordroDal.Update(entity);
             _cariHareketService.Update(entity.CariHareket);
             return new SuccessResult(Messages.CekSenetMessages.BordroGuncellendi);

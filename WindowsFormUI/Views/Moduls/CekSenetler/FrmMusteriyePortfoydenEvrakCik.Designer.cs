@@ -35,7 +35,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMusteriyePortfoydenEvrakCik));
-            this.dgvMusteridenEvrakAl = new System.Windows.Forms.DataGridView();
+            this.dgvPortfoydenEvrakCik = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colUnvan = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,7 +45,7 @@
             this.colAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlUstBilgiler = new System.Windows.Forms.Panel();
             this.grpBordroBilgiler = new System.Windows.Forms.GroupBox();
-            this.uscEvrakSil = new WindowsFormUI.Views.UserControls.UscFormButtons();
+            this.uscEvrak = new WindowsFormUI.Views.UserControls.UscFormButtons();
             this.btnEvrakBul = new System.Windows.Forms.Button();
             this.lblBordroKod = new System.Windows.Forms.Label();
             this.txtEvrakNo = new System.Windows.Forms.TextBox();
@@ -60,19 +60,19 @@
             this.lblCariUnvan = new System.Windows.Forms.Label();
             this.lblCikisTarih = new System.Windows.Forms.Label();
             this.lblBordroAciklama = new System.Windows.Forms.Label();
-            this.uscMusteriyeEvrakCik = new WindowsFormUI.Views.UserControls.UscFormButtons();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMusteridenEvrakAl)).BeginInit();
+            this.uscBordro = new WindowsFormUI.Views.UserControls.UscFormButtons();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPortfoydenEvrakCik)).BeginInit();
             this.pnlUstBilgiler.SuspendLayout();
             this.grpBordroBilgiler.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dgvMusteridenEvrakAl
+            // dgvPortfoydenEvrakCik
             // 
-            this.dgvMusteridenEvrakAl.AllowUserToAddRows = false;
-            this.dgvMusteridenEvrakAl.AllowUserToDeleteRows = false;
-            this.dgvMusteridenEvrakAl.AllowUserToResizeRows = false;
-            this.dgvMusteridenEvrakAl.BackgroundColor = System.Drawing.Color.White;
-            this.dgvMusteridenEvrakAl.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvPortfoydenEvrakCik.AllowUserToAddRows = false;
+            this.dgvPortfoydenEvrakCik.AllowUserToDeleteRows = false;
+            this.dgvPortfoydenEvrakCik.AllowUserToResizeRows = false;
+            this.dgvPortfoydenEvrakCik.BackgroundColor = System.Drawing.Color.White;
+            this.dgvPortfoydenEvrakCik.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -80,9 +80,9 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMusteridenEvrakAl.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvMusteridenEvrakAl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvMusteridenEvrakAl.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvPortfoydenEvrakCik.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvPortfoydenEvrakCik.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvPortfoydenEvrakCik.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
             this.colNo,
             this.colUnvan,
@@ -90,21 +90,21 @@
             this.colTutar,
             this.colAsilBorclu,
             this.colAciklama});
-            this.dgvMusteridenEvrakAl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvMusteridenEvrakAl.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvMusteridenEvrakAl.EnableHeadersVisualStyles = false;
-            this.dgvMusteridenEvrakAl.Location = new System.Drawing.Point(264, 0);
-            this.dgvMusteridenEvrakAl.MultiSelect = false;
-            this.dgvMusteridenEvrakAl.Name = "dgvMusteridenEvrakAl";
-            this.dgvMusteridenEvrakAl.ReadOnly = true;
-            this.dgvMusteridenEvrakAl.RowHeadersVisible = false;
-            this.dgvMusteridenEvrakAl.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgvMusteridenEvrakAl.RowTemplate.Height = 25;
-            this.dgvMusteridenEvrakAl.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMusteridenEvrakAl.Size = new System.Drawing.Size(721, 314);
-            this.dgvMusteridenEvrakAl.TabIndex = 0;
-            this.dgvMusteridenEvrakAl.TabStop = false;
-            this.dgvMusteridenEvrakAl.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvMusteridenEvrakAl_CellDoubleClick);
+            this.dgvPortfoydenEvrakCik.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvPortfoydenEvrakCik.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvPortfoydenEvrakCik.EnableHeadersVisualStyles = false;
+            this.dgvPortfoydenEvrakCik.Location = new System.Drawing.Point(264, 0);
+            this.dgvPortfoydenEvrakCik.MultiSelect = false;
+            this.dgvPortfoydenEvrakCik.Name = "dgvPortfoydenEvrakCik";
+            this.dgvPortfoydenEvrakCik.ReadOnly = true;
+            this.dgvPortfoydenEvrakCik.RowHeadersVisible = false;
+            this.dgvPortfoydenEvrakCik.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvPortfoydenEvrakCik.RowTemplate.Height = 25;
+            this.dgvPortfoydenEvrakCik.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPortfoydenEvrakCik.Size = new System.Drawing.Size(721, 314);
+            this.dgvPortfoydenEvrakCik.TabIndex = 0;
+            this.dgvPortfoydenEvrakCik.TabStop = false;
+            this.dgvPortfoydenEvrakCik.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvEvraklar_CellDoubleClick);
             // 
             // colId
             // 
@@ -199,7 +199,7 @@
             // 
             // grpBordroBilgiler
             // 
-            this.grpBordroBilgiler.Controls.Add(this.uscEvrakSil);
+            this.grpBordroBilgiler.Controls.Add(this.uscEvrak);
             this.grpBordroBilgiler.Controls.Add(this.btnEvrakBul);
             this.grpBordroBilgiler.Controls.Add(this.lblBordroKod);
             this.grpBordroBilgiler.Controls.Add(this.txtEvrakNo);
@@ -222,20 +222,20 @@
             this.grpBordroBilgiler.TabStop = false;
             this.grpBordroBilgiler.Text = "Bordro Bilgileri";
             // 
-            // uscEvrakSil
+            // uscEvrak
             // 
-            this.uscEvrakSil.BtnClear_Visible = false;
-            this.uscEvrakSil.BtnDelete_Enable = false;
-            this.uscEvrakSil.BtnDelete_Text = "Sil     ";
-            this.uscEvrakSil.BtnSave_Enable = false;
-            this.uscEvrakSil.BtnSave_Text = "Kaydet";
-            this.uscEvrakSil.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.uscEvrakSil.LblStatus_Text = "";
-            this.uscEvrakSil.Location = new System.Drawing.Point(3, 262);
-            this.uscEvrakSil.Name = "uscEvrakSil";
-            this.uscEvrakSil.Size = new System.Drawing.Size(258, 49);
-            this.uscEvrakSil.TabIndex = 14;
-            this.uscEvrakSil.ClickCancel += new System.EventHandler(this.UscEvrakSil_ClickCancel);
+            this.uscEvrak.BtnClear_Visible = false;
+            this.uscEvrak.BtnDelete_Enable = false;
+            this.uscEvrak.BtnDelete_Text = "Sil     ";
+            this.uscEvrak.BtnSave_Enable = false;
+            this.uscEvrak.BtnSave_Text = "Kaydet";
+            this.uscEvrak.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.uscEvrak.LblStatus_Text = "";
+            this.uscEvrak.Location = new System.Drawing.Point(3, 262);
+            this.uscEvrak.Name = "uscEvrak";
+            this.uscEvrak.Size = new System.Drawing.Size(258, 49);
+            this.uscEvrak.TabIndex = 14;
+            this.uscEvrak.ClickCancel += new System.EventHandler(this.UscEvrak_ClickSil);
             // 
             // btnEvrakBul
             // 
@@ -378,36 +378,36 @@
             this.lblBordroAciklama.TabIndex = 8;
             this.lblBordroAciklama.Text = "Açıklama";
             // 
-            // uscMusteriyeEvrakCik
+            // uscBordro
             // 
-            this.uscMusteriyeEvrakCik.BtnClear_Visible = true;
-            this.uscMusteriyeEvrakCik.BtnDelete_Enable = true;
-            this.uscMusteriyeEvrakCik.BtnDelete_Text = "Sil     ";
-            this.uscMusteriyeEvrakCik.BtnSave_Enable = true;
-            this.uscMusteriyeEvrakCik.BtnSave_Text = "Kaydet";
-            this.uscMusteriyeEvrakCik.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.uscMusteriyeEvrakCik.LblStatus_Text = "";
-            this.uscMusteriyeEvrakCik.Location = new System.Drawing.Point(264, 270);
-            this.uscMusteriyeEvrakCik.Name = "uscMusteriyeEvrakCik";
-            this.uscMusteriyeEvrakCik.Size = new System.Drawing.Size(721, 44);
-            this.uscMusteriyeEvrakCik.TabIndex = 1;
-            this.uscMusteriyeEvrakCik.TabStop = false;
-            this.uscMusteriyeEvrakCik.ClickClear += new System.EventHandler(this.UscMusteriyeEvrakCik_ClickClear);
-            this.uscMusteriyeEvrakCik.ClickSave += new System.EventHandler(this.UscMusteriyeEvrakCik_ClickSave);
-            this.uscMusteriyeEvrakCik.ClickCancel += new System.EventHandler(this.UscMusteriyeEvrakCik_ClickCancel);
+            this.uscBordro.BtnClear_Visible = true;
+            this.uscBordro.BtnDelete_Enable = true;
+            this.uscBordro.BtnDelete_Text = "Sil     ";
+            this.uscBordro.BtnSave_Enable = true;
+            this.uscBordro.BtnSave_Text = "Kaydet";
+            this.uscBordro.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.uscBordro.LblStatus_Text = "";
+            this.uscBordro.Location = new System.Drawing.Point(264, 262);
+            this.uscBordro.Name = "uscBordro";
+            this.uscBordro.Size = new System.Drawing.Size(721, 52);
+            this.uscBordro.TabIndex = 1;
+            this.uscBordro.TabStop = false;
+            this.uscBordro.ClickClear += new System.EventHandler(this.UscBordro_ClickClear);
+            this.uscBordro.ClickSave += new System.EventHandler(this.UscBordro_ClickSave);
+            this.uscBordro.ClickCancel += new System.EventHandler(this.UscBordro_ClickSil);
             // 
-            // FrmMusteriyeEvrakCik
+            // FrmMusteriyePortfoydenEvrakCik
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(985, 314);
-            this.Controls.Add(this.uscMusteriyeEvrakCik);
-            this.Controls.Add(this.dgvMusteridenEvrakAl);
+            this.Controls.Add(this.uscBordro);
+            this.Controls.Add(this.dgvPortfoydenEvrakCik);
             this.Controls.Add(this.pnlUstBilgiler);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "FrmMusteriyeEvrakCik";
+            this.Name = "FrmMusteriyePortfoydenEvrakCik";
             this.Text = "Müşteriye Portföyden Evrak Çık";
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMusteridenEvrakAl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPortfoydenEvrakCik)).EndInit();
             this.pnlUstBilgiler.ResumeLayout(false);
             this.grpBordroBilgiler.ResumeLayout(false);
             this.grpBordroBilgiler.PerformLayout();
@@ -417,7 +417,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dgvMusteridenEvrakAl;
+        private System.Windows.Forms.DataGridView dgvPortfoydenEvrakCik;
         private System.Windows.Forms.Panel pnlUstBilgiler;
         private System.Windows.Forms.TextBox txtEvrakNo;
         private System.Windows.Forms.Label lblEvrakNo;
@@ -432,7 +432,7 @@
         private System.Windows.Forms.Label lblCariUnvan;
         private System.Windows.Forms.Label lblCikisTarih;
         private System.Windows.Forms.Label lblBordroAciklama;
-        private UserControls.UscFormButtons uscMusteriyeEvrakCik;
+        private UserControls.UscFormButtons uscBordro;
         private System.Windows.Forms.Button btnEvrakBul;
         private System.Windows.Forms.DateTimePicker dtpCikisTarih;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
@@ -442,6 +442,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colTutar;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAsilBorclu;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAciklama;
-        private UserControls.UscFormButtons uscEvrakSil;
+        private UserControls.UscFormButtons uscEvrak;
     }
 }
