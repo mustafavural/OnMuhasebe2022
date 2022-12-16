@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows.Forms;
 using WindowsFormUI.Views;
+using WindowsFormUI.Views.Moduls.Bankalar;
 using WindowsFormUI.Views.Moduls.Cariler;
 using WindowsFormUI.Views.Moduls.CekSenetler;
 using WindowsFormUI.Views.Moduls.Faturalar;
@@ -59,6 +60,11 @@ namespace WindowsFormUI
             builder.RegisterType<FrmEvrakAl>().AsSelf();
             builder.RegisterType<FrmMusteriyePortfoydenEvrakCik>().AsSelf();
             builder.RegisterType<FrmPortfoydekiEvraklar>().AsSelf();
+            builder.RegisterType<FrmBanka>().AsSelf();
+            builder.RegisterType<FrmBankaKart>().AsSelf();
+            builder.RegisterType<FrmBankaKayit>().AsSelf();
+            builder.RegisterType<FrmBankaListe>().AsSelf();
+
 
             return builder.Build();
         }

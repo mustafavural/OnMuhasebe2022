@@ -44,7 +44,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<CekSenetBorc> CekSenetBorclar { get; set; }
 
 
-        public DbSet<BankaHesap> BankaHesaplar { get; set; }
+        public DbSet<Banka> Bankalar { get; set; }
         public DbSet<BankaHareket> BankaHareketler { get; set; }
 
 

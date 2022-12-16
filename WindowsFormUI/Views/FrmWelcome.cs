@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using System;
 using System.Windows.Forms;
+using WindowsFormUI.Views.Moduls.Bankalar;
 using WindowsFormUI.Views.Moduls.Cariler;
 using WindowsFormUI.Views.Moduls.CekSenetler;
 using WindowsFormUI.Views.Moduls.Faturalar;
@@ -48,6 +49,7 @@ namespace WindowsFormUI.Views
 
         private void BtnWelcomeBanka_Click(object sender, EventArgs e)
         {
+            Program.Container.Resolve<FrmBanka>().Show();
         }
 
         private void BtnMinimize_Click(object sender, EventArgs e)

@@ -33,8 +33,9 @@
             this.tsmiCekSenet = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDegerliEvrakCikis = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiKayit = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiKayitMusteridenEvrakAl = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiKayitMusteriyeEvrakCik = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiKayitCaridenEvrakAl = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiKayitCariyeCiroEvrakCik = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiKayitCariyeBorcEvrakCik = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSeperator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiKayitPortfoydekiEvraklar = new System.Windows.Forms.ToolStripMenuItem();
             this.bordroListesiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,15 +66,16 @@
             // 
             this.tsmiDegerliEvrakCikis.Image = global::WindowsFormUI.Properties.Resources.Kapat24x24;
             this.tsmiDegerliEvrakCikis.Name = "tsmiDegerliEvrakCikis";
-            this.tsmiDegerliEvrakCikis.Size = new System.Drawing.Size(180, 22);
+            this.tsmiDegerliEvrakCikis.Size = new System.Drawing.Size(99, 22);
             this.tsmiDegerliEvrakCikis.Text = "Çıkış";
             this.tsmiDegerliEvrakCikis.Click += new System.EventHandler(this.TsmiDegerliEvrakCikis_Click);
             // 
             // tsmiKayit
             // 
             this.tsmiKayit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiKayitMusteridenEvrakAl,
-            this.tsmiKayitMusteriyeEvrakCik,
+            this.tsmiKayitCaridenEvrakAl,
+            this.tsmiKayitCariyeCiroEvrakCik,
+            this.tsmiKayitCariyeBorcEvrakCik,
             this.tsmiSeperator,
             this.tsmiKayitPortfoydekiEvraklar,
             this.bordroListesiToolStripMenuItem});
@@ -82,32 +84,40 @@
             this.tsmiKayit.Size = new System.Drawing.Size(61, 20);
             this.tsmiKayit.Text = "Kayıt";
             // 
-            // tsmiKayitMusteridenEvrakAl
+            // tsmiKayitCaridenEvrakAl
             // 
-            this.tsmiKayitMusteridenEvrakAl.Image = global::WindowsFormUI.Properties.Resources.Senet_Kendi32x32;
-            this.tsmiKayitMusteridenEvrakAl.Name = "tsmiKayitMusteridenEvrakAl";
-            this.tsmiKayitMusteridenEvrakAl.Size = new System.Drawing.Size(179, 22);
-            this.tsmiKayitMusteridenEvrakAl.Text = "Müşteriden Evrak Al";
-            this.tsmiKayitMusteridenEvrakAl.Click += new System.EventHandler(this.TsmiKayitMusteridenEvrakAl_Click);
+            this.tsmiKayitCaridenEvrakAl.Image = global::WindowsFormUI.Properties.Resources.Senet_Kendi32x32;
+            this.tsmiKayitCaridenEvrakAl.Name = "tsmiKayitCaridenEvrakAl";
+            this.tsmiKayitCaridenEvrakAl.Size = new System.Drawing.Size(220, 22);
+            this.tsmiKayitCaridenEvrakAl.Text = "Cariden Evrak Al";
+            this.tsmiKayitCaridenEvrakAl.Click += new System.EventHandler(this.TsmiKayitMusteridenEvrakAl_Click);
             // 
-            // tsmiKayitMusteriyeEvrakCik
+            // tsmiKayitCariyeCiroEvrakCik
             // 
-            this.tsmiKayitMusteriyeEvrakCik.Image = global::WindowsFormUI.Properties.Resources.Cek_Cariye32x32;
-            this.tsmiKayitMusteriyeEvrakCik.Name = "tsmiKayitMusteriyeEvrakCik";
-            this.tsmiKayitMusteriyeEvrakCik.Size = new System.Drawing.Size(179, 22);
-            this.tsmiKayitMusteriyeEvrakCik.Text = "Müşteriye Evrak Çık";
-            this.tsmiKayitMusteriyeEvrakCik.Click += new System.EventHandler(this.TsmiKayitMusteriyeEvrakCik_Click);
+            this.tsmiKayitCariyeCiroEvrakCik.Image = global::WindowsFormUI.Properties.Resources.Cek_Cariye32x32;
+            this.tsmiKayitCariyeCiroEvrakCik.Name = "tsmiKayitCariyeCiroEvrakCik";
+            this.tsmiKayitCariyeCiroEvrakCik.Size = new System.Drawing.Size(220, 22);
+            this.tsmiKayitCariyeCiroEvrakCik.Text = "Portföyden Cariye Evrak Çık";
+            this.tsmiKayitCariyeCiroEvrakCik.Click += new System.EventHandler(this.TsmiKayitMusteriyeEvrakCik_Click);
+            // 
+            // tsmiKayitCariyeBorcEvrakCik
+            // 
+            this.tsmiKayitCariyeBorcEvrakCik.Image = global::WindowsFormUI.Properties.Resources.Cek_Kendi32x32;
+            this.tsmiKayitCariyeBorcEvrakCik.Name = "tsmiKayitCariyeBorcEvrakCik";
+            this.tsmiKayitCariyeBorcEvrakCik.Size = new System.Drawing.Size(220, 22);
+            this.tsmiKayitCariyeBorcEvrakCik.Text = "Cariye Borç Evrağı Çık";
+            this.tsmiKayitCariyeBorcEvrakCik.Click += new System.EventHandler(this.TsmiKayitCariyeBorcEvrakCik_Click);
             // 
             // tsmiSeperator
             // 
             this.tsmiSeperator.Name = "tsmiSeperator";
-            this.tsmiSeperator.Size = new System.Drawing.Size(176, 6);
+            this.tsmiSeperator.Size = new System.Drawing.Size(217, 6);
             // 
             // tsmiKayitPortfoydekiEvraklar
             // 
             this.tsmiKayitPortfoydekiEvraklar.Image = global::WindowsFormUI.Properties.Resources.Cek_Bordo32x32;
             this.tsmiKayitPortfoydekiEvraklar.Name = "tsmiKayitPortfoydekiEvraklar";
-            this.tsmiKayitPortfoydekiEvraklar.Size = new System.Drawing.Size(179, 22);
+            this.tsmiKayitPortfoydekiEvraklar.Size = new System.Drawing.Size(220, 22);
             this.tsmiKayitPortfoydekiEvraklar.Text = "Portföydeki Evraklar";
             this.tsmiKayitPortfoydekiEvraklar.Click += new System.EventHandler(this.TsmiKayitPortfoydekiEvraklar_Click);
             // 
@@ -115,7 +125,7 @@
             // 
             this.bordroListesiToolStripMenuItem.Image = global::WindowsFormUI.Properties.Resources.Cek32x32;
             this.bordroListesiToolStripMenuItem.Name = "bordroListesiToolStripMenuItem";
-            this.bordroListesiToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.bordroListesiToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.bordroListesiToolStripMenuItem.Text = "Bordro Listesi";
             this.bordroListesiToolStripMenuItem.Click += new System.EventHandler(this.TsmiKayitBordroListeler_Click);
             // 
@@ -145,10 +155,11 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiCekSenet;
         private System.Windows.Forms.ToolStripMenuItem tsmiDegerliEvrakCikis;
         private System.Windows.Forms.ToolStripMenuItem tsmiKayit;
-        private System.Windows.Forms.ToolStripMenuItem tsmiKayitMusteriyeEvrakCik;
-        private System.Windows.Forms.ToolStripMenuItem tsmiKayitMusteridenEvrakAl;
+        private System.Windows.Forms.ToolStripMenuItem tsmiKayitCariyeCiroEvrakCik;
+        private System.Windows.Forms.ToolStripMenuItem tsmiKayitCaridenEvrakAl;
         private System.Windows.Forms.ToolStripMenuItem tsmiKayitPortfoydekiEvraklar;
         private System.Windows.Forms.ToolStripSeparator tsmiSeperator;
         private System.Windows.Forms.ToolStripMenuItem bordroListesiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiKayitCariyeBorcEvrakCik;
     }
 }

@@ -61,7 +61,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<BankaHareket>> GetListByBankaHesapId(int bankaHesapId)
         {
-            var bankaHareketler = _bankaHareketDal.GetList(s => s.BankaHesapId == bankaHesapId);
+            var bankaHareketler = _bankaHareketDal.GetList(s => s.BankaId == bankaHesapId);
             var cariHareket = _cariHareketService.GetList(c => bankaHareketler.Select(b => b.Id).Contains(c.Id)).Data;
             foreach (var item in bankaHareketler)
             {

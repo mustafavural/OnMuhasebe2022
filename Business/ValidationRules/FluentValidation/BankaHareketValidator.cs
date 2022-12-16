@@ -9,7 +9,7 @@ namespace Business.ValidationRules.FluentValidation
         {
             RuleFor(s => s.EvrakNo).NotNull();
             RuleFor(s => s.GirenCikanMiktar).NotNull();
-            RuleFor(s => s.BankaHesapId).NotNull();
+            RuleFor(s => s.BankaId).NotNull();
             RuleFor(s => s.Tarih).NotNull();
             RuleFor(s => s.EvrakNo).Length(14);
             RuleFor(s => s.GirenCikanMiktar).NotEqual(0);

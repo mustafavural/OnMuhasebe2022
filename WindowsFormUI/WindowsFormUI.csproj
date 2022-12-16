@@ -48,6 +48,18 @@
     <Compile Update="Views\Moduls\Faturalar\FrmFaturaListe.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Views\Moduls\Bankalar\FrmBanka.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Views\Moduls\Bankalar\FrmBankaKart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Views\Moduls\Bankalar\FrmBankaKayit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Views\Moduls\Bankalar\FrmBankaListe.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

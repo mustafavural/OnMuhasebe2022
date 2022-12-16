@@ -25,6 +25,13 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             form.Show();
         }
 
+        private void TsmiKayitCariyeBorcEvrakCik_Click(object sender, EventArgs e)
+        {
+            var form = Program.Container.Resolve<FrmBorcEvrakCik>();
+            form.MdiParent = this;
+            form.Show();
+        }
+
         private void TsmiKayitPortfoydekiEvraklar_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FrmPortfoydekiEvraklar>();

@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public class BankaHesapValidator : AbstractValidator<BankaHesap>
+    public class BankaHesapValidator : AbstractValidator<Banka>
     {
         public BankaHesapValidator()
         {

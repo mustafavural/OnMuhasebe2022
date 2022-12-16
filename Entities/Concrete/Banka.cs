@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Concrete
 {
-    public class BankaHesap : IEntity
+    public class Banka : IEntity
     {
         public int Id { get; set; }
         public string BankaAd { get; set; }

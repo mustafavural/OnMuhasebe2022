@@ -5,7 +5,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfBankaHesapDal : EfEntityRepositoryBase<BankaHesap, SIRKETLERContext>, IBankaHesapDal
+    public class EfBankaDal : EfEntityRepositoryBase<Banka, SIRKETLERContext>, IBankaDal
     {
 
     }

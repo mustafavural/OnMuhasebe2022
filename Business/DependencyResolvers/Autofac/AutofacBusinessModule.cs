@@ -60,7 +60,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfCekSenetMusteriDal>().As<ICekSenetMusteriDal>();
             builder.RegisterType<EfCekSenetBordroDal>().As<ICekSenetBordroDal>();
 
-            builder.RegisterType<EfBankaHesapDal>().As<IBankaHesapDal>();
+            builder.RegisterType<EfBankaDal>().As<IBankaDal>();
             builder.RegisterType<EfBankaHareketDal>().As<IBankaHareketDal>();
 
             builder.RegisterType<EfAdresDal>().As<IAdresDal>();
