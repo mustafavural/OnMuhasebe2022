@@ -29,7 +29,7 @@ namespace Business.Concrete
         }
         private IResult KontrolStokHareketMevcutMu(StokHareket entity)
         {
-            return _stokHareketDal.GetById(entity.Id) != null ? new SuccessResult() : new ErrorResult(Messages.StokMessages.HareketBulunamadi);
+            return _stokHareketDal.Get(s => s.Id == entity.Id) != null ? new SuccessResult() : new ErrorResult(Messages.StokMessages.HareketBulunamadi);
         }
         #endregion
 

@@ -17,7 +17,7 @@ namespace Business.Concrete
 
         public IDataResult<Sehir> GetById(int id)
         {
-            return new SuccessDataResult<Sehir>(_sehirDal.GetById(id));
+            return new SuccessDataResult<Sehir>(_sehirDal.Get(s => s.Id == id));
         }
 
         public IDataResult<Sehir> GetByAd(string ad)

@@ -32,7 +32,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CekSenetMusteriManager>().As<ICekSenetMusteriService>();
             builder.RegisterType<CekSenetBordroManager>().As<ICekSenetBordroService>();
 
-            builder.RegisterType<BankaHesapManager>().As<IBankaHesapService>();
+            builder.RegisterType<BankaManager>().As<IBankaService>();
             builder.RegisterType<BankaHareketManager>().As<IBankaHareketService>();
 
             builder.RegisterType<AdresManager>().As<IAdresService>();

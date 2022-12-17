@@ -66,7 +66,7 @@ namespace Business.Concrete
 
         private IResult KontrolBordroIdMevcutMu(int id)
         {
-            return _cekSenetBordroDal.GetById(id) != null ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.EvrakYok);
+            return _cekSenetBordroDal.Get(s => s.Id == id) != null ? new SuccessResult() : new ErrorResult(Messages.CekSenetMessages.EvrakYok);
         }
         #endregion
 

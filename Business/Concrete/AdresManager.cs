@@ -58,7 +58,7 @@ namespace Business.Concrete
 
         private IResult KontrolAdresMevcutMu(int adresId)
         {
-            return _adresDal.GetById(adresId) != null ? new SuccessResult() : new ErrorResult(Messages.AdresMessages.AdresBulunamadi);
+            return _adresDal.Get(s => s.Id == adresId) != null ? new SuccessResult() : new ErrorResult(Messages.AdresMessages.AdresBulunamadi);
         }
         #endregion
 

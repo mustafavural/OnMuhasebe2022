@@ -11,5 +11,7 @@
         public static int SecilenKasaHareketId { get; set; }
         public static int SecilenBordroId { get; set; }
         public static int SecilenMusteriEvrakId { get; set; }
+        public static int SecilenBankaId { get; set; }
+        public static int SecilenBankaHareketId { get; set; }
     }
 }

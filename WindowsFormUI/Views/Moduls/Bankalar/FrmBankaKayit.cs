@@ -42,12 +42,12 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
         {
             if (BankaIslemTuru == BankaIslemTuru.Tahsilat)
             {
-                this.Icon = Resources.Banka_Tahsilat32x321;
+                this.Icon = Resources.Banka_Havale32x321;
                 this.Text += "  --  Tahsilat Yap";
             }
             else if (BankaIslemTuru == BankaIslemTuru.Tediye)
             {
-                this.Icon = Resources.Banka_Odeme32x321;
+                this.Icon = Resources.BankaEFT32x321;
                 this.Text += "  --  Tediye (Ödeme) Yap";
             }
             ClearScreen();
@@ -97,7 +97,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             {
                 s.Id,
                 s.BankaId,
-                BankaAd = _bankaService.GetById(s.BankaId).Data.Ad,
+                BankaAd = _bankaService.GetById(s.BankaId).Data.BankaAd,
                 s.CariId,
                 _cariService.GetById(s.CariId).Data.Unvan,
                 s.EvrakNo,
@@ -118,7 +118,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
                 {
                     _secilenBanka = _bankaService.GetById(StaticPrimitives.SecilenBankaId).Data;
                     StaticPrimitives.SecilenBankaId = 0;
-                    txtBankaAd.Text = _secilenBanka.Ad;
+                    txtBankaAd.Text = _secilenBanka.BankaAd;
                 }
                 else txtBankaAd.Text = "";
                 txtBankaAd.Focus();
@@ -239,10 +239,10 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
         {
             try
             {
-                _secilenBanka ??= _bankaService.GetByAd(txtBankaAd.Text).Data;
+                _secilenBanka ??= _bankaService.GetByHesapNo(txtBankaAd.Text).Data;
                 if (_secilenBanka == null)
                 {
-                    MessageHelper.SuccessMessageBuilder(Messages.BankaMessages.BankaBulunamadi, this.Text);
+                    MessageHelper.SuccessMessageBuilder(Messages.BankaMessages.HesapBulunamadi, this.Text);
                     txtBankaAd.Focus();
                     return;
                 }
@@ -395,7 +395,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             uscBankaButtons.BtnSave_Enable = true;
 
             _secilenBanka = secilenBankaHareket.Banka;
-            txtBankaAd.Text = _secilenBanka.Ad;
+            txtBankaAd.Text = _secilenBanka.BankaAd;
             txtEvrakNo.Text = secilenBankaHareket.EvrakNo;
             _secilenCari = secilenBankaHareket.CariHareket.Cari;
             txtCariKod.Text = _secilenCari.Kod;

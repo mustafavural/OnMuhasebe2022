@@ -9,6 +9,7 @@ namespace Entities.Concrete
         public string BankaAd { get; set; }
         public string BankaSubeAd { get; set; }
         public string HesapNo { get; set; }
+        public string IBAN { get; set; }
 
         [NotMapped]
         public virtual Adres Adres { get; set; }

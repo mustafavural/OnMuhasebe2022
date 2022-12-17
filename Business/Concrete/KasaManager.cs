@@ -25,7 +25,7 @@ namespace Business.Concrete
 
         private IResult KontrolKasaIdZatenVarMi(int id)
         {
-            return _kasaDal.GetById(id) == null ? new SuccessResult() : new ErrorResult(Messages.KasaMessages.KasaZatenMevcut);
+            return _kasaDal.Get(s => s.Id == id) == null ? new SuccessResult() : new ErrorResult(Messages.KasaMessages.KasaZatenMevcut);
         }
 
         private IResult KontrolKasaAdZatenVarMi(string ad)
@@ -35,7 +35,7 @@ namespace Business.Concrete
 
         private IResult KontrolKasaMevcutMu(int id)
         {
-            return _kasaDal.GetById(id) != null ? new SuccessResult() : new ErrorResult(Messages.KasaMessages.KasaBulunamadi);
+            return _kasaDal.Get(s => s.Id == id) != null ? new SuccessResult() : new ErrorResult(Messages.KasaMessages.KasaBulunamadi);
         }
         #endregion
 

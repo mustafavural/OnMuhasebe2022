@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Business.Abstract
 {
-    public interface IBankaHesapService
+    public interface IBankaService
     {
         IDataResult<Banka> GetById(int id);
         IDataResult<List<Banka>> GetList(Expression<Func<Banka, bool>>? filter = null);

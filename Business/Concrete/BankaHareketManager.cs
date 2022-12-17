@@ -28,7 +28,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<BankaHareket> GetById(int entityId)
         {
-            var bankaHareket = _bankaHareketDal.GetById(entityId);
+            var bankaHareket = _bankaHareketDal.Get(s => s.Id == entityId);
             bankaHareket.CariHareket = _cariHareketService.GetById(entityId).Data;
             return new SuccessDataResult<BankaHareket>(bankaHareket);
         }

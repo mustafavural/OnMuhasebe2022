@@ -86,7 +86,7 @@
             // 
             // tsmiKayitKart
             // 
-            this.tsmiKayitKart.Image = global::WindowsFormUI.Properties.Resources.Banka_Karti32x32;
+            this.tsmiKayitKart.Image = global::WindowsFormUI.Properties.Resources.Banka_Kartı32x32;
             this.tsmiKayitKart.Name = "tsmiKayitKart";
             this.tsmiKayitKart.Size = new System.Drawing.Size(135, 22);
             this.tsmiKayitKart.Text = "Banka Kart";
@@ -99,7 +99,7 @@
             // 
             // tsmiKayitTahsilatYap
             // 
-            this.tsmiKayitTahsilatYap.Image = global::WindowsFormUI.Properties.Resources.Banka_Tahsilat32x32;
+            this.tsmiKayitTahsilatYap.Image = global::WindowsFormUI.Properties.Resources.Banka_Havale32x32;
             this.tsmiKayitTahsilatYap.Name = "tsmiKayitTahsilatYap";
             this.tsmiKayitTahsilatYap.Size = new System.Drawing.Size(135, 22);
             this.tsmiKayitTahsilatYap.Tag = "1";
@@ -108,7 +108,7 @@
             // 
             // tsmiKayitOdemeYap
             // 
-            this.tsmiKayitOdemeYap.Image = global::WindowsFormUI.Properties.Resources.Banka_Odeme32x32;
+            this.tsmiKayitOdemeYap.Image = global::WindowsFormUI.Properties.Resources.BankaEFT32x32;
             this.tsmiKayitOdemeYap.Name = "tsmiKayitOdemeYap";
             this.tsmiKayitOdemeYap.Size = new System.Drawing.Size(135, 22);
             this.tsmiKayitOdemeYap.Tag = "2";

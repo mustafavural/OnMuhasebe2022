@@ -33,7 +33,7 @@ namespace Business.Concrete
         #region BusinessRules
         private IResult KontrolFaturaIdMevcutMu(int id)
         {
-            return _faturaDal.GetById(id) != null ? new SuccessResult() : new ErrorResult(Messages.FaturaMessages.FaturaYok);
+            return _faturaDal.Get(s => s.Id == id) != null ? new SuccessResult() : new ErrorResult(Messages.FaturaMessages.FaturaYok);
         }
         private IResult KontrolFaturaNoZatenVarMi(string no)
         {

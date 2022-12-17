@@ -19,11 +19,17 @@
             public static string HesapEklendi => "Banka hesabı başarıyla eklendi.";
             public static string HesapSilindi => "Banka hesabı başarıyla silindi.";
             public static string HesapGuncellendi => "Banka hesabı başarıyla güncellendi.";
-            public static string HesapZatenVar => "Banka hesabı zaten mevcut";
+            public static string HesapBulunamadi => "Banka hesabı bulunamadi.";
+            public static string HesapKullaniliyor => "Hesap hareket görmüş silinemez.";
+            public static string HesapNoZatenVar => "Banka hesabı zaten mevcut";
+            public static string IBANZatenVar => "IBAN zaten mevcut";
             public static string HesapHareketEklendi => "Hesap hareket başarıyla eklendi.";
             public static string HesapHareketSilindi => "Hesap hareket başarıyla silindi.";
             public static string HesapHareketGuncellendi => "Hesap hareket başarıyla güncellendi.";
-            public static string HesapIdBulunamadi => "Silinecek hesap bulunamadi.";
+            public static string AciklamaBosGecilemez => "Bir açıklama gereklidir.";
+            public static string MiktarBosGecilemez => "Miktar alanı gereklidir.";
+            public static string TarihHatali => "İleri tarihli kayıt girilemez.";
+            public static string EvrakNoHatali => "Evrak numarası bulunamadı.";
         }
 
         public static class CariMessages

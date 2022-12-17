@@ -376,7 +376,7 @@
             // btnBankaBul
             // 
             this.btnBankaBul.FlatAppearance.BorderSize = 0;
-            this.btnBankaBul.Image = global::WindowsFormUI.Properties.Resources.Banka_Karti16x16;
+            this.btnBankaBul.Image = global::WindowsFormUI.Properties.Resources.Banka_Kartı16x16;
             this.btnBankaBul.Location = new System.Drawing.Point(191, 17);
             this.btnBankaBul.Name = "btnBankaBul";
             this.btnBankaBul.Size = new System.Drawing.Size(24, 26);

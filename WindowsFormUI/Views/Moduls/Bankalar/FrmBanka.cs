@@ -13,11 +13,6 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             InitializeComponent();
         }
 
-        private void TsmiCikis_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void TsmiKayitKart_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FrmBankaKart>();
@@ -40,6 +35,11 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             form.MdiParent = this;
             form.BankaIslemTuru = BankaIslemTuru.Hepsi;
             form.Show();
+        }
+
+        private void TsmiCikis_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -14,51 +14,69 @@ using System.Linq.Expressions;
 
 namespace Business.Concrete
 {
-    public class BankaHesapManager : IBankaHesapService
+    public class BankaManager : IBankaService
     {
-        private readonly IBankaDal _bankaHesapDal;
+        private readonly IBankaDal _bankaDal;
         private readonly IBankaHareketService _bankaHareketService;
 
-        public BankaHesapManager(IBankaDal bankaHesapDal, IBankaHareketService bankaHareketService)
+        public BankaManager(IBankaDal bankaDal, IBankaHareketService bankaHareketService)
         {
-            _bankaHesapDal = bankaHesapDal;
+            _bankaDal = bankaDal;
             _bankaHareketService = bankaHareketService;
         }
 
         #region BusinessRules
 
-        private IResult BankaHesapZatenVarmi(string hesapNo)
+        private IResult KontrolBankaHesapIdMevcutMu(int id)
         {
-            return _bankaHesapDal.Get(s => s.HesapNo == hesapNo) == null ? new SuccessResult() : new ErrorResult(Messages.BankaMessages.HesapZatenVar);
+            return _bankaDal.Get(s => s.Id == id) != null ? new SuccessResult() : new ErrorResult(Messages.BankaMessages.HesapBulunamadi);
         }
 
-        private IResult BankaHesapIdMevcutMu(int id)
+        private IResult KontrolHesapNoZatenVarmi(string hesapNo)
         {
-            return _bankaHesapDal.GetById(id) != null ? new SuccessResult() : new ErrorResult(Messages.BankaMessages.HesapIdBulunamadi);
+            return _bankaDal.Get(s => s.HesapNo == hesapNo) == null ? new SuccessResult() : new ErrorResult(Messages.BankaMessages.HesapNoZatenVar);
+        }
+
+        private IResult KontrolIBANZatenVarMi(string iban)
+        {
+            return _bankaDal.Get(s => s.IBAN == iban) == null ? new SuccessResult() : new ErrorResult(Messages.BankaMessages.IBANZatenVar);
+        }
+
+        private IResult KontrolHesapKullaniliyorMu(int id)
+        {
+            return _bankaHareketService.GetListByBankaHesapId(id).Data.Count == 0 ? new SuccessResult() : new ErrorResult(Messages.BankaMessages.HesapKullaniliyor);
         }
 
         #endregion
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
-        public IDataResult<Banka> GetById(int id)
+        private Banka Get(Expression<Func<Banka, bool>> filter)
         {
-            return new SuccessDataResult<Banka>(_bankaHesapDal.Get(s => s.Id == id));
+            return _bankaDal.Get(filter);
         }
 
         [SecuredOperation("List,Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         [CacheAspect(1)]
-        public IDataResult<List<Banka>> GetList(Expression<Func<Banka, bool>>? filter = null)
+        private List<Banka> GetAll(Expression<Func<Banka, bool>>? filter = null)
         {
-            return new SuccessDataResult<List<Banka>>(_bankaHesapDal.GetList(filter));
+            return _bankaDal.GetList(filter);
         }
 
-        [SecuredOperation("List,Admin")]
-        [LogAspect(typeof(DatabaseLogger))]
+        public IDataResult<Banka> GetById(int id)
+        {
+            return new SuccessDataResult<Banka>(Get(s => s.Id == id));
+        }
+
+        public IDataResult<List<Banka>> GetList(Expression<Func<Banka, bool>>? filter = null)
+        {
+            return new SuccessDataResult<List<Banka>>(GetAll(filter));
+        }
+
         public IDataResult<Banka> GetByHesapNo(string hesapNo)
         {
-            return new SuccessDataResult<Banka>(_bankaHesapDal.Get(s => s.HesapNo == hesapNo));
+            return new SuccessDataResult<Banka>(Get(s => s.HesapNo == hesapNo));
         }
 
         [SecuredOperation("List,Admin")]
@@ -68,33 +86,28 @@ namespace Business.Concrete
             return new SuccessDataResult<decimal>(_bankaHareketService.GetList(s => s.BankaId == hesapId).Data.Sum(s => s.GirenCikanMiktar));
         }
 
-        [SecuredOperation("List,Admin")]
-        [LogAspect(typeof(DatabaseLogger))]
-        [CacheAspect(1)]
         public IDataResult<List<Banka>> GetListByBankaAd(string bankaAd)
         {
-            return new SuccessDataResult<List<Banka>>(_bankaHesapDal.GetList(s => s.BankaAd == bankaAd));
+            return new SuccessDataResult<List<Banka>>(GetAll(s => s.BankaAd == bankaAd));
         }
 
-        [SecuredOperation("List,Admin")]
-        [LogAspect(typeof(DatabaseLogger))]
-        [CacheAspect(1)]
         public IDataResult<List<Banka>> GetListByBankaSubeAd(string bankaSubeAd)
         {
-            return new SuccessDataResult<List<Banka>>(_bankaHesapDal.GetList(s => s.BankaSubeAd == bankaSubeAd));
+            return new SuccessDataResult<List<Banka>>(GetAll(s => s.BankaSubeAd == bankaSubeAd));
         }
 
         [SecuredOperation("Add,Admin")]
-        [ValidationAspect(typeof(BankaHesapValidator), Priority = 1)]
+        [ValidationAspect(typeof(BankaValidator), Priority = 1)]
         [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect("IBankaHesapService.Get")]
         public IResult Add(Banka bankaHesap)
         {
-            var result = BusinessRules.Run(BankaHesapZatenVarmi(bankaHesap.HesapNo));
+            var result = BusinessRules.Run(KontrolHesapNoZatenVarmi(bankaHesap.HesapNo),
+                                           KontrolIBANZatenVarMi(bankaHesap.IBAN));
             if (!result.IsSuccess)
                 return result;
 
-            _bankaHesapDal.Add(bankaHesap);
+            _bankaDal.Add(bankaHesap);
             return new SuccessResult(Messages.BankaMessages.HesapEklendi);
         }
 
@@ -103,26 +116,26 @@ namespace Business.Concrete
         [CacheRemoveAspect("IBankaHesapService.Get")]
         public IResult Delete(Banka bankaHesap)
         {
-            var result = BusinessRules.Run(BankaHesapIdMevcutMu(bankaHesap.Id));
+            var result = BusinessRules.Run(KontrolBankaHesapIdMevcutMu(bankaHesap.Id),
+                                           KontrolHesapKullaniliyorMu(bankaHesap.Id));
             if (!result.IsSuccess)
                 return result;
 
-            _bankaHesapDal.Delete(bankaHesap);
+            _bankaDal.Delete(bankaHesap);
             return new SuccessResult(Messages.BankaMessages.HesapSilindi);
         }
 
         [SecuredOperation("Update,Admin")]
-        [ValidationAspect(typeof(BankaHesapValidator), Priority = 1)]
+        [ValidationAspect(typeof(BankaValidator), Priority = 1)]
         [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect("IBankaHesapService.Get")]
         public IResult Update(Banka bankaHesap)
         {
-            var result = BusinessRules.Run(BankaHesapIdMevcutMu(bankaHesap.Id),
-                                           BankaHesapZatenVarmi(bankaHesap.HesapNo));
+            var result = BusinessRules.Run(KontrolBankaHesapIdMevcutMu(bankaHesap.Id));
             if (!result.IsSuccess)
                 return result;
 
-            _bankaHesapDal.Update(bankaHesap);
+            _bankaDal.Update(bankaHesap);
             return new SuccessResult(Messages.BankaMessages.HesapGuncellendi);
         }
     }

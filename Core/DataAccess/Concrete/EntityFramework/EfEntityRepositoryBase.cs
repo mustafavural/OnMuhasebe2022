@@ -9,16 +9,12 @@ namespace Core.DataAccess.Concrete.EntityFramework
         where TEntity : class, IEntity, new()
         where TContext : DbContext, new()
     {
-        public TEntity GetById(int entityId)
-        {
-            using var context = new TContext();
-            return context.Set<TEntity>().SingleOrDefault(c => c.Id == entityId);
-        }
         public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
             using var context = new TContext();
             return context.Set<TEntity>().SingleOrDefault(filter);
         }
+
         public List<TEntity> GetList(Expression<Func<TEntity, bool>>? filter = null)
         {
             using var context = new TContext();
@@ -26,6 +22,7 @@ namespace Core.DataAccess.Concrete.EntityFramework
                 ? context.Set<TEntity>().ToList()
                 : context.Set<TEntity>().Where(filter).ToList();
         }
+
         public void Add(TEntity entity)
         {
             using var context = new TContext();
@@ -33,6 +30,7 @@ namespace Core.DataAccess.Concrete.EntityFramework
             addedEntity.State = EntityState.Added;
             context.SaveChanges();
         }
+
         public void Delete(TEntity entity)
         {
             using var context = new TContext();
@@ -40,6 +38,7 @@ namespace Core.DataAccess.Concrete.EntityFramework
             deletedEntity.State = EntityState.Deleted;
             context.SaveChanges();
         }
+
         public void Update(TEntity entity)
         {
             using var context = new TContext();
