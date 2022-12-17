@@ -63,7 +63,7 @@ namespace WindowsFormUI
             builder.RegisterType<FrmBanka>().AsSelf();
             builder.RegisterType<FrmBankaKart>().AsSelf();
             builder.RegisterType<FrmBankaKayit>().AsSelf();
-            builder.RegisterType<FrmBankaListe>().AsSelf();
+            builder.RegisterType<FrmBankaHareketListe>().AsSelf();
 
 
             return builder.Build();

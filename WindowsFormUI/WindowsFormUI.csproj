@@ -57,7 +57,7 @@
     <Compile Update="Views\Moduls\Bankalar\FrmBankaKayit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Views\Moduls\Bankalar\FrmBankaListe.cs">
+    <Compile Update="Views\Moduls\Bankalar\FrmBankaHareketListe.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

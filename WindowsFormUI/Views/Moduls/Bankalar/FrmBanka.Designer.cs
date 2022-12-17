@@ -59,7 +59,7 @@
             this.tsmiBankaCikis});
             this.tsmiBanka.Image = global::WindowsFormUI.Properties.Resources.Banka32x32;
             this.tsmiBanka.Name = "tsmiBanka";
-            this.tsmiBanka.Size = new System.Drawing.Size(59, 20);
+            this.tsmiBanka.Size = new System.Drawing.Size(67, 20);
             this.tsmiBanka.Text = "Banka";
             // 
             // tsmiBankaCikis
@@ -88,43 +88,43 @@
             // 
             this.tsmiKayitKart.Image = global::WindowsFormUI.Properties.Resources.Banka_Kartı32x32;
             this.tsmiKayitKart.Name = "tsmiKayitKart";
-            this.tsmiKayitKart.Size = new System.Drawing.Size(135, 22);
+            this.tsmiKayitKart.Size = new System.Drawing.Size(180, 22);
             this.tsmiKayitKart.Text = "Banka Kart";
             this.tsmiKayitKart.Click += new System.EventHandler(this.TsmiKayitKart_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(132, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmiKayitTahsilatYap
             // 
             this.tsmiKayitTahsilatYap.Image = global::WindowsFormUI.Properties.Resources.Banka_Havale32x32;
             this.tsmiKayitTahsilatYap.Name = "tsmiKayitTahsilatYap";
-            this.tsmiKayitTahsilatYap.Size = new System.Drawing.Size(135, 22);
+            this.tsmiKayitTahsilatYap.Size = new System.Drawing.Size(180, 22);
             this.tsmiKayitTahsilatYap.Tag = "1";
-            this.tsmiKayitTahsilatYap.Text = "Tahsilat Yap";
+            this.tsmiKayitTahsilatYap.Text = "Havale/EFT Al";
             this.tsmiKayitTahsilatYap.Click += new System.EventHandler(this.TsmiKayitYap_Click);
             // 
             // tsmiKayitOdemeYap
             // 
             this.tsmiKayitOdemeYap.Image = global::WindowsFormUI.Properties.Resources.BankaEFT32x32;
             this.tsmiKayitOdemeYap.Name = "tsmiKayitOdemeYap";
-            this.tsmiKayitOdemeYap.Size = new System.Drawing.Size(135, 22);
+            this.tsmiKayitOdemeYap.Size = new System.Drawing.Size(180, 22);
             this.tsmiKayitOdemeYap.Tag = "2";
-            this.tsmiKayitOdemeYap.Text = "Ödeme Yap";
+            this.tsmiKayitOdemeYap.Text = "Havale/EFT Gönder";
             this.tsmiKayitOdemeYap.Click += new System.EventHandler(this.TsmiKayitYap_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(132, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmiKayitListe
             // 
             this.tsmiKayitListe.Image = global::WindowsFormUI.Properties.Resources.Banka_Liste32x32;
             this.tsmiKayitListe.Name = "tsmiKayitListe";
-            this.tsmiKayitListe.Size = new System.Drawing.Size(135, 22);
+            this.tsmiKayitListe.Size = new System.Drawing.Size(180, 22);
             this.tsmiKayitListe.Text = "Banka Liste";
             this.tsmiKayitListe.Click += new System.EventHandler(this.TsmiKayitListe_Click);
             // 

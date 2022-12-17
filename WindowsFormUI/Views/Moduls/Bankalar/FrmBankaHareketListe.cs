@@ -11,28 +11,26 @@ using WindowsFormUI.Properties;
 
 namespace WindowsFormUI.Views.Moduls.Bankalar
 {
-    public partial class FrmBankaListe : FrmBase
+    public partial class FrmBankaHareketListe : FrmBase
     {
         private readonly IBankaHareketService _bankaHareketService;
         private readonly List<BankaHareket> _bankaHareketler;
         public BankaIslemTuru BankaIslemTuru { get; set; }
         public bool SecimIcin => BankaIslemTuru > 0;
 
-        public FrmBankaListe(IBankaHareketService bankaHareketService)
+        public FrmBankaHareketListe(IBankaHareketService bankaHareketService)
         {
             InitializeComponent();
             _bankaHareketService = bankaHareketService;
             BankaIslemTuru = BankaIslemTuru.Hepsi;
-            _bankaHareketler = _bankaHareketService.GetList().Data;
             this.Icon = Resources.Banka_Hareket32x321;
+            _bankaHareketler = _bankaHareketService.GetList().Data;
             dtpTarihIlk.Value = DateTime.Today.AddDays(-10);
         }
 
         private void FrmBankaListe_Load(object sender, EventArgs e)
         {
-            if (!SecimIcin)
-                this.Text = "Banka Hareket Listesi";
-            else
+            if (SecimIcin)
                 this.Text = BankaIslemTuru == BankaIslemTuru.Tahsilat ? "Banka Tahsilat Listesi" : "Banka Tediye Listesi";
 
             _TextChanged(sender, e);

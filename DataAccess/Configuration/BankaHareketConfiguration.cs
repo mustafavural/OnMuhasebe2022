@@ -10,7 +10,7 @@ namespace DataAccess.Configuration
         public void Configure(EntityTypeBuilder<BankaHareket> builder)
         {
             builder.ToTable("BankaHareketler");
-            builder.HasKey(x => x.Id).HasName("PK_BankaHareketler");
+            builder.HasKey(x => x.Id).HasName("PK_BankaHareket");
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedNever().UseIdentityColumn();
             builder.Property(x => x.BankaId).HasColumnName(@"BankaId").HasColumnType("int").IsRequired();
@@ -20,7 +20,7 @@ namespace DataAccess.Configuration
             builder.Property(x => x.Tarih).HasColumnName(@"Tarih").HasColumnType("date").IsRequired();
             builder.Property(x => x.Aciklama).HasColumnName(@"Aciklama").HasColumnType("nvarchar(250)").IsRequired(false).HasMaxLength(250);
 
-            builder.HasIndex(x => x.EvrakNo).HasDatabaseName("UK_BankaHareketler_EvrakNo").IsUnique();
+            builder.HasIndex(x => x.EvrakNo).HasDatabaseName("UK_BankaHareket_EvrakNo").IsUnique();
 
             // Foreign keys
             builder.HasOne(a => a.Banka).WithMany().HasForeignKey(c => c.BankaId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("Banka_1_M_BankaHareketler");

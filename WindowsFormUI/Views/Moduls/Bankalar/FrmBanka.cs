@@ -2,6 +2,7 @@
 using Core.Extensions;
 using System;
 using System.Windows.Forms;
+using WindowsFormUI.Properties;
 
 namespace WindowsFormUI.Views.Moduls.Bankalar
 {
@@ -17,21 +18,31 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
         {
             var form = Program.Container.Resolve<FrmBankaKart>();
             form.MdiParent = this;
+            form.SecimIcin = false;
             form.Show();
         }
 
         private void TsmiKayitYap_Click(object sender, EventArgs e)
         {
-            BankaIslemTuru bankaIslemTuru = (BankaIslemTuru)(((ToolStripMenuItem)sender).Tag.ToString().ToInt());
             var form = Program.Container.Resolve<FrmBankaKayit>();
             form.MdiParent = this;
-            form.BankaIslemTuru = bankaIslemTuru;
+            form.BankaIslemTuru = (BankaIslemTuru)(((ToolStripMenuItem)sender).Tag.ToString().ToInt());
+            if (form.BankaIslemTuru == BankaIslemTuru.Tahsilat)
+            {
+                form.Icon = Resources.Banka_Havale32x321;
+                form.Text += "  --  Havale/EFT Al";
+            }
+            else if (form.BankaIslemTuru == BankaIslemTuru.Tediye)
+            {
+                form.Icon = Resources.BankaEFT32x321;
+                form.Text += "  --  Havale/EFT Gönder";
+            }
             form.Show();
         }
 
         private void TsmiKayitListe_Click(object sender, EventArgs e)
         {
-            var form = Program.Container.Resolve<FrmBankaListe>();
+            var form = Program.Container.Resolve<FrmBankaHareketListe>();
             form.MdiParent = this;
             form.BankaIslemTuru = BankaIslemTuru.Hepsi;
             form.Show();

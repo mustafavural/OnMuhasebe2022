@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormUI.Views.Moduls.Bankalar
 {
-    partial class FrmBankaListe
+    partial class FrmBankaHareketListe
     {
         /// <summary>
         /// Required designer variable.
@@ -306,7 +306,7 @@
             this.MaximumSize = new System.Drawing.Size(1000, 600);
             this.MinimumSize = new System.Drawing.Size(892, 296);
             this.Name = "FrmBankaListe";
-            this.Text = "FrmBankaListe";
+            this.Text = "Banka Hesap Hareket Listesi";
             this.Load += new System.EventHandler(this.FrmBankaListe_Load);
             this.grpEvrakListe.ResumeLayout(false);
             this.grpEvrakListe.PerformLayout();

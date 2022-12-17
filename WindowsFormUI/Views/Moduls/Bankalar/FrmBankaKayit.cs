@@ -11,7 +11,6 @@ using System.Reflection;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
 using WindowsFormUI.Helpers;
-using WindowsFormUI.Properties;
 using WindowsFormUI.Views.Moduls.Cariler;
 using WindowsFormUI.Views.UserExtensions;
 
@@ -22,7 +21,8 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
         private readonly IBankaService _bankaService;
         private readonly IBankaHareketService _bankaHareketService;
         private readonly ICariService _cariService;
-        private Banka _secilenBanka;
+        private readonly List<BankaHareket> _bankaHareketler;
+        private Banka _secilenHesap;
         private Cari _secilenCari;
         private BankaHareket _secilenBankaHareket;
         private decimal _girenCikanMiktar = 0;
@@ -36,46 +36,37 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             _bankaHareketService = bankaHareketService;
             _cariService = cariService;
             BankaIslemTuru = BankaIslemTuru.Hepsi;
+            _bankaHareketler = new();
         }
 
         private void FrmBankaKayit_Load(object sender, EventArgs e)
         {
-            if (BankaIslemTuru == BankaIslemTuru.Tahsilat)
-            {
-                this.Icon = Resources.Banka_Havale32x321;
-                this.Text += "  --  Tahsilat Yap";
-            }
-            else if (BankaIslemTuru == BankaIslemTuru.Tediye)
-            {
-                this.Icon = Resources.BankaEFT32x321;
-                this.Text += "  --  Tediye (Ödeme) Yap";
-            }
-            ClearScreen();
+            ClearForm_IslemBilgileri();
+            UpdateDgvBankaHareketler();
         }
 
-        private void ClearScreen()
+        private void ClearForm_IslemBilgileri()
         {
-            uscBankaButtons.TabStop = false;
+            txtHesapNo.Text = "";
+            txtHesapNo.Enabled = true;
+            btnHesapBul.Enabled = true;
 
-            txtBankaAd.Enabled = true;
-            btnBankaBul.Enabled = true;
-            txtBankaAd.Text = "00-Merkez Banka";
-
-            txtCariKod.Enabled = false;
             txtCariKod.Text = "";
+            txtCariKod.Enabled = false;
             btnCariBul.Enabled = false;
             lblCariAd.Text = "";
 
-            txtEvrakNo.Enabled = false;
             txtEvrakNo.Text = "";
+            txtEvrakNo.Enabled = false;
             btnEvrakBul.Enabled = false;
 
-            txtMiktar.Enabled = false;
             txtMiktar.Text = "";
+            txtMiktar.Enabled = false;
 
-            txtAciklama.Enabled = false;
             txtAciklama.Text = "";
+            txtAciklama.Enabled = false;
 
+            dtpBankaTarih.Value = DateTime.Today;
             dtpBankaTarih.Enabled = false;
 
             uscBankaButtons.BtnClear_Visible = false;
@@ -83,21 +74,23 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             uscBankaButtons.BtnSave_Enable = false;
             uscBankaButtons.BtnSave_Text = "Kaydet";
 
-            _secilenBanka = null;
+            txtHesapNo.Focus();
+
+            /////////////////////////////////
+            _secilenHesap = null;
             _secilenCari = null;
             _secilenBankaHareket = null;
 
-            dgvBankaHareketler.DataSource = ListeyeYaz(_bankaHareketService.GetList(s => s.EvrakNo.StartsWith(BankaIslemTuru.ToCharString())).Data);
-            txtBankaAd.Focus();
         }
 
-        private object ListeyeYaz(List<BankaHareket> bankaHareketler)
+        private void UpdateDgvBankaHareketler()
         {
-            return bankaHareketler.Select(s => new
+            _bankaHareketler.Clear();
+            _bankaHareketler.AddRange(_bankaHareketService.GetList(s => s.EvrakNo.StartsWith(BankaIslemTuru.ToCharString())).Data);
+            dgvBankaHareketler.DataSource = _bankaHareketler.Select(s => new
             {
                 s.Id,
                 s.BankaId,
-                BankaAd = _bankaService.GetById(s.BankaId).Data.BankaAd,
                 s.CariId,
                 _cariService.GetById(s.CariId).Data.Unvan,
                 s.EvrakNo,
@@ -107,7 +100,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             }).ToList();
         }
 
-        private void BtnBankaBul_Click(object sender, EventArgs e)
+        private void BtnHesapBul_Click(object sender, EventArgs e)
         {
             var form = Program.Container.Resolve<FrmBankaKart>();
             form.SecimIcin = true;
@@ -116,12 +109,12 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             {
                 if (StaticPrimitives.SecilenBankaId > 0)
                 {
-                    _secilenBanka = _bankaService.GetById(StaticPrimitives.SecilenBankaId).Data;
+                    _secilenHesap = _bankaService.GetById(StaticPrimitives.SecilenBankaId).Data;
+                    txtHesapNo.Text = _secilenHesap.HesapNo;
                     StaticPrimitives.SecilenBankaId = 0;
-                    txtBankaAd.Text = _secilenBanka.BankaAd;
                 }
-                else txtBankaAd.Text = "";
-                txtBankaAd.Focus();
+                else txtHesapNo.Text = "";
+                txtHesapNo.Focus();
             }
             catch (Exception err)
             {
@@ -139,8 +132,8 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
                 if (StaticPrimitives.SecilenCariId > 0)
                 {
                     _secilenCari = _cariService.GetById(StaticPrimitives.SecilenCariId).Data;
-                    StaticPrimitives.SecilenCariId = 0;
                     txtCariKod.Text = _secilenCari.Kod;
+                    StaticPrimitives.SecilenCariId = 0;
                 }
                 else txtCariKod.Text = "";
                 txtCariKod.Focus();
@@ -153,7 +146,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
 
         private void BtnEvrakBul_Click(object sender, EventArgs e)
         {
-            var form = Program.Container.Resolve<FrmBankaListe>();
+            var form = Program.Container.Resolve<FrmBankaHareketListe>();
             form.BankaIslemTuru = BankaIslemTuru;
             form.ShowDialog();
             try
@@ -161,8 +154,8 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
                 if (StaticPrimitives.SecilenBankaHareketId > 0)
                 {
                     _secilenBankaHareket = _bankaHareketService.GetById(StaticPrimitives.SecilenBankaHareketId).Data;
-                    StaticPrimitives.SecilenBankaHareketId = 0;
                     txtEvrakNo.Text = _secilenBankaHareket.EvrakNo;
+                    StaticPrimitives.SecilenBankaHareketId = 0;
                 }
                 else txtEvrakNo.Text = "";
                 txtEvrakNo.Focus();
@@ -175,15 +168,16 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
 
         private void UscBankaButtons_ClickClear(object sender, EventArgs e)
         {
-            ClearScreen();
+            ClearForm_IslemBilgileri();
+            UpdateDgvBankaHareketler();
         }
 
         private void UscBankaButtons_ClickSave(object sender, EventArgs e)
         {
             try
             {
-                IResult result = _secilenBankaHareket == null 
-                    ? _bankaHareketService.Add(ReadBankaHareketFromForm()) 
+                IResult result = _secilenBankaHareket == null
+                    ? _bankaHareketService.Add(ReadBankaHareketFromForm())
                     : _bankaHareketService.Update(_secilenBankaHareket);
                 uscBankaButtons.LblStatus_Text = result.Message;
             }
@@ -193,18 +187,16 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             }
         }
 
-        private BankaHareket ReadBankaHareketFromForm()
+        private BankaHareket ReadBankaHareketFromForm() => new()
         {
-            return new BankaHareket
-            {
-                BankaId = _secilenBanka.Id,
-                CariId = _secilenCari.Id,
-                EvrakNo = txtEvrakNo.Text,
-                Aciklama = txtAciklama.Text,
-                GirenCikanMiktar = _girenCikanMiktar,
-                Tarih = dtpBankaTarih.Value
-            };
-        }
+            Id = 0,
+            BankaId = _secilenHesap.Id,
+            CariId = _secilenCari.Id,
+            EvrakNo = txtEvrakNo.Text,
+            GirenCikanMiktar = _girenCikanMiktar,
+            Tarih = dtpBankaTarih.Value,
+            Aciklama = txtAciklama.Text
+        };
 
         private void UscBankaButtons_ClickCancel(object sender, EventArgs e)
         {
@@ -213,7 +205,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
                 if (_secilenBankaHareket != null)
                 {
                     var result = _bankaHareketService.Delete(_secilenBankaHareket);
-                    ClearScreen();
+                    ClearForm_IslemBilgileri();
                     uscBankaButtons.LblStatus_Text = result.Message;
                 }
             }
@@ -223,7 +215,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             }
         }
 
-        private void ThrowLeaveOnlyWithTabKey(object sender, PreviewKeyDownEventArgs e)
+        private void LeaveOnlyWithTabKey(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyData == Keys.Tab)
             {
@@ -239,30 +231,54 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
         {
             try
             {
-                _secilenBanka ??= _bankaService.GetByHesapNo(txtBankaAd.Text).Data;
-                if (_secilenBanka == null)
+                _secilenHesap ??= _bankaService.GetByHesapNo(txtHesapNo.Text).Data;
+                if (_secilenHesap == null)
                 {
                     MessageHelper.SuccessMessageBuilder(Messages.BankaMessages.HesapBulunamadi, this.Text);
-                    txtBankaAd.Focus();
+                    txtHesapNo.Focus();
                     return;
                 }
 
-                txtEvrakNo.Enabled = true;
-                btnEvrakBul.Enabled = true;
-                uscBankaButtons.BtnClear_Visible = true;
-                //
-                BankaHareket yenifis = _bankaHareketService.GetList((s => s.BankaId == _secilenBanka.Id && s.EvrakNo.StartsWith(BankaIslemTuru.ToCharString()))).Data?.MaxBy(s => s.Id);
-                int fisNo = yenifis == null ? 1 : yenifis.EvrakNo[1..].Trim('0').ToInt() + 1;
-                txtEvrakNo.Text = fisNo.ToString();
-                //
-                txtBankaAd.Enabled = false;
-                btnBankaBul.Enabled = false;
+                txtCariKod.Enabled = true;
+                btnCariBul.Enabled = true;
+
+                txtHesapNo.Enabled = false;
+                btnHesapBul.Enabled = false;
             }
             catch (Exception err)
             {
                 MessageHelper.ErrorMessageBuilder(err);
             }
-            txtEvrakNo.Focus();
+            txtCariKod.Focus();
+        }
+
+        private void TxtCariKod_Leaved()
+        {
+            try
+            {
+                var result = _cariService.GetByKod(txtCariKod.Text);
+                if (result.Data == null)
+                    throw new Exception(Messages.CariMessages.CariYok);
+                else
+                {
+                    _secilenCari = result.Data;
+                    lblCariAd.Text = _secilenCari.Unvan;
+                }
+                //
+                BankaHareket yenifis = _bankaHareketService.GetList((s => s.BankaId == _secilenHesap.Id && s.EvrakNo.StartsWith(BankaIslemTuru.ToCharString()))).Data?.MaxBy(s => s.Id);
+                int fisNo = yenifis == null ? 1 : yenifis.EvrakNo[1..].Trim('0').ToInt() + 1;
+                txtEvrakNo.Text = fisNo.ToString();
+                //
+                txtEvrakNo.Enabled = true;
+
+                txtCariKod.Enabled = false;
+                btnCariBul.Enabled = false;
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                txtCariKod.Focus();
+            }
         }
 
         private void TxtEvrakNo_Leaved()
@@ -290,30 +306,6 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             txtEvrakNo.Enabled = false;
             btnEvrakBul.Enabled = false;
             txtCariKod.Focus();
-        }
-
-        private void TxtCariKod_Leaved()
-        {
-            try
-            {
-                if (_secilenCari == null)
-                {
-                    var result = _cariService.GetByKod(txtCariKod.Text);
-                    if (result.Data != null)
-                        _secilenCari = result.Data;
-                    else
-                        throw new Exception(Messages.CariMessages.CariYok);
-                }
-                txtMiktar.Enabled = true;
-                lblCariAd.Text = _secilenCari.Unvan;
-                txtCariKod.Enabled = false;
-                btnCariBul.Enabled = false;
-            }
-            catch(Exception err)
-            {
-                MessageHelper.ErrorMessageBuilder(err);
-                txtCariKod.Focus();
-            }
         }
 
         private void TxtMiktar_Leaved()
@@ -381,8 +373,8 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
 
         private void BringExistingBankaHareket(BankaHareket secilenBankaHareket)
         {
-            txtBankaAd.Enabled = true;
-            btnBankaBul.Enabled = true;
+            txtHesapNo.Enabled = true;
+            btnHesapBul.Enabled = true;
             txtCariKod.Enabled = true;
             btnCariBul.Enabled = true;
             txtEvrakNo.Enabled = true;
@@ -394,8 +386,8 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             uscBankaButtons.BtnDelete_Enable = true;
             uscBankaButtons.BtnSave_Enable = true;
 
-            _secilenBanka = secilenBankaHareket.Banka;
-            txtBankaAd.Text = _secilenBanka.BankaAd;
+            _secilenHesap = secilenBankaHareket.Banka;
+            txtHesapNo.Text = _secilenHesap.BankaAd;
             txtEvrakNo.Text = secilenBankaHareket.EvrakNo;
             _secilenCari = secilenBankaHareket.CariHareket.Cari;
             txtCariKod.Text = _secilenCari.Kod;

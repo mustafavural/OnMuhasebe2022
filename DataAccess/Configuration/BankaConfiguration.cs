@@ -9,7 +9,7 @@ namespace DataAccess.Configuration
         public void Configure(EntityTypeBuilder<Banka> builder)
         {
             builder.ToTable("Bankalar");
-            builder.HasKey(x => x.Id).HasName("PK_Bankalar").IsClustered();
+            builder.HasKey(x => x.Id).HasName("PK_Banka").IsClustered();
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
             builder.Property(x => x.BankaAd).HasColumnName(@"BankaAd").HasColumnType("nvarchar(50)").IsRequired().HasMaxLength(50);
@@ -17,7 +17,8 @@ namespace DataAccess.Configuration
             builder.Property(x => x.HesapNo).HasColumnName(@"HesapNo").HasColumnType("varchar(10)").IsRequired().IsUnicode(false).HasMaxLength(10);
             builder.Property(x => x.IBAN).HasColumnName(@"IBAN").HasColumnType("varchar(30)").IsRequired().IsUnicode(false).HasMaxLength(30);
 
-            builder.HasIndex(x => x.HesapNo).HasDatabaseName("UK_Banka_No").IsUnique();
+            builder.HasIndex(x => x.HesapNo).HasDatabaseName("UK_Banka_HesapNo").IsUnique();
+            builder.HasIndex(x => x.IBAN).HasDatabaseName("UK_Banka_IBAN").IsUnique();
         }
     }
 

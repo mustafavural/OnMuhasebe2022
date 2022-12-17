@@ -3,7 +3,7 @@ using WindowsFormUI.Views.Moduls.Faturalar;
 
 namespace WindowsFormUI.Views.UserExtensions
 {
-    public static class BordoExtensions
+    public static class CekSenetExtensions
     {
 
         /// <summary>
