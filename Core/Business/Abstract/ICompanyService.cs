@@ -7,5 +7,6 @@ namespace Core.Business.Abstract
         void Add(Company company);
         List<User> GetUsers(Company company);
         Company GetByName(string name);
+        List<Company> GetList();
     }
 }

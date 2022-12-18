@@ -7,7 +7,7 @@ namespace Core.DataAccess.Concrete.EntityFramework.Contexts
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString: @"server=(localdb)\MSSQLLocalDB;Database=MvOnMuhasebe2022;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer(connectionString: @"server=(localdb)\MSSQLLocalDB;Database=OnMuhasebe2022;User Id=sa;Password=sapass");
         }
         public DbSet<User> Users { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }

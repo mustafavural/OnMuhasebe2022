@@ -1,6 +1,12 @@
-﻿using Core.DependencyResolvers;
+﻿using Core.Aspects.Autofac.Security;
+using Core.DependencyResolvers;
 using Core.Extensions;
+using Core.Utilities.Interceptors.Autofac;
 using Core.Utilities.Ioc;
+using Core.Utilities.Security.Encyption;
+using Core.Utilities.Security.JWT;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebAPI
 {
@@ -18,7 +24,7 @@ namespace WebAPI
         {
             services.AddControllers();
             services.AddHttpContextAccessor();
-            //services.AddTransient<MethodInterception, SecuredOperation>();
+            services.AddTransient<MethodInterception, SecuredOperation>();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddCors(options =>
@@ -26,20 +32,20 @@ namespace WebAPI
                 options.AddPolicy("AllowOrigin",
                     builder => builder.WithOrigins("http://localhost:44366"));
             });
-            //var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options =>
-            //    {
-            //        options.TokenValidationParameters = new TokenValidationParameters()
-            //        {
-            //            ValidateIssuer = true,
-            //            ValidateAudience = true,
-            //            ValidateLifetime = true,
-            //            ValidIssuer = tokenOptions.Issuer,
-            //            ValidAudience = tokenOptions.Audience,
-            //            IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
-            //        };
-            //    });
+            var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidIssuer = tokenOptions.Issuer,
+                        ValidAudience = tokenOptions.Audience,
+                        IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+                    };
+                });
 
             services.AddDependencyResolvers(new ICoreModule[]
             {
@@ -66,9 +72,9 @@ namespace WebAPI
 
             app.UseRouting();
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
 
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

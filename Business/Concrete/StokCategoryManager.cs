@@ -79,7 +79,7 @@ namespace Business.Concrete
             if (!result.IsSuccess)
                 return result;
 
-            _stokCategoryDal.Delete(new StokCategory { Id = entity.Id });
+            _stokCategoryDal.Delete(entity);
             return new SuccessResult(Messages.StokMessages.CategorySilindi);
         }
 

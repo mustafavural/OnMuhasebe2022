@@ -23,6 +23,11 @@ namespace Core.Business.Concrete
             return _companyDal.Get(s => s.Name == name);
         }
 
+        public List<Company> GetList()
+        {
+            return _companyDal.GetList();
+        }
+
         public List<User> GetUsers(Company company)
         {
             return _companyDal.GetUsers(company);

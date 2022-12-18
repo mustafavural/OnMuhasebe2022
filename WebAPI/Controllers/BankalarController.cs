@@ -8,67 +8,67 @@ namespace WebAPI.Controllers
     [ApiController]
     public class BankalarController : ControllerBase
     {
-        private readonly IBankaHesapService _bankaHesapService;
+        private readonly IBankaService _bankaService;
         private readonly IBankaHareketService _bankaHareketService;
 
-        public BankalarController(IBankaHesapService bankaHesapService, IBankaHareketService bankaHareketService)
+        public BankalarController(IBankaService bankaService, IBankaHareketService bankaHareketService)
         {
-            _bankaHesapService = bankaHesapService;
+            _bankaService = bankaService;
             _bankaHareketService = bankaHareketService;
         }
 
         [HttpGet("GetHesapById")]
         public IActionResult GetHesapById(int hesapId)
         {
-            var result = _bankaHesapService.GetById(hesapId);
+            var result = _bankaService.GetById(hesapId);
             return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Message);
         }
         [HttpGet("GetHesapByHesapNo")]
         public IActionResult GetHesapByHesapNo(string hesapNo)
         {
-            var result = _bankaHesapService.GetByHesapNo(hesapNo);
+            var result = _bankaService.GetByHesapNo(hesapNo);
             return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Message);
         }
         [HttpGet("GetHesapBakiye")]
         public IActionResult GetHesapBakiye(int hesapId)
         {
-            var result = _bankaHesapService.GetHesapBakiye(hesapId);
+            var result = _bankaService.GetHesapBakiye(hesapId);
             return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Message);
         }
         [HttpGet("GetHesapListByBankaAd")]
         public IActionResult GetHesapListByBankaAd(string hesapAd)
         {
-            var result = _bankaHesapService.GetListByBankaAd(hesapAd);
+            var result = _bankaService.GetListByBankaAd(hesapAd);
             return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Message);
         }
         [HttpGet("GetHesapListByBankaSubeAd")]
         public IActionResult GetHesapListByBankaSubeAd(string hesapAd)
         {
-            var result = _bankaHesapService.GetListByBankaSubeAd(hesapAd);
+            var result = _bankaService.GetListByBankaSubeAd(hesapAd);
             return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Message);
         }
         [HttpGet("GetHesapList")]
         public IActionResult GetHesapList()
         {
-            var result = _bankaHesapService.GetList();
+            var result = _bankaService.GetList();
             return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Message);
         }
         [HttpPost("AddHesap")]
-        public IActionResult AddHesap(BankaHesap bankaHesap)
+        public IActionResult AddHesap(Banka banka)
         {
-            var result = _bankaHesapService.Add(bankaHesap);
+            var result = _bankaService.Add(banka);
             return result.IsSuccess ? Ok(result.Message) : BadRequest(result.Message);
         }
         [HttpPost("DeleteHesap")]
-        public IActionResult DeleteHesap(BankaHesap bankaHesap)
+        public IActionResult DeleteHesap(Banka banka)
         {
-            var result = _bankaHesapService.Delete(bankaHesap);
+            var result = _bankaService.Delete(banka);
             return result.IsSuccess ? Ok(result.Message) : BadRequest(result.Message);
         }
         [HttpPost("UpdateHesap")]
-        public IActionResult UpdateHesap(BankaHesap bankaHesap)
+        public IActionResult UpdateHesap(Banka banka)
         {
-            var result = _bankaHesapService.Update(bankaHesap);
+            var result = _bankaService.Update(banka);
             return result.IsSuccess ? Ok(result.Message) : BadRequest(result.Message);
         }
         [HttpGet("GetHareketById")]
@@ -89,8 +89,8 @@ namespace WebAPI.Controllers
             var result = _bankaHareketService.GetListByCariId(cariId);
             return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Message);
         }
-        [HttpGet("GetHareketListByBankaHesapId")]
-        public IActionResult GetHareketListByBankaHesapId(int hesapId)
+        [HttpGet("GetHareketListByBankaId")]
+        public IActionResult GetHareketListByBankaId(int hesapId)
         {
             var result = _bankaHareketService.GetListByBankaHesapId(hesapId);
             return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Message);
@@ -114,21 +114,21 @@ namespace WebAPI.Controllers
             return result.IsSuccess ? Ok(result.Data) : BadRequest(result.Message);
         }
         [HttpPost("AddHareket")]
-        public IActionResult AddHesap(BankaHareket bankaHesap)
+        public IActionResult AddHesap(BankaHareket banka)
         {
-            var result = _bankaHareketService.Add(bankaHesap);
+            var result = _bankaHareketService.Add(banka);
             return result.IsSuccess ? Ok(result.Message) : BadRequest(result.Message);
         }
         [HttpPost("DeleteHareket")]
-        public IActionResult DeleteHesap(BankaHareket bankaHesap)
+        public IActionResult DeleteHesap(BankaHareket banka)
         {
-            var result = _bankaHareketService.Delete(bankaHesap);
+            var result = _bankaHareketService.Delete(banka);
             return result.IsSuccess ? Ok(result.Message) : BadRequest(result.Message);
         }
         [HttpPost("UpdateHareket")]
-        public IActionResult UpdateHesap(BankaHareket bankaHesap)
+        public IActionResult UpdateHesap(BankaHareket banka)
         {
-            var result = _bankaHareketService.Update(bankaHesap);
+            var result = _bankaHareketService.Update(banka);
             return result.IsSuccess ? Ok(result.Message) : BadRequest(result.Message);
         }
     }

@@ -8,7 +8,6 @@ using System.Linq;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
 using WindowsFormUI.Helpers;
-using WindowsFormUI.Views.Moduls.Cariler;
 
 namespace WindowsFormUI.Views.Moduls.Stoklar
 {
@@ -18,7 +17,6 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
         private readonly IStokCategoryService _stokCategoryService;
         private readonly IStokHareketService _stokHareketService;
         private readonly List<Stok> _stoklar;
-        private readonly List<StokCategory> _stokCategoryler;
         private bool _ciftTiklandiMi = false;
 
         public bool SecimIcin { get; set; }
@@ -31,7 +29,6 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             _stokCategoryService = stokCategoryService;
             SecimIcin = false;
             _stoklar = _stokService.GetList().Data;
-            _stokCategoryler = _stokCategoryService.GetList().Data;
             WriteToScreen(_stoklar);
             txtStokKod.Focus();
         }
@@ -55,11 +52,11 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
         {
             var form = Program.Container.Resolve<FrmStokGrup>();
             form.SecimIcin = true;
-            form.Show();
+            form.ShowDialog();
 
             if (StaticPrimitives.SecilenStokCategoryId > 0)
             {
-                var secilenStokCategory = _stokCategoryler.Where(s => s.Id == StaticPrimitives.SecilenStokCategoryId).Single();
+                var secilenStokCategory = _stokCategoryService.GetById(StaticPrimitives.SecilenStokCategoryId).Data;
                 if (!lsbCategoryler.Items.Contains(secilenStokCategory.Ad))
                     lsbCategoryler.Items.Add(secilenStokCategory.Ad);
                 TxtStokBilgiler_TextChanged(sender, e);
@@ -80,13 +77,13 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
         private bool SecilenGruplaraUyuyorMu(string kod)
         {
-            if (lsbCategoryler.Items.Count != 0)
+            if (lsbCategoryler.Items.Count > 0)
             {
                 var list = _stokService.GetByKod(kod).Data.StokCategoryler;
                 foreach (var item in list)
@@ -129,10 +126,10 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
 
         private void TsmiShowColumn_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItem itsm = (ToolStripMenuItem)sender;
-            var column = itsm.Name[8..];
-            dgvStokListe.Columns["col" + column].Visible = !itsm.Checked;
-            itsm.Checked = !itsm.Checked;
+            ToolStripMenuItem tsmi = (ToolStripMenuItem)sender;
+            var column = tsmi.Name[8..];
+            dgvStokListe.Columns["col" + column].Visible = !tsmi.Checked;
+            tsmi.Checked = !tsmi.Checked;
         }
     }
 }

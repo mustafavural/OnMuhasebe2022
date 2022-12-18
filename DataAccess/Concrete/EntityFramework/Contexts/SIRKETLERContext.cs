@@ -6,11 +6,16 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 {
     public class SIRKETLERContext : DbContext
     {
+        public static string ServerName => "(localdb)\\MSSQLLocalDB";
+        public static string DatabaseName => "SIRKET";
+        public static string UserId => "sa";
+        public static string Password => "sapass";
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(connectionString: @"server=(localdb)\MSSQLLocalDB;Database=SIRKET;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(connectionString: $"server={ServerName};Database={DatabaseName};User Id={UserId};Password={Password}");
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
+using WindowsFormUI.Helpers;
 
 namespace WindowsFormUI.Views.Moduls.Stoklar
 {
@@ -34,7 +35,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
                 if (result.Data != null)
                 {
                     _secilenStok = result.Data;
-                    WriteToScreen(_secilenStok);
+                    WriteToScreen();
                 }
                 else
                 {
@@ -57,7 +58,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             if (StaticPrimitives.SecilenStokId > 0)
             {
                 _secilenStok = _stokService.GetById(StaticPrimitives.SecilenStokId).Data;
-                WriteToScreen(_secilenStok);
+                WriteToScreen();
             }
         }
 
@@ -83,7 +84,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
                     });
 
                     uscStokEkleSilButon.LblStatus_Text = result.Message;
-                    dgvGrupView.DataSource = _secilenStok.StokCategoryler;
+                    dgvGrupView.DataSource = _secilenStok.StokCategoryler.ToList();
                     btnGrupEkle.Focus();
                 }
             }
@@ -108,38 +109,52 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
         private void UscStokEkleSilButon_ClickEkleGuncelle(object sender, EventArgs e)
         {
-            var readStok = ReadStokFromForm();
-            IResult result;
-            if (_secilenStok == null)
-                result = _stokService.Add(readStok);
-            else
+            try
             {
-                readStok.Id = _secilenStok.Id;
-                result = _stokService.Update(readStok);
-            }
+                var readStok = ReadStokFromForm();
+                IResult result;
+                if (_secilenStok == null)
+                    result = _stokService.Add(readStok);
+                else
+                {
+                    readStok.Id = _secilenStok.Id;
+                    result = _stokService.Update(readStok);
+                }
 
-            this.ClearScreen();
-            uscStokEkleSilButon.LblStatus_Text = result.Message;
+                this.ClearScreen();
+                uscStokEkleSilButon.LblStatus_Text = result.Message;
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void UscStokEkleSilButon_ClickSecileniSil(object sender, EventArgs e)
         {
-            foreach (var item in _secilenStok.StokCategoryler)
+            try
             {
-                var stokGrup = _stokService.GetStokGrup(_secilenStok.Id, item.Id).Data;
-                _stokService.DeleteCategoryFromStok(stokGrup);
-            }
-            var result = _stokService.Delete(_secilenStok);
+                foreach (var item in _secilenStok.StokCategoryler)
+                {
+                    var stokGrup = _stokService.GetStokGrup(_secilenStok.Id, item.Id).Data;
+                    _stokService.DeleteCategoryFromStok(stokGrup);
+                }
+                var result = _stokService.Delete(_secilenStok);
 
-            if (result.IsSuccess)
-                this.ClearScreen();
-            uscStokEkleSilButon.LblStatus_Text = result.Message;
+                if (result.IsSuccess)
+                    this.ClearScreen();
+                uscStokEkleSilButon.LblStatus_Text = result.Message;
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void DgvStokListe_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -148,7 +163,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             {
                 int secilenStokId = (int)dgvStokListe.Rows[e.RowIndex].Cells["colId"].Value;
                 _secilenStok = _stokService.GetById(secilenStokId).Data;
-                WriteToScreen(_secilenStok);
+                WriteToScreen();
             }
         }
 
@@ -182,15 +197,15 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             Birim = txtStokBirim.Text
         };
 
-        private void WriteToScreen(Stok secilenStok)
+        private void WriteToScreen()
         {
-            txtStokKod.Text = secilenStok.Kod;
-            txtStokBarkod.Text = secilenStok.Barkod;
-            txtStokAd.Text = secilenStok.Ad;
-            txtStokKDV.Text = secilenStok.Kdv.ToString();
-            txtStokBirim.Text = secilenStok.Birim;
+            txtStokKod.Text = _secilenStok.Kod;
+            txtStokBarkod.Text = _secilenStok.Barkod;
+            txtStokAd.Text = _secilenStok.Ad;
+            txtStokKDV.Text = _secilenStok.Kdv.ToString();
+            txtStokBirim.Text = _secilenStok.Birim;
 
-            dgvGrupView.DataSource = secilenStok.StokCategoryler;
+            dgvGrupView.DataSource = _secilenStok.StokCategoryler.ToList();
 
             btnGrupEkle.Enabled = true;
             btnGrupSil.Enabled = true;
@@ -206,9 +221,22 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             {
                 tabFrmStok.TabPages.Insert(tabFrmStok.TabPages.Count, tabStokHareket);
             }
-            var result = _stokHareketService.GetListByStokId(secilenStok.Id).Data;
-            dgvStokHareketler.DataSource = result;
-            grpStokHareketler.Text = $"{secilenStok.Ad} ------------------ Kalan Stok Miktarı : {result.Sum(s => s.Miktar)} - {secilenStok.Birim}";
+            var result = _stokHareketService.GetListByStokId(_secilenStok.Id).Data;
+            dgvStokHareketler.DataSource = result.Select(s => new
+            {
+                s.Id,
+                s.FaturaId,
+                s.StokId,
+                s.Miktar,
+                s.Birim,
+                s.Fiyat,
+                s.BrutTutar,
+                s.Kdv,
+                s.NetTutar,
+                s.Tarih,
+                s.Aciklama
+            }).ToList();
+            grpStokHareketler.Text = $"{_secilenStok.Ad} ------------------ Kalan Stok Miktarı : {result.Sum(s => s.Miktar)} - {_secilenStok.Birim}";
         }
 
         private void ClearScreen()

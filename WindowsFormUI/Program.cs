@@ -22,7 +22,7 @@ namespace WindowsFormUI
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main()
+        public static void Main()
         {
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
@@ -30,15 +30,17 @@ namespace WindowsFormUI
             System.Transactions.TransactionManager.ImplicitDistributedTransactions = true;
             Container = ConfigureContainer();
             ConfigureServices(new ServiceCollection());
-            Application.Run(Container.Resolve<FrmWelcome>());
+            Application.Run(Container.Resolve<FrmLogin>());
         }
         public static IContainer ConfigureContainer()
         {
             var builder = new ContainerBuilder();
 
             builder.RegisterModule(new AutofacBusinessModule());
+            builder.RegisterModule(new Core.DependencyResolvers.AutofacCoreModule.AutofacCoreModule());
             builder.RegisterType<FrmBase>().AsSelf();
             builder.RegisterType<FrmMdiBase>().AsSelf();
+            builder.RegisterType<FrmLogin>().AsSelf();
             builder.RegisterType<FrmWelcome>().AsSelf();
             builder.RegisterType<FrmStok>().AsSelf();
             builder.RegisterType<FrmStokKart>().AsSelf();

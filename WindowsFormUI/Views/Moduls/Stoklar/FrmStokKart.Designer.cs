@@ -35,6 +35,11 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.grpStok = new System.Windows.Forms.GroupBox();
             this.txtStokBirim = new System.Windows.Forms.TextBox();
             this.btnStokBul = new System.Windows.Forms.Button();
@@ -55,12 +60,6 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.btnGrupEkle = new System.Windows.Forms.Button();
             this.uscStokEkleSilButon = new WindowsFormUI.Views.UserControls.UscFormButtons();
             this.dgvStokListe = new System.Windows.Forms.DataGridView();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBarkod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKDV = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBirim = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabFrmStok = new System.Windows.Forms.TabControl();
             this.tabStokKart = new System.Windows.Forms.TabPage();
             this.tabStokHareket = new System.Windows.Forms.TabPage();
@@ -78,6 +77,12 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.colHareketTarih = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHareketAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.imLStokKart = new System.Windows.Forms.ImageList(this.components);
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colKod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBarkod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colKDV = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBirim = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpStok.SuspendLayout();
             this.grpGrup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGrupView)).BeginInit();
@@ -333,50 +338,6 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.dgvStokListe.TabStop = false;
             this.dgvStokListe.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvStokListe_CellDoubleClick);
             // 
-            // colId
-            // 
-            this.colId.DataPropertyName = "Id";
-            this.colId.HeaderText = "Id";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Visible = false;
-            // 
-            // colKod
-            // 
-            this.colKod.DataPropertyName = "Kod";
-            this.colKod.HeaderText = "Kod";
-            this.colKod.Name = "colKod";
-            this.colKod.ReadOnly = true;
-            // 
-            // colBarkod
-            // 
-            this.colBarkod.DataPropertyName = "Barkod";
-            this.colBarkod.HeaderText = "Barkod";
-            this.colBarkod.Name = "colBarkod";
-            this.colBarkod.ReadOnly = true;
-            // 
-            // colAd
-            // 
-            this.colAd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colAd.DataPropertyName = "Ad";
-            this.colAd.HeaderText = "Ad";
-            this.colAd.Name = "colAd";
-            this.colAd.ReadOnly = true;
-            // 
-            // colKDV
-            // 
-            this.colKDV.DataPropertyName = "KDV";
-            this.colKDV.HeaderText = "KDV";
-            this.colKDV.Name = "colKDV";
-            this.colKDV.ReadOnly = true;
-            // 
-            // colBirim
-            // 
-            this.colBirim.DataPropertyName = "Birim";
-            this.colBirim.HeaderText = "Birim";
-            this.colBirim.Name = "colBirim";
-            this.colBirim.ReadOnly = true;
-            // 
             // tabFrmStok
             // 
             this.tabFrmStok.Controls.Add(this.tabStokKart);
@@ -430,7 +391,15 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.dgvStokHareketler.AllowUserToAddRows = false;
             this.dgvStokHareketler.AllowUserToDeleteRows = false;
             this.dgvStokHareketler.BackgroundColor = System.Drawing.Color.White;
-            this.dgvStokHareketler.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvStokHareketler.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvStokHareketler.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvStokHareketler.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colHareketId,
             this.colStokId,
@@ -448,6 +417,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.dgvStokHareketler.Name = "dgvStokHareketler";
             this.dgvStokHareketler.ReadOnly = true;
             this.dgvStokHareketler.RowHeadersVisible = false;
+            this.dgvStokHareketler.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvStokHareketler.RowTemplate.Height = 25;
             this.dgvStokHareketler.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvStokHareketler.Size = new System.Drawing.Size(728, 299);
@@ -479,74 +449,100 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             // 
             // colHareketMiktar
             // 
+            this.colHareketMiktar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colHareketMiktar.DataPropertyName = "Miktar";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = null;
-            this.colHareketMiktar.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            this.colHareketMiktar.DefaultCellStyle = dataGridViewCellStyle2;
             this.colHareketMiktar.HeaderText = "Miktar";
             this.colHareketMiktar.Name = "colHareketMiktar";
             this.colHareketMiktar.ReadOnly = true;
+            this.colHareketMiktar.Width = 71;
             // 
             // colHareketBirim
             // 
+            this.colHareketBirim.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colHareketBirim.DataPropertyName = "Birim";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle2.NullValue = null;
-            this.colHareketBirim.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.NullValue = null;
+            this.colHareketBirim.DefaultCellStyle = dataGridViewCellStyle3;
             this.colHareketBirim.HeaderText = "Birim";
             this.colHareketBirim.Name = "colHareketBirim";
             this.colHareketBirim.ReadOnly = true;
+            this.colHareketBirim.Width = 61;
             // 
             // colHareketFiyat
             // 
+            this.colHareketFiyat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colHareketFiyat.DataPropertyName = "Fiyat";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle3.Format = "#,###.## TL";
-            dataGridViewCellStyle3.NullValue = null;
-            this.colHareketFiyat.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "#,###.## TL";
+            dataGridViewCellStyle4.NullValue = null;
+            this.colHareketFiyat.DefaultCellStyle = dataGridViewCellStyle4;
             this.colHareketFiyat.HeaderText = "Fiyat";
             this.colHareketFiyat.Name = "colHareketFiyat";
             this.colHareketFiyat.ReadOnly = true;
+            this.colHareketFiyat.Width = 62;
             // 
             // colBrutTutar
             // 
+            this.colBrutTutar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colBrutTutar.DataPropertyName = "BrutTutar";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "#,###.## TL";
+            this.colBrutTutar.DefaultCellStyle = dataGridViewCellStyle5;
             this.colBrutTutar.HeaderText = "Brüt Tutar";
             this.colBrutTutar.Name = "colBrutTutar";
             this.colBrutTutar.ReadOnly = true;
+            this.colBrutTutar.Width = 96;
             // 
             // dataGridViewTextBoxColumn1
             // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewTextBoxColumn1.DataPropertyName = "KDV";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewTextBoxColumn1.HeaderText = "KDV";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 56;
             // 
             // colNetTutar
             // 
+            this.colNetTutar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colNetTutar.DataPropertyName = "NetTutar";
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "#,###.## TL";
+            this.colNetTutar.DefaultCellStyle = dataGridViewCellStyle7;
             this.colNetTutar.HeaderText = "Net Tutar";
             this.colNetTutar.Name = "colNetTutar";
             this.colNetTutar.ReadOnly = true;
+            this.colNetTutar.Width = 93;
             // 
             // colHareketTarih
             // 
+            this.colHareketTarih.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colHareketTarih.DataPropertyName = "Tarih";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle4.Format = "d";
-            dataGridViewCellStyle4.NullValue = null;
-            this.colHareketTarih.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Format = "d";
+            dataGridViewCellStyle8.NullValue = null;
+            this.colHareketTarih.DefaultCellStyle = dataGridViewCellStyle8;
             this.colHareketTarih.HeaderText = "Tarih";
             this.colHareketTarih.Name = "colHareketTarih";
             this.colHareketTarih.ReadOnly = true;
+            this.colHareketTarih.Width = 63;
             // 
             // colHareketAciklama
             // 
+            this.colHareketAciklama.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colHareketAciklama.DataPropertyName = "Aciklama";
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.colHareketAciklama.DefaultCellStyle = dataGridViewCellStyle9;
             this.colHareketAciklama.HeaderText = "Açıklama";
             this.colHareketAciklama.Name = "colHareketAciklama";
             this.colHareketAciklama.ReadOnly = true;
+            this.colHareketAciklama.Width = 82;
             // 
             // imLStokKart
             // 
@@ -555,6 +551,58 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.imLStokKart.TransparentColor = System.Drawing.Color.Transparent;
             this.imLStokKart.Images.SetKeyName(0, "Stok_Kartı32x32.ico");
             this.imLStokKart.Images.SetKeyName(1, "Stok_Hareket32x32.ico");
+            // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "Id";
+            this.colId.HeaderText = "Id";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            // 
+            // colKod
+            // 
+            this.colKod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colKod.DataPropertyName = "Kod";
+            this.colKod.HeaderText = "Kod";
+            this.colKod.Name = "colKod";
+            this.colKod.ReadOnly = true;
+            this.colKod.Width = 52;
+            // 
+            // colBarkod
+            // 
+            this.colBarkod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colBarkod.DataPropertyName = "Barkod";
+            this.colBarkod.HeaderText = "Barkod";
+            this.colBarkod.Name = "colBarkod";
+            this.colBarkod.ReadOnly = true;
+            this.colBarkod.Width = 71;
+            // 
+            // colAd
+            // 
+            this.colAd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colAd.DataPropertyName = "Ad";
+            this.colAd.HeaderText = "Ad";
+            this.colAd.Name = "colAd";
+            this.colAd.ReadOnly = true;
+            // 
+            // colKDV
+            // 
+            this.colKDV.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colKDV.DataPropertyName = "KDV";
+            this.colKDV.HeaderText = "KDV";
+            this.colKDV.Name = "colKDV";
+            this.colKDV.ReadOnly = true;
+            this.colKDV.Width = 57;
+            // 
+            // colBirim
+            // 
+            this.colBirim.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colBirim.DataPropertyName = "Birim";
+            this.colBirim.HeaderText = "Birim";
+            this.colBirim.Name = "colBirim";
+            this.colBirim.ReadOnly = true;
+            this.colBirim.Width = 63;
             // 
             // FrmStokKart
             // 

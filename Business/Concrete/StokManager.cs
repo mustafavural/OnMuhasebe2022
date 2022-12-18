@@ -3,6 +3,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Security;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
@@ -43,8 +44,15 @@ namespace Business.Concrete
         {
             return _stokDal.GetStokGrup(stokGrup.StokId, stokGrup.StokCategoryId) == null ? new SuccessResult() : new ErrorResult(Messages.StokMessages.StokVeCategoryZatenEslenik);
         }
+
+        private IResult KontrolStokKullanimdaMi(int id)
+        {
+            return _stokDal.GetStokHareketler(id).Count == 0 ? new SuccessResult() : new ErrorResult(Messages.StokMessages.StokKullaniliyor);
+        }
         #endregion
 
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         private Stok Get(Expression<Func<Stok, bool>> filter)
         {
             var result = _stokDal.Get(filter);
@@ -53,6 +61,9 @@ namespace Business.Concrete
             return result;
         }
 
+        [SecuredOperation("List,Admin")]
+        [CacheAspect(duration: 1)]
+        [LogAspect(typeof(DatabaseLogger))]
         private List<Stok> GetAll(Expression<Func<Stok, bool>>? filter = null)
         {
             var result = _stokDal.GetList(filter);
@@ -60,15 +71,11 @@ namespace Business.Concrete
             return result;
         }
 
-        [SecuredOperation("List,Admin")]
-        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Stok> GetById(int stokId)
         {
             return new SuccessDataResult<Stok>(Get(s => s.Id == stokId));
         }
 
-        [SecuredOperation("List,Admin")]
-        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Stok> GetByKod(string stokKod)
         {
             return new SuccessDataResult<Stok>(Get(s => s.Kod == stokKod));
@@ -82,9 +89,7 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        [SecuredOperation("List,Admin")]
-        [CacheAspect(duration: 1)]
-        [LogAspect(typeof(DatabaseLogger))]
+        [PerformanceAspect(5)]
         public IDataResult<List<Stok>> GetList(Expression<Func<Stok, bool>>? filter = null)
         {
             return new SuccessDataResult<List<Stok>>(GetAll(filter));
@@ -139,7 +144,8 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IResult Delete(Stok stok)
         {
-            IResult result = BusinessRules.Run(KontrolStokIdVarMi(stok.Id));
+            IResult result = BusinessRules.Run(KontrolStokIdVarMi(stok.Id),
+                                               KontrolStokKullanimdaMi(stok.Id));
             if (!result.IsSuccess)
                 return result;
 

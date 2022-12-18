@@ -54,7 +54,7 @@ namespace DataAccess.Concrete.EntityFramework
             using (var context = new SIRKETLERContext())
             {
                 var result = from hareketler in context.StokHareketler
-                             where hareketler.Id == stokId
+                             where hareketler.StokId == stokId
                              select hareketler;
                 return result.ToList();
             }
