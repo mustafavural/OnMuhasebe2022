@@ -121,7 +121,7 @@ namespace Business.Concrete
             return new SuccessDataResult<CekSenetBordro>(Get(k => k.No == no));
         }
 
-        public IDataResult<int> GetLastRowIndex()
+        public IDataResult<int> GetNewRowsEvrakNo()
         {
             var evrak = GetAll().MaxBy(s => s.Id);
             return new SuccessDataResult<int>(evrak == null ? 1 : evrak.No[1..].Trim('0').ToInt() + 1);

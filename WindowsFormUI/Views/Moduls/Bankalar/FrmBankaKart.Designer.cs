@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmBankaKart));
             this.dgvBankalar = new System.Windows.Forms.DataGridView();
             this.grpEkleGuncelle = new System.Windows.Forms.GroupBox();
@@ -48,6 +49,7 @@
             this.colBankaSubeAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHesapNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIBAN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBakiye = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBankalar)).BeginInit();
             this.grpEkleGuncelle.SuspendLayout();
             this.SuspendLayout();
@@ -65,7 +67,8 @@
             this.colBankaAd,
             this.colBankaSubeAd,
             this.colHesapNo,
-            this.colIBAN});
+            this.colIBAN,
+            this.colBakiye});
             this.dgvBankalar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvBankalar.Location = new System.Drawing.Point(0, 190);
             this.dgvBankalar.MultiSelect = false;
@@ -73,7 +76,7 @@
             this.dgvBankalar.ReadOnly = true;
             this.dgvBankalar.RowHeadersVisible = false;
             this.dgvBankalar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvBankalar.Size = new System.Drawing.Size(506, 171);
+            this.dgvBankalar.Size = new System.Drawing.Size(626, 171);
             this.dgvBankalar.TabIndex = 1;
             this.dgvBankalar.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvBankalar_CellDoubleClick);
             // 
@@ -92,7 +95,7 @@
             this.grpEkleGuncelle.Dock = System.Windows.Forms.DockStyle.Top;
             this.grpEkleGuncelle.Location = new System.Drawing.Point(0, 0);
             this.grpEkleGuncelle.Name = "grpEkleGuncelle";
-            this.grpEkleGuncelle.Size = new System.Drawing.Size(506, 190);
+            this.grpEkleGuncelle.Size = new System.Drawing.Size(626, 190);
             this.grpEkleGuncelle.TabIndex = 0;
             this.grpEkleGuncelle.TabStop = false;
             this.grpEkleGuncelle.Text = "Banka Ekle Güncelle";
@@ -116,7 +119,7 @@
             this.uscBankalar.LblStatus_Text = "";
             this.uscBankalar.Location = new System.Drawing.Point(3, 145);
             this.uscBankalar.Name = "uscBankalar";
-            this.uscBankalar.Size = new System.Drawing.Size(500, 42);
+            this.uscBankalar.Size = new System.Drawing.Size(620, 42);
             this.uscBankalar.TabIndex = 8;
             this.uscBankalar.ClickClear += new System.EventHandler(this.UscBankalar_ClickClear);
             this.uscBankalar.ClickSave += new System.EventHandler(this.UscBankalar_ClickSave);
@@ -164,7 +167,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtIBAN.Location = new System.Drawing.Point(66, 115);
             this.txtIBAN.Name = "txtIBAN";
-            this.txtIBAN.Size = new System.Drawing.Size(428, 24);
+            this.txtIBAN.Size = new System.Drawing.Size(548, 24);
             this.txtIBAN.TabIndex = 7;
             this.txtIBAN.TextChanged += new System.EventHandler(this.Txt_TextChanged);
             // 
@@ -174,7 +177,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtHesapNo.Location = new System.Drawing.Point(66, 85);
             this.txtHesapNo.Name = "txtHesapNo";
-            this.txtHesapNo.Size = new System.Drawing.Size(428, 24);
+            this.txtHesapNo.Size = new System.Drawing.Size(548, 24);
             this.txtHesapNo.TabIndex = 5;
             this.txtHesapNo.TextChanged += new System.EventHandler(this.Txt_TextChanged);
             // 
@@ -184,7 +187,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSubeAd.Location = new System.Drawing.Point(66, 55);
             this.txtSubeAd.Name = "txtSubeAd";
-            this.txtSubeAd.Size = new System.Drawing.Size(428, 24);
+            this.txtSubeAd.Size = new System.Drawing.Size(548, 24);
             this.txtSubeAd.TabIndex = 3;
             this.txtSubeAd.TextChanged += new System.EventHandler(this.Txt_TextChanged);
             // 
@@ -194,7 +197,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBankaAd.Location = new System.Drawing.Point(66, 25);
             this.txtBankaAd.Name = "txtBankaAd";
-            this.txtBankaAd.Size = new System.Drawing.Size(428, 24);
+            this.txtBankaAd.Size = new System.Drawing.Size(548, 24);
             this.txtBankaAd.TabIndex = 1;
             this.txtBankaAd.TextChanged += new System.EventHandler(this.Txt_TextChanged);
             // 
@@ -249,14 +252,29 @@
             this.colIBAN.ReadOnly = true;
             this.colIBAN.Width = 66;
             // 
+            // colBakiye
+            // 
+            this.colBakiye.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colBakiye.DataPropertyName = "Bakiye";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "C2";
+            dataGridViewCellStyle3.NullValue = "---------";
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.colBakiye.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colBakiye.HeaderText = "Bakiye";
+            this.colBakiye.Name = "colBakiye";
+            this.colBakiye.ReadOnly = true;
+            // 
             // FrmBankaKart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(506, 361);
+            this.ClientSize = new System.Drawing.Size(626, 361);
             this.Controls.Add(this.dgvBankalar);
             this.Controls.Add(this.grpEkleGuncelle);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(642, 800);
+            this.MinimumSize = new System.Drawing.Size(642, 400);
             this.Name = "FrmBankaKart";
             this.Text = "Banka Kartı";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmBankaKart_FormClosing);
@@ -287,5 +305,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colBankaSubeAd;
         private System.Windows.Forms.DataGridViewTextBoxColumn colHesapNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIBAN;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBakiye;
     }
 }

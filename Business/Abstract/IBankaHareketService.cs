@@ -16,5 +16,6 @@ namespace Business.Abstract
         IResult Add(BankaHareket bankaHareket);
         IResult Delete(BankaHareket bankaHareket);
         IResult Update(BankaHareket bankaHareket);
+        IDataResult<int> GetNewRowsEvrakNo();
     }
 }

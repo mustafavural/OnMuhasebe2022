@@ -7,6 +7,7 @@ using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Security;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
+using Core.Extensions;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -18,11 +19,13 @@ namespace Business.Concrete
     {
         private readonly IBankaHareketDal _bankaHareketDal;
         private readonly ICariHareketService _cariHareketService;
+        private readonly IBankaService _bankaService;
 
-        public BankaHareketManager(IBankaHareketDal bankaHareketDal, ICariHareketService cariHareketService)
+        public BankaHareketManager(IBankaHareketDal bankaHareketDal, ICariHareketService cariHareketService, IBankaService bankaService)
         {
             _bankaHareketDal = bankaHareketDal;
             _cariHareketService = cariHareketService;
+            _bankaService = bankaService;
         }
 
         [SecuredOperation("List,Admin")]
@@ -32,6 +35,7 @@ namespace Business.Concrete
             var bankaHareket = _bankaHareketDal.Get(filter);
             if (bankaHareket != null)
             {
+                bankaHareket.Banka = _bankaService.GetById(bankaHareket.BankaId).Data;
                 bankaHareket.CariHareket = _cariHareketService.GetById(bankaHareket.Id).Data;
             }
             return bankaHareket;
@@ -45,6 +49,7 @@ namespace Business.Concrete
             var bankaHareketler = _bankaHareketDal.GetList(filter);
             if (bankaHareketler.Count > 0)
             {
+                bankaHareketler.ForEach(b => b.Banka = _bankaService.GetById(b.BankaId).Data);
                 bankaHareketler.ForEach(b => b.CariHareket = _cariHareketService.GetById(b.Id).Data);
             }
             return bankaHareketler;
@@ -58,6 +63,12 @@ namespace Business.Concrete
         public IDataResult<BankaHareket> GetByEvrakNo(string evrakNo)
         {
             return new SuccessDataResult<BankaHareket>(Get(s => s.EvrakNo == evrakNo));
+        }
+
+        public IDataResult<int> GetNewRowsEvrakNo()
+        {
+            var hareket = GetAll().MaxBy(s => s.Id);
+            return new SuccessDataResult<int>(hareket == null ? 1 : hareket.EvrakNo[1..].Trim('0').ToInt() + 1);
         }
 
         public IDataResult<List<BankaHareket>> GetListByCariId(int cariId)
@@ -93,13 +104,6 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IResult Add(BankaHareket bankaHareket)
         {
-            bankaHareket.CariHareket = new CariHareket
-            {
-                CariId = bankaHareket.CariId,
-                Tarih = bankaHareket.Tarih,
-                Tutar = bankaHareket.GirenCikanMiktar,
-                Aciklama = bankaHareket.Aciklama
-            };
             _cariHareketService.Add(bankaHareket.CariHareket);
             _bankaHareketDal.Add(bankaHareket);
             return new SuccessResult(Messages.BankaMessages.HesapHareketEklendi);

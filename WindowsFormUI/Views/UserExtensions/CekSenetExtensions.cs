@@ -22,9 +22,9 @@ namespace WindowsFormUI.Views.UserExtensions
                 case BordroTurleri.BorcTediye:
                     return "Borc Tediye Bordrosu";
                 case BordroTurleri.Hepsi:
-                    return "";
+                    return string.Empty;
                 default:
-                    return "";
+                    return string.Empty;
             }
         }
     }

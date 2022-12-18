@@ -94,7 +94,8 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
                 a.BankaAd,
                 a.BankaSubeAd,
                 a.HesapNo,
-                a.IBAN
+                a.IBAN,
+                Bakiye = _bankaService.GetHesapBakiye(a.Id).Data
             }).ToList();
         }
 

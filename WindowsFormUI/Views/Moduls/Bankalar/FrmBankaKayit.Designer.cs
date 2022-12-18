@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvBankaHareketler = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colBankaId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,14 +71,14 @@
             this.dgvBankaHareketler.AllowUserToDeleteRows = false;
             this.dgvBankaHareketler.AllowUserToResizeRows = false;
             this.dgvBankaHareketler.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvBankaHareketler.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvBankaHareketler.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvBankaHareketler.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBankaHareketler.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -90,14 +90,13 @@
             this.colTarih,
             this.colAciklama});
             this.dgvBankaHareketler.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvBankaHareketler.Location = new System.Drawing.Point(0, 142);
+            this.dgvBankaHareketler.Location = new System.Drawing.Point(0, 156);
             this.dgvBankaHareketler.MultiSelect = false;
             this.dgvBankaHareketler.Name = "dgvBankaHareketler";
             this.dgvBankaHareketler.ReadOnly = true;
             this.dgvBankaHareketler.RowHeadersVisible = false;
             this.dgvBankaHareketler.RowTemplate.Height = 25;
-            this.dgvBankaHareketler.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvBankaHareketler.Size = new System.Drawing.Size(713, 185);
+            this.dgvBankaHareketler.Size = new System.Drawing.Size(713, 171);
             this.dgvBankaHareketler.TabIndex = 1;
             this.dgvBankaHareketler.TabStop = false;
             this.dgvBankaHareketler.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvBankaHareketler_CellContentDoubleClick);
@@ -133,8 +132,8 @@
             // 
             this.colEvrakNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colEvrakNo.DataPropertyName = "EvrakNo";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colEvrakNo.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colEvrakNo.DefaultCellStyle = dataGridViewCellStyle2;
             this.colEvrakNo.HeaderText = "Evrak No";
             this.colEvrakNo.Name = "colEvrakNo";
             this.colEvrakNo.ReadOnly = true;
@@ -144,8 +143,8 @@
             // 
             this.colCariAd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colCariAd.DataPropertyName = "Unvan";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colCariAd.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colCariAd.DefaultCellStyle = dataGridViewCellStyle3;
             this.colCariAd.FillWeight = 310F;
             this.colCariAd.HeaderText = "Cari Adı";
             this.colCariAd.Name = "colCariAd";
@@ -155,9 +154,9 @@
             // 
             this.colMiktar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colMiktar.DataPropertyName = "GirenCikanMiktar";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle10.Format = "#,###.## TL";
-            this.colMiktar.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle4.Format = "#,###.## TL";
+            this.colMiktar.DefaultCellStyle = dataGridViewCellStyle4;
             this.colMiktar.HeaderText = "Miktar";
             this.colMiktar.Name = "colMiktar";
             this.colMiktar.ReadOnly = true;
@@ -167,8 +166,8 @@
             // 
             this.colTarih.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colTarih.DataPropertyName = "Tarih";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colTarih.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colTarih.DefaultCellStyle = dataGridViewCellStyle5;
             this.colTarih.HeaderText = "Tarih";
             this.colTarih.Name = "colTarih";
             this.colTarih.ReadOnly = true;
@@ -178,8 +177,8 @@
             // 
             this.colAciklama.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colAciklama.DataPropertyName = "Aciklama";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            this.colAciklama.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            this.colAciklama.DefaultCellStyle = dataGridViewCellStyle6;
             this.colAciklama.HeaderText = "Aciklama";
             this.colAciklama.MinimumWidth = 150;
             this.colAciklama.Name = "colAciklama";
@@ -208,7 +207,7 @@
             this.grpBankaHareket.Dock = System.Windows.Forms.DockStyle.Top;
             this.grpBankaHareket.Location = new System.Drawing.Point(0, 0);
             this.grpBankaHareket.Name = "grpBankaHareket";
-            this.grpBankaHareket.Size = new System.Drawing.Size(713, 142);
+            this.grpBankaHareket.Size = new System.Drawing.Size(713, 156);
             this.grpBankaHareket.TabIndex = 0;
             this.grpBankaHareket.TabStop = false;
             this.grpBankaHareket.Text = "İşlem Bilgileri";
@@ -216,10 +215,10 @@
             // dtpBankaTarih
             // 
             this.dtpBankaTarih.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpBankaTarih.Location = new System.Drawing.Point(73, 82);
+            this.dtpBankaTarih.Location = new System.Drawing.Point(474, 47);
             this.dtpBankaTarih.Name = "dtpBankaTarih";
             this.dtpBankaTarih.Size = new System.Drawing.Size(141, 24);
-            this.dtpBankaTarih.TabIndex = 15;
+            this.dtpBankaTarih.TabIndex = 13;
             this.dtpBankaTarih.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // txtCariKod
@@ -232,18 +231,18 @@
             // 
             // uscBankaButtons
             // 
-            this.uscBankaButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.uscBankaButtons.BtnClear_Visible = true;
             this.uscBankaButtons.BtnDelete_Enable = true;
             this.uscBankaButtons.BtnDelete_Text = "Sil     ";
             this.uscBankaButtons.BtnSave_Enable = true;
             this.uscBankaButtons.BtnSave_Text = "Kaydet";
+            this.uscBankaButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.uscBankaButtons.LblStatus_Text = "";
-            this.uscBankaButtons.Location = new System.Drawing.Point(221, 82);
+            this.uscBankaButtons.Location = new System.Drawing.Point(3, 107);
             this.uscBankaButtons.Name = "uscBankaButtons";
-            this.uscBankaButtons.Size = new System.Drawing.Size(480, 53);
+            this.uscBankaButtons.Size = new System.Drawing.Size(707, 46);
             this.uscBankaButtons.TabIndex = 16;
+            this.uscBankaButtons.TabStop = false;
             this.uscBankaButtons.ClickClear += new System.EventHandler(this.UscBankaButtons_ClickClear);
             this.uscBankaButtons.ClickSave += new System.EventHandler(this.UscBankaButtons_ClickSave);
             this.uscBankaButtons.ClickCancel += new System.EventHandler(this.UscBankaButtons_ClickCancel);
@@ -253,9 +252,9 @@
             this.btnCariBul.BackgroundImage = global::WindowsFormUI.Properties.Resources.Cari32x32;
             this.btnCariBul.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnCariBul.FlatAppearance.BorderSize = 0;
-            this.btnCariBul.Location = new System.Drawing.Point(400, 15);
+            this.btnCariBul.Location = new System.Drawing.Point(400, 17);
             this.btnCariBul.Name = "btnCariBul";
-            this.btnCariBul.Size = new System.Drawing.Size(24, 26);
+            this.btnCariBul.Size = new System.Drawing.Size(24, 24);
             this.btnCariBul.TabIndex = 5;
             this.btnCariBul.TabStop = false;
             this.btnCariBul.UseVisualStyleBackColor = true;
@@ -266,9 +265,9 @@
             this.btnEvrakBul.BackgroundImage = global::WindowsFormUI.Properties.Resources.Banka_Hareket32x32;
             this.btnEvrakBul.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnEvrakBul.FlatAppearance.BorderSize = 0;
-            this.btnEvrakBul.Location = new System.Drawing.Point(191, 45);
+            this.btnEvrakBul.Location = new System.Drawing.Point(191, 47);
             this.btnEvrakBul.Name = "btnEvrakBul";
-            this.btnEvrakBul.Size = new System.Drawing.Size(24, 26);
+            this.btnEvrakBul.Size = new System.Drawing.Size(24, 24);
             this.btnEvrakBul.TabIndex = 9;
             this.btnEvrakBul.TabStop = false;
             this.btnEvrakBul.UseVisualStyleBackColor = true;
@@ -296,17 +295,17 @@
             // 
             this.txtAciklama.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAciklama.Location = new System.Drawing.Point(460, 47);
+            this.txtAciklama.Location = new System.Drawing.Point(73, 77);
             this.txtAciklama.Name = "txtAciklama";
-            this.txtAciklama.Size = new System.Drawing.Size(241, 24);
-            this.txtAciklama.TabIndex = 13;
+            this.txtAciklama.Size = new System.Drawing.Size(542, 24);
+            this.txtAciklama.TabIndex = 15;
             this.txtAciklama.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // txtMiktar
             // 
             this.txtMiktar.Location = new System.Drawing.Point(282, 47);
             this.txtMiktar.Name = "txtMiktar";
-            this.txtMiktar.Size = new System.Drawing.Size(112, 24);
+            this.txtMiktar.Size = new System.Drawing.Size(142, 24);
             this.txtMiktar.TabIndex = 11;
             this.txtMiktar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarfEngelle);
             this.txtMiktar.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
@@ -314,10 +313,10 @@
             // lblTarih
             // 
             this.lblTarih.AutoSize = true;
-            this.lblTarih.Location = new System.Drawing.Point(12, 86);
+            this.lblTarih.Location = new System.Drawing.Point(430, 50);
             this.lblTarih.Name = "lblTarih";
             this.lblTarih.Size = new System.Drawing.Size(38, 17);
-            this.lblTarih.TabIndex = 14;
+            this.lblTarih.TabIndex = 12;
             this.lblTarih.Text = "Tarih";
             // 
             // lblEvrakNo
@@ -332,16 +331,16 @@
             // lblAciklama
             // 
             this.lblAciklama.AutoSize = true;
-            this.lblAciklama.Location = new System.Drawing.Point(400, 50);
+            this.lblAciklama.Location = new System.Drawing.Point(6, 80);
             this.lblAciklama.Name = "lblAciklama";
             this.lblAciklama.Size = new System.Drawing.Size(56, 17);
-            this.lblAciklama.TabIndex = 12;
+            this.lblAciklama.TabIndex = 14;
             this.lblAciklama.Text = "Açıklama";
             // 
             // lblMiktar
             // 
             this.lblMiktar.AutoSize = true;
-            this.lblMiktar.Location = new System.Drawing.Point(221, 52);
+            this.lblMiktar.Location = new System.Drawing.Point(221, 50);
             this.lblMiktar.Name = "lblMiktar";
             this.lblMiktar.Size = new System.Drawing.Size(46, 17);
             this.lblMiktar.TabIndex = 10;
@@ -351,9 +350,9 @@
             // 
             this.lblCariAd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblCariAd.Location = new System.Drawing.Point(430, 20);
+            this.lblCariAd.Location = new System.Drawing.Point(430, 17);
             this.lblCariAd.Name = "lblCariAd";
-            this.lblCariAd.Size = new System.Drawing.Size(277, 17);
+            this.lblCariAd.Size = new System.Drawing.Size(277, 20);
             this.lblCariAd.TabIndex = 6;
             // 
             // btnHesapBul
@@ -362,7 +361,7 @@
             this.btnHesapBul.Image = global::WindowsFormUI.Properties.Resources.Banka_Kartı16x16;
             this.btnHesapBul.Location = new System.Drawing.Point(191, 17);
             this.btnHesapBul.Name = "btnHesapBul";
-            this.btnHesapBul.Size = new System.Drawing.Size(24, 26);
+            this.btnHesapBul.Size = new System.Drawing.Size(24, 24);
             this.btnHesapBul.TabIndex = 2;
             this.btnHesapBul.TabStop = false;
             this.btnHesapBul.UseVisualStyleBackColor = true;

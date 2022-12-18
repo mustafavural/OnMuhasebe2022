@@ -29,7 +29,7 @@
             public static string AciklamaBosGecilemez => "Bir açıklama gereklidir.";
             public static string MiktarBosGecilemez => "Miktar alanı gereklidir.";
             public static string TarihHatali => "İleri tarihli kayıt girilemez.";
-            public static string EvrakNoHatali => "Evrak numarası bulunamadı.";
+            public static string EvrakNoHatali => "Girilen hane sayısı 12'yi geçmemelidir.";
         }
 
         public static class CariMessages

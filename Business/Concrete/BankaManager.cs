@@ -17,12 +17,10 @@ namespace Business.Concrete
     public class BankaManager : IBankaService
     {
         private readonly IBankaDal _bankaDal;
-        private readonly IBankaHareketService _bankaHareketService;
 
-        public BankaManager(IBankaDal bankaDal, IBankaHareketService bankaHareketService)
+        public BankaManager(IBankaDal bankaDal)
         {
             _bankaDal = bankaDal;
-            _bankaHareketService = bankaHareketService;
         }
 
         #region BusinessRules
@@ -44,7 +42,7 @@ namespace Business.Concrete
 
         private IResult KontrolHesapKullaniliyorMu(int id)
         {
-            return _bankaHareketService.GetListByBankaHesapId(id).Data.Count == 0 ? new SuccessResult() : new ErrorResult(Messages.BankaMessages.HesapKullaniliyor);
+            return _bankaDal.KontrolHesapKullaniliyorMu(id) ? new SuccessResult() : new ErrorResult(Messages.BankaMessages.HesapKullaniliyor);
         }
 
         #endregion
@@ -83,7 +81,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<decimal> GetHesapBakiye(int hesapId)
         {
-            return new SuccessDataResult<decimal>(_bankaHareketService.GetList(s => s.BankaId == hesapId).Data.Sum(s => s.GirenCikanMiktar));
+            return new SuccessDataResult<decimal>(_bankaDal.GetHesapBakiye(hesapId));
         }
 
         public IDataResult<List<Banka>> GetListByBankaAd(string bankaAd)

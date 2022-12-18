@@ -8,7 +8,7 @@ namespace Business.Abstract
     {
         IDataResult<CekSenetBordro> GetById(int id);
         IDataResult<CekSenetBordro> GetByNo(string no);
-        IDataResult<int> GetLastRowIndex();
+        IDataResult<int> GetNewRowsEvrakNo();
         IDataResult<List<CekSenetBordro>> GetListByTur(string tur);
         IDataResult<List<CekSenetBordro>> GetListByCariId(int cariId);
         IDataResult<List<CekSenetMusteri>> GetTahsilatCekSenetListById(int id);

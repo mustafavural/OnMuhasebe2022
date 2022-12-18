@@ -474,7 +474,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
 
         private void ClearDeger_NoSayaclar()
         {
-            bordroNo = _cekSenetBordroService.GetLastRowIndex().Data;
+            bordroNo = _cekSenetBordroService.GetNewRowsEvrakNo().Data;
             evrakNo = _cekSenetMusteriService.GetLastRowIndex().Data;
         }
 

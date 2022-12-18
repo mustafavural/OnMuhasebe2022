@@ -6,7 +6,7 @@ using WindowsFormUI.Properties;
 
 namespace WindowsFormUI.Views.Moduls.Bankalar
 {
-    public enum BankaIslemTuru { Hepsi = 0, Tahsilat = 1, Tediye = 2 }
+    public enum BankaIslemTurleri { Hepsi = 0, Tahsilat = 1, Tediye = 2 }
     public partial class FrmBanka : FrmMdiBase
     {
         public FrmBanka()
@@ -26,13 +26,13 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
         {
             var form = Program.Container.Resolve<FrmBankaKayit>();
             form.MdiParent = this;
-            form.BankaIslemTuru = (BankaIslemTuru)(((ToolStripMenuItem)sender).Tag.ToString().ToInt());
-            if (form.BankaIslemTuru == BankaIslemTuru.Tahsilat)
+            form.BankaIslemTuru = (BankaIslemTurleri)(((ToolStripMenuItem)sender).Tag.ToString().ToInt());
+            if (form.BankaIslemTuru == BankaIslemTurleri.Tahsilat)
             {
                 form.Icon = Resources.Banka_Havale32x321;
                 form.Text += "  --  Havale/EFT Al";
             }
-            else if (form.BankaIslemTuru == BankaIslemTuru.Tediye)
+            else if (form.BankaIslemTuru == BankaIslemTurleri.Tediye)
             {
                 form.Icon = Resources.BankaEFT32x321;
                 form.Text += "  --  Havale/EFT Gönder";
@@ -44,7 +44,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
         {
             var form = Program.Container.Resolve<FrmBankaHareketListe>();
             form.MdiParent = this;
-            form.BankaIslemTuru = BankaIslemTuru.Hepsi;
+            form.BankaIslemTuru = BankaIslemTurleri.Hepsi;
             form.Show();
         }
 

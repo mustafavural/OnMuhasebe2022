@@ -320,7 +320,7 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
 
         private void ClearForm_BordroBilgiler()
         {
-            txtBordroNo.Text = _cekSenetBordroService.GetLastRowIndex().Data.ToString();
+            txtBordroNo.Text = _cekSenetBordroService.GetNewRowsEvrakNo().Data.ToString();
             txtBordroNo.Enabled = true;
             btnBordroBul.Enabled = true;
 

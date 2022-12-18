@@ -13,7 +13,7 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(s => s.Tarih).NotNull();
             RuleFor(s => s.EvrakNo).Length(14);
             RuleFor(s => s.GirenCikanMiktar).NotEqual(0);
-            RuleFor(s => s.Tarih).GreaterThanOrEqualTo(DateTime.Today);
+            RuleFor(s => s.Tarih).LessThanOrEqualTo(DateTime.Today);
         }
     }
 }

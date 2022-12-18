@@ -26,8 +26,9 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
         private Cari _secilenCari;
         private BankaHareket _secilenBankaHareket;
         private decimal _girenCikanMiktar = 0;
+        private bool isUpdate;
 
-        public BankaIslemTuru BankaIslemTuru { get; set; }
+        public BankaIslemTurleri BankaIslemTuru { get; set; }
 
         public FrmBankaKayit(IBankaService bankaService, IBankaHareketService bankaHareketService, ICariService cariService)
         {
@@ -35,7 +36,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             _bankaService = bankaService;
             _bankaHareketService = bankaHareketService;
             _cariService = cariService;
-            BankaIslemTuru = BankaIslemTuru.Hepsi;
+            BankaIslemTuru = BankaIslemTurleri.Hepsi;
             _bankaHareketler = new();
         }
 
@@ -86,7 +87,8 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
         private void UpdateDgvBankaHareketler()
         {
             _bankaHareketler.Clear();
-            _bankaHareketler.AddRange(_bankaHareketService.GetList(s => s.EvrakNo.StartsWith(BankaIslemTuru.ToCharString())).Data);
+            string startWith = BankaIslemTuru.ToChar().ToString();
+            _bankaHareketler.AddRange(_bankaHareketService.GetList(s => s.EvrakNo.StartsWith(startWith)).Data);
             dgvBankaHareketler.DataSource = _bankaHareketler.Select(s => new
             {
                 s.Id,
@@ -109,8 +111,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             {
                 if (StaticPrimitives.SecilenBankaId > 0)
                 {
-                    _secilenHesap = _bankaService.GetById(StaticPrimitives.SecilenBankaId).Data;
-                    txtHesapNo.Text = _secilenHesap.HesapNo;
+                    txtHesapNo.Text = _bankaService.GetById(StaticPrimitives.SecilenBankaId).Data.HesapNo;
                     StaticPrimitives.SecilenBankaId = 0;
                 }
                 else txtHesapNo.Text = "";
@@ -131,8 +132,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             {
                 if (StaticPrimitives.SecilenCariId > 0)
                 {
-                    _secilenCari = _cariService.GetById(StaticPrimitives.SecilenCariId).Data;
-                    txtCariKod.Text = _secilenCari.Kod;
+                    txtCariKod.Text = _cariService.GetById(StaticPrimitives.SecilenCariId).Data.Kod;
                     StaticPrimitives.SecilenCariId = 0;
                 }
                 else txtCariKod.Text = "";
@@ -153,8 +153,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             {
                 if (StaticPrimitives.SecilenBankaHareketId > 0)
                 {
-                    _secilenBankaHareket = _bankaHareketService.GetById(StaticPrimitives.SecilenBankaHareketId).Data;
-                    txtEvrakNo.Text = _secilenBankaHareket.EvrakNo;
+                    txtEvrakNo.Text = _bankaHareketService.GetById(StaticPrimitives.SecilenBankaHareketId).Data.EvrakNo;
                     StaticPrimitives.SecilenBankaHareketId = 0;
                 }
                 else txtEvrakNo.Text = "";
@@ -176,9 +175,26 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
         {
             try
             {
-                IResult result = _secilenBankaHareket == null
-                    ? _bankaHareketService.Add(ReadBankaHareketFromForm())
-                    : _bankaHareketService.Update(_secilenBankaHareket);
+                IResult result;
+                if (isUpdate)
+                {
+                    result = _bankaHareketService.Update(ReadBankaHareketFromForm());
+                }
+                else
+                {
+                    _secilenBankaHareket = ReadBankaHareketFromForm();
+                    _secilenBankaHareket.CariHareket = new()
+                    {
+                        Id = 0,
+                        CariId = _secilenCari.Id,
+                        Tarih = dtpBankaTarih.Value,
+                        Aciklama = $"{txtEvrakNo.Text} evrak nolu {BankaIslemTuru.ToText()}",
+                        Tutar = BankaIslemTuru == BankaIslemTurleri.Tahsilat ? _girenCikanMiktar * -1 : _girenCikanMiktar,
+                    };
+                    result = _bankaHareketService.Add(_secilenBankaHareket);
+                }
+                ClearForm_IslemBilgileri();
+                UpdateDgvBankaHareketler();
                 uscBankaButtons.LblStatus_Text = result.Message;
             }
             catch (Exception err)
@@ -186,17 +202,6 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
                 MessageHelper.ErrorMessageBuilder(err);
             }
         }
-
-        private BankaHareket ReadBankaHareketFromForm() => new()
-        {
-            Id = 0,
-            BankaId = _secilenHesap.Id,
-            CariId = _secilenCari.Id,
-            EvrakNo = txtEvrakNo.Text,
-            GirenCikanMiktar = _girenCikanMiktar,
-            Tarih = dtpBankaTarih.Value,
-            Aciklama = txtAciklama.Text
-        };
 
         private void UscBankaButtons_ClickCancel(object sender, EventArgs e)
         {
@@ -206,6 +211,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
                 {
                     var result = _bankaHareketService.Delete(_secilenBankaHareket);
                     ClearForm_IslemBilgileri();
+                    UpdateDgvBankaHareketler();
                     uscBankaButtons.LblStatus_Text = result.Message;
                 }
             }
@@ -227,29 +233,33 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             }
         }
 
-        private void TxtBankaAd_Leaved()
+        private void TxtHesapNo_Leaved()
         {
             try
             {
-                _secilenHesap ??= _bankaService.GetByHesapNo(txtHesapNo.Text).Data;
-                if (_secilenHesap == null)
+                _secilenHesap = _bankaService.GetByHesapNo(txtHesapNo.Text).Data;
+                if (_secilenHesap != null)
                 {
-                    MessageHelper.SuccessMessageBuilder(Messages.BankaMessages.HesapBulunamadi, this.Text);
-                    txtHesapNo.Focus();
-                    return;
+                    btnHesapBul.Enabled = false;
+                    txtHesapNo.Enabled = false;
+
+                    txtCariKod.Enabled = true;
+                    btnCariBul.Enabled = true;
+
+                    uscBankaButtons.BtnClear_Visible = true;
+
+                    txtCariKod.Focus();
                 }
-
-                txtCariKod.Enabled = true;
-                btnCariBul.Enabled = true;
-
-                txtHesapNo.Enabled = false;
-                btnHesapBul.Enabled = false;
+                else
+                {
+                    MessageHelper.SuccessMessageBuilder(Messages.BankaMessages.HesapBulunamadi, "Veri Hatası");
+                    txtHesapNo.Focus();
+                }
             }
             catch (Exception err)
             {
                 MessageHelper.ErrorMessageBuilder(err);
             }
-            txtCariKod.Focus();
         }
 
         private void TxtCariKod_Leaved()
@@ -263,16 +273,13 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
                 {
                     _secilenCari = result.Data;
                     lblCariAd.Text = _secilenCari.Unvan;
-                }
-                //
-                BankaHareket yenifis = _bankaHareketService.GetList((s => s.BankaId == _secilenHesap.Id && s.EvrakNo.StartsWith(BankaIslemTuru.ToCharString()))).Data?.MaxBy(s => s.Id);
-                int fisNo = yenifis == null ? 1 : yenifis.EvrakNo[1..].Trim('0').ToInt() + 1;
-                txtEvrakNo.Text = fisNo.ToString();
-                //
-                txtEvrakNo.Enabled = true;
 
-                txtCariKod.Enabled = false;
-                btnCariBul.Enabled = false;
+                    txtEvrakNo.Text = _bankaHareketService.GetNewRowsEvrakNo().Data.ToString();
+                    txtEvrakNo.Enabled = true;
+
+                    txtCariKod.Enabled = false;
+                    btnCariBul.Enabled = false;
+                }
             }
             catch (Exception err)
             {
@@ -283,44 +290,52 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
 
         private void TxtEvrakNo_Leaved()
         {
-            string evrakNo = "";
-            if (txtEvrakNo.Text.Length > 12)
+            if (txtEvrakNo.Text.Length <= 14)
             {
-                MessageHelper.SuccessMessageBuilder(Messages.BankaMessages.EvrakNoHatali, this.Text);
-                txtEvrakNo.Text = "";
+                var evrakNo = ModulExtensions.FormatNoString(txtEvrakNo.Text, 14, BankaIslemTuru.ToChar());
+                txtEvrakNo.Text = evrakNo;
+                var result = _bankaHareketService.GetByEvrakNo(evrakNo);
+                if (result.Data == null)
+                    GetNewBankaHareket();
+                else
+                    GetOldBankaHareket(result.Data);
+                txtMiktar.Focus();
             }
             else
-                evrakNo = ModulExtensions.FormatNoString(txtEvrakNo.Text, 14, 'K');
-            if (_secilenBankaHareket == null)
             {
-                var result = _bankaHareketService.GetByEvrakNo(evrakNo);
-                if (result.Data != null)
-                {
-                    _secilenBankaHareket = result.Data;
-                    BringExistingBankaHareket(_secilenBankaHareket);
-                }
+                MessageHelper.ErrorMessageBuilder(Messages.BankaMessages.EvrakNoHatali, this.Text);
+                txtEvrakNo.Focus();
             }
-            txtCariKod.Enabled = true;
-            btnCariBul.Enabled = true;
-            txtEvrakNo.Text = evrakNo;
-            txtEvrakNo.Enabled = false;
-            btnEvrakBul.Enabled = false;
-            txtCariKod.Focus();
         }
 
         private void TxtMiktar_Leaved()
         {
-            if(txtMiktar.Text.Length> 0)
-            { 
-                txtAciklama.Enabled = true;
+            if (txtMiktar.Text.Length > 0)
+            {
                 _girenCikanMiktar = txtMiktar.Text.ToDecimal();
                 txtMiktar.Text = _girenCikanMiktar.ToString("#,###.## TL");
+                dtpBankaTarih.Enabled = true;
                 txtMiktar.Enabled = false;
+                dtpBankaTarih.Focus();
             }
             else
             {
-                MessageHelper.SuccessMessageBuilder(Messages.BankaMessages.MiktarBosGecilemez, this.Text);
+                MessageHelper.ErrorMessageBuilder(Messages.BankaMessages.MiktarBosGecilemez, this.Text);
                 txtMiktar.Focus();
+            }
+        }
+
+        private void DtpBankaTarih_Leaved()
+        {
+            if (dtpBankaTarih.Value.Date <= DateTime.Today.Date)
+            {
+                txtAciklama.Enabled = true;
+                dtpBankaTarih.Enabled = false;
+            }
+            else
+            {
+                MessageHelper.ErrorMessageBuilder(Messages.BankaMessages.TarihHatali, this.Text);
+                dtpBankaTarih.Focus();
             }
         }
 
@@ -328,28 +343,76 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
         {
             if (txtAciklama.Text != "")
             {
-                dtpBankaTarih.Enabled = true;
+                uscBankaButtons.BtnSave_Enable = true;
                 txtAciklama.Enabled = false;
             }
             else
             {
-                MessageHelper.SuccessMessageBuilder(Messages.BankaMessages.AciklamaBosGecilemez, this.Text);
+                MessageHelper.ErrorMessageBuilder(Messages.BankaMessages.AciklamaBosGecilemez, this.Text);
                 txtAciklama.Focus();
             }
         }
 
-        private void DtpBankaTarih_Leaved()
+        private void GetNewBankaHareket()
         {
-            if (dtpBankaTarih.Value.Date < DateTime.Today.Date)
+            txtMiktar.Enabled = true;
+            txtEvrakNo.Enabled = false;
+            btnEvrakBul.Enabled = false;
+        }
+
+        private void GetOldBankaHareket(BankaHareket bankaHareket)
+        {
+            _secilenBankaHareket = bankaHareket;
+            _secilenHesap = _secilenBankaHareket.Banka;
+            _secilenCari = _secilenBankaHareket.CariHareket.Cari;
+
+            txtHesapNo.Text = _secilenHesap.HesapNo;
+            txtHesapNo.Enabled = false;
+            btnHesapBul.Enabled = false;
+
+            txtCariKod.Text = _secilenCari.Kod;
+            txtCariKod.Enabled = false;
+            btnCariBul.Enabled = false;
+            lblCariAd.Text = _secilenCari.Unvan;
+
+            txtEvrakNo.Text = _secilenBankaHareket.EvrakNo;
+            txtEvrakNo.Enabled = true;
+            btnEvrakBul.Enabled = true;
+
+            txtMiktar.Text = _secilenBankaHareket.GirenCikanMiktar.ToString("#,###.## TL");
+            txtMiktar.Enabled = true;
+
+            dtpBankaTarih.Value = _secilenBankaHareket.Tarih;
+            dtpBankaTarih.Enabled = false;
+
+            txtAciklama.Text = _secilenBankaHareket.Aciklama;
+            txtAciklama.Enabled = false;
+
+            uscBankaButtons.BtnClear_Visible = true;
+            uscBankaButtons.BtnDelete_Enable = true;
+            uscBankaButtons.BtnSave_Enable = false;
+
+            uscBankaButtons.BtnSave_Text = "Güncelle";
+            isUpdate = true;
+        }
+
+        private BankaHareket ReadBankaHareketFromForm() => new()
+        {
+            Id = 0,
+            BankaId = _secilenHesap.Id,
+            CariId = _secilenCari.Id,
+            EvrakNo = txtEvrakNo.Text,
+            GirenCikanMiktar = BankaIslemTuru == BankaIslemTurleri.Tahsilat ? _girenCikanMiktar : _girenCikanMiktar *= -1,
+            Tarih = dtpBankaTarih.Value,
+            Aciklama = txtAciklama.Text
+        };
+
+        private void DgvBankaHareketler_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
             {
-                uscBankaButtons.TabStop = true;
-                uscBankaButtons.BtnSave_Enable = true;
-                dtpBankaTarih.Enabled = false;
-            }
-            else
-            {
-                MessageHelper.SuccessMessageBuilder(Messages.BankaMessages.TarihHatali, this.Text);
-                dtpBankaTarih.Focus();
+                var id = (int)dgvBankaHareketler.Rows[e.RowIndex].Cells["colId"].Value;
+                GetOldBankaHareket(_bankaHareketService.GetById(id).Data);
             }
         }
 
@@ -359,43 +422,6 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
                 e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
             else
                 e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ',';
-        }
-
-        private void DgvBankaHareketler_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex > -1)
-            {
-                var id = (int)dgvBankaHareketler.Rows[e.RowIndex].Cells["colId"].Value;
-                _secilenBankaHareket = _bankaHareketService.GetById(id).Data;
-                BringExistingBankaHareket(_secilenBankaHareket);
-            }
-        }
-
-        private void BringExistingBankaHareket(BankaHareket secilenBankaHareket)
-        {
-            txtHesapNo.Enabled = true;
-            btnHesapBul.Enabled = true;
-            txtCariKod.Enabled = true;
-            btnCariBul.Enabled = true;
-            txtEvrakNo.Enabled = true;
-            btnEvrakBul.Enabled = true;
-            txtMiktar.Enabled = true;
-            txtAciklama.Enabled = true;
-            dtpBankaTarih.Enabled = true;
-            uscBankaButtons.BtnClear_Visible = true;
-            uscBankaButtons.BtnDelete_Enable = true;
-            uscBankaButtons.BtnSave_Enable = true;
-
-            _secilenHesap = secilenBankaHareket.Banka;
-            txtHesapNo.Text = _secilenHesap.BankaAd;
-            txtEvrakNo.Text = secilenBankaHareket.EvrakNo;
-            _secilenCari = secilenBankaHareket.CariHareket.Cari;
-            txtCariKod.Text = _secilenCari.Kod;
-            lblCariAd.Text = _secilenCari.Unvan;
-            txtMiktar.Text = secilenBankaHareket.GirenCikanMiktar.ToString("#,###.## TL");
-            dtpBankaTarih.Value = secilenBankaHareket.Tarih;
-            txtAciklama.Text = secilenBankaHareket.Aciklama;
-            uscBankaButtons.BtnSave_Text = "Güncelle";
         }
     }
 }
