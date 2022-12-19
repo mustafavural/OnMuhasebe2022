@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
+using WindowsFormUI.Helpers;
 
 namespace WindowsFormUI.Views.Moduls.Cariler
 {
@@ -29,20 +30,36 @@ namespace WindowsFormUI.Views.Moduls.Cariler
                 uscGruplar.Visible = false;
                 grpEkleGuncelle.Height = 55;
             }
+        }
+
+        private void FrmCariGrup_Load(object sender, EventArgs e)
+        {
             this.ClearScreen();
         }
 
         private void ClearScreen()
         {
-            txtGrupKodAd.Text = "";
-            _secilenCategory = null;
-            lblStatusBar.Text = "";
-            uscGruplar.BtnDelete_Enable = false;
-            uscGruplar.BtnSave_Enable = false;
-            uscGruplar.BtnSave_Text = "Kaydet";
-            uscGruplar.LblStatus_Text = "";
-            _cariCategoryler = _cariCategoryService.GetList().Data;
-            dgvGruplar.DataSource = _cariCategoryler.OrderByDescending(s => s.Id).ToList();
+            try
+            {
+                txtGrupKodAd.Text = "";
+                _secilenCategory = null;
+                lblStatusBar.Text = "";
+                uscGruplar.BtnDelete_Enable = false;
+                uscGruplar.BtnSave_Enable = false;
+                uscGruplar.BtnSave_Text = "Kaydet";
+                uscGruplar.LblStatus_Text = "";
+                _cariCategoryler = _cariCategoryService.GetList().Data;
+                dgvGruplar.DataSource = _cariCategoryler.OrderByDescending(s => s.Id).ToList();
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch(Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void WriteToScreen(CariCategory cariCategory)

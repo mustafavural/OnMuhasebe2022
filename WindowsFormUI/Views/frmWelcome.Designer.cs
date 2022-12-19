@@ -38,6 +38,8 @@
             this.btnExit = new WindowsFormUI.Views.UserControls.BtnWelcome();
             this.btnMinimize = new WindowsFormUI.Views.UserControls.BtnWelcome();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnWelcomeCompany = new WindowsFormUI.Views.UserControls.BtnWelcome();
+            this.btnWelcomeUser = new WindowsFormUI.Views.UserControls.BtnWelcome();
             this.SuspendLayout();
             // 
             // btnWelcomeStok
@@ -128,7 +130,7 @@
             this.btnWelcomeCek.Text = "Çek";
             this.btnWelcomeCek.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnWelcomeCek.UseVisualStyleBackColor = false;
-            this.btnWelcomeCek.Click += new System.EventHandler(this.BtnWelcomeCek_Click);
+            this.btnWelcomeCek.Click += new System.EventHandler(this.BtnWelcomeCekSenet_Click);
             // 
             // btnWelcomeBanka
             // 
@@ -137,7 +139,7 @@
             this.btnWelcomeBanka.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnWelcomeBanka.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnWelcomeBanka.ForeColor = System.Drawing.Color.Black;
-            this.btnWelcomeBanka.Image = global::WindowsFormUI.Properties.Resources.Banka32x32;
+            this.btnWelcomeBanka.Image = global::WindowsFormUI.Properties.Resources.Cek_Bankaya32x32;
             this.btnWelcomeBanka.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnWelcomeBanka.Location = new System.Drawing.Point(140, 203);
             this.btnWelcomeBanka.Name = "btnWelcomeBanka";
@@ -194,13 +196,51 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Ön Muhasebe 2022";
             // 
-            // frmWelcome
+            // btnWelcomeCompany
+            // 
+            this.btnWelcomeCompany.BackColor = System.Drawing.Color.Cyan;
+            this.btnWelcomeCompany.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnWelcomeCompany.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWelcomeCompany.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnWelcomeCompany.ForeColor = System.Drawing.Color.Black;
+            this.btnWelcomeCompany.Image = global::WindowsFormUI.Properties.Resources.Banka32x32;
+            this.btnWelcomeCompany.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnWelcomeCompany.Location = new System.Drawing.Point(140, 273);
+            this.btnWelcomeCompany.Name = "btnWelcomeCompany";
+            this.btnWelcomeCompany.Size = new System.Drawing.Size(122, 64);
+            this.btnWelcomeCompany.TabIndex = 9;
+            this.btnWelcomeCompany.Text = "Şirket Ayarları";
+            this.btnWelcomeCompany.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnWelcomeCompany.UseVisualStyleBackColor = false;
+            this.btnWelcomeCompany.Click += new System.EventHandler(this.BtnWelcomeCompany_Click);
+            // 
+            // btnWelcomeUser
+            // 
+            this.btnWelcomeUser.BackColor = System.Drawing.Color.Cyan;
+            this.btnWelcomeUser.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnWelcomeUser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWelcomeUser.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnWelcomeUser.ForeColor = System.Drawing.Color.Black;
+            this.btnWelcomeUser.Image = global::WindowsFormUI.Properties.Resources.Cari_Grup32x32;
+            this.btnWelcomeUser.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnWelcomeUser.Location = new System.Drawing.Point(12, 273);
+            this.btnWelcomeUser.Name = "btnWelcomeUser";
+            this.btnWelcomeUser.Size = new System.Drawing.Size(122, 64);
+            this.btnWelcomeUser.TabIndex = 9;
+            this.btnWelcomeUser.Text = "Kullanıcı Ayarları";
+            this.btnWelcomeUser.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnWelcomeUser.UseVisualStyleBackColor = false;
+            this.btnWelcomeUser.Click += new System.EventHandler(this.BtnWelcomeUser_Click);
+            // 
+            // FrmWelcome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(279, 367);
             this.ControlBox = false;
+            this.Controls.Add(this.btnWelcomeUser);
+            this.Controls.Add(this.btnWelcomeCompany);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnMinimize);
             this.Controls.Add(this.btnExit);
@@ -212,7 +252,7 @@
             this.Controls.Add(this.btnWelcomeStok);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmWelcome";
+            this.Name = "FrmWelcome";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmWelcome";
             this.ResumeLayout(false);
@@ -231,5 +271,7 @@
         private UserControls.BtnWelcome btnExit;
         private UserControls.BtnWelcome btnMinimize;
         private System.Windows.Forms.Label label1;
+        private UserControls.BtnWelcome btnWelcomeCompany;
+        private UserControls.BtnWelcome btnWelcomeUser;
     }
 }

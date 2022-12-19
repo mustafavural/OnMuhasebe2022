@@ -71,16 +71,23 @@ namespace Business.Concrete
             return result;
         }
 
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Stok> GetById(int stokId)
         {
             return new SuccessDataResult<Stok>(Get(s => s.Id == stokId));
         }
 
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Stok> GetByKod(string stokKod)
         {
             return new SuccessDataResult<Stok>(Get(s => s.Kod == stokKod));
         }
 
+        [SecuredOperation("List,Admin")]
+        [CacheAspect(duration: 1)]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<Stok>> GetListByCategoryId(int categoryId)
         {
             //var result = _stokDal.GetListByCategoryId(categoryId);
@@ -89,6 +96,9 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
+        [SecuredOperation("List,Admin")]
+        [CacheAspect(duration: 1)]
+        [LogAspect(typeof(DatabaseLogger))]
         [PerformanceAspect(5)]
         public IDataResult<List<Stok>> GetList(Expression<Func<Stok, bool>>? filter = null)
         {

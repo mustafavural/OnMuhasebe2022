@@ -152,6 +152,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.Name = "FrmStokGrup";
             this.Text = "Stok Grupları";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmStokGrup_FormClosing);
+            this.Load += new System.EventHandler(this.FrmStokGrup_Load);
             this.grpEkleGuncelle.ResumeLayout(false);
             this.grpEkleGuncelle.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGruplar)).EndInit();

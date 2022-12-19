@@ -22,6 +22,10 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             InitializeComponent();
             _stokService = stokService;
             _stokHareketService = stokHareketService;
+        }
+
+        private void FrmStokKart_Load(object sender, EventArgs e)
+        {
             this.ClearScreen();
         }
 
@@ -51,7 +55,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
 
         private void BtnStokBul_Click(object sender, EventArgs e)
         {
-            var frmliste= Program.Container.Resolve<FrmStokListe>();
+            var frmliste = Program.Container.Resolve<FrmStokListe>();
             frmliste.SecimIcin = true;
             frmliste.ShowDialog();
 
@@ -241,28 +245,40 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
 
         private void ClearScreen()
         {
-            txtStokKod.Enabled = true;
-            txtStokKod.Text = "";
-            txtStokBarkod.Text = "";
-            txtStokAd.Text = "";
-            txtStokKDV.Text = "";
-            txtStokBirim.Text = "";
-
-            dgvGrupView.DataSource = new List<StokCategory>();
-
-            btnGrupEkle.Enabled = false;
-            btnGrupSil.Enabled = false;
-            uscStokEkleSilButon.BtnClear_Visible = false;
-            uscStokEkleSilButon.BtnDelete_Enable = false;
-            uscStokEkleSilButon.BtnSave_Enable = false;
-            uscStokEkleSilButon.BtnSave_Text = "Ekle";
-            uscStokEkleSilButon.LblStatus_Text = "";
-            _secilenStok = null;
-            dgvStokListe.DataSource = _stokService.GetList().Data.OrderByDescending(s => s.Id).ToList();
-
-            if (tabFrmStok.TabPages.Contains(tabStokHareket))
+            try
             {
-                tabFrmStok.TabPages.Remove(tabStokHareket);
+                txtStokKod.Enabled = true;
+                txtStokKod.Text = "";
+                txtStokBarkod.Text = "";
+                txtStokAd.Text = "";
+                txtStokKDV.Text = "";
+                txtStokBirim.Text = "";
+
+                dgvGrupView.DataSource = new List<StokCategory>();
+
+                btnGrupEkle.Enabled = false;
+                btnGrupSil.Enabled = false;
+                uscStokEkleSilButon.BtnClear_Visible = false;
+                uscStokEkleSilButon.BtnDelete_Enable = false;
+                uscStokEkleSilButon.BtnSave_Enable = false;
+                uscStokEkleSilButon.BtnSave_Text = "Ekle";
+                uscStokEkleSilButon.LblStatus_Text = "";
+                _secilenStok = null;
+                dgvStokListe.DataSource = _stokService.GetList().Data.OrderByDescending(s => s.Id).ToList();
+
+                if (tabFrmStok.TabPages.Contains(tabStokHareket))
+                {
+                    tabFrmStok.TabPages.Remove(tabStokHareket);
+                }
+            }
+            catch (UnauthorizedAccessException autherr)
+            {
+                MessageHelper.ErrorMessageBuilder(autherr);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
         #endregion

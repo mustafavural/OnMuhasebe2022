@@ -3,7 +3,7 @@ using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.Interceptors.Autofac;
 using Core.Utilities.Ioc;
-using Core.Utilities.Security.Encyption;
+using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;

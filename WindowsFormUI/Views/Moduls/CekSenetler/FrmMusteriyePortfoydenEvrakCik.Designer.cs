@@ -407,6 +407,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMusteriyePortfoydenEvrakCik";
             this.Text = "Müşteriye Portföyden Evrak Çık";
+            this.Load += new System.EventHandler(this.FrmMusteriyePortfoydenEvrakCik_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPortfoydenEvrakCik)).EndInit();
             this.pnlUstBilgiler.ResumeLayout(false);
             this.grpBordroBilgiler.ResumeLayout(false);

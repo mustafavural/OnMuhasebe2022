@@ -17,5 +17,16 @@ namespace Core.DataAccess.Concrete.EntityFramework
 
             return result.ToList();
         }
+
+        public List<Company> GetListByUserId(int userId)
+        {
+            using var context = new MVMasterContext();
+            var result = from company in context.Companies
+                         join groups in context.UserCompanies
+                         on company.Id equals groups.CompanyId
+                         where groups.UserId == userId
+                         select company;
+            return result.ToList();
+        }
     }
 }

@@ -62,6 +62,11 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
                 isUpdate = false;
                 txtBankaAd.Focus();
             }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
             catch (Exception err)
             {
                 MessageHelper.ErrorMessageBuilder(err);

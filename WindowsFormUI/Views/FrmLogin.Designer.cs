@@ -42,7 +42,7 @@
             // 
             this.lblKullaniciSifre.AutoSize = true;
             this.lblKullaniciSifre.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblKullaniciSifre.Location = new System.Drawing.Point(12, 70);
+            this.lblKullaniciSifre.Location = new System.Drawing.Point(10, 39);
             this.lblKullaniciSifre.Name = "lblKullaniciSifre";
             this.lblKullaniciSifre.Size = new System.Drawing.Size(37, 16);
             this.lblKullaniciSifre.TabIndex = 0;
@@ -50,7 +50,7 @@
             // 
             // txtKullaniciSifre
             // 
-            this.txtKullaniciSifre.Location = new System.Drawing.Point(95, 67);
+            this.txtKullaniciSifre.Location = new System.Drawing.Point(93, 36);
             this.txtKullaniciSifre.Name = "txtKullaniciSifre";
             this.txtKullaniciSifre.PasswordChar = '*';
             this.txtKullaniciSifre.Size = new System.Drawing.Size(194, 24);
@@ -59,8 +59,9 @@
             // cmbSirketAd
             // 
             this.cmbSirketAd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSirketAd.Enabled = false;
             this.cmbSirketAd.FormattingEnabled = true;
-            this.cmbSirketAd.Location = new System.Drawing.Point(95, 6);
+            this.cmbSirketAd.Location = new System.Drawing.Point(93, 66);
             this.cmbSirketAd.Name = "cmbSirketAd";
             this.cmbSirketAd.Size = new System.Drawing.Size(194, 25);
             this.cmbSirketAd.TabIndex = 2;
@@ -85,7 +86,7 @@
             // 
             this.lblKullaniciAd.AutoSize = true;
             this.lblKullaniciAd.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblKullaniciAd.Location = new System.Drawing.Point(12, 40);
+            this.lblKullaniciAd.Location = new System.Drawing.Point(10, 9);
             this.lblKullaniciAd.Name = "lblKullaniciAd";
             this.lblKullaniciAd.Size = new System.Drawing.Size(75, 16);
             this.lblKullaniciAd.TabIndex = 0;
@@ -93,7 +94,7 @@
             // 
             // txtKullaniciAd
             // 
-            this.txtKullaniciAd.Location = new System.Drawing.Point(95, 37);
+            this.txtKullaniciAd.Location = new System.Drawing.Point(93, 6);
             this.txtKullaniciAd.Name = "txtKullaniciAd";
             this.txtKullaniciAd.Size = new System.Drawing.Size(194, 24);
             this.txtKullaniciAd.TabIndex = 1;
@@ -102,7 +103,7 @@
             // 
             this.lblSirketAd.AutoSize = true;
             this.lblSirketAd.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblSirketAd.Location = new System.Drawing.Point(12, 9);
+            this.lblSirketAd.Location = new System.Drawing.Point(10, 69);
             this.lblSirketAd.Name = "lblSirketAd";
             this.lblSirketAd.Size = new System.Drawing.Size(67, 16);
             this.lblSirketAd.TabIndex = 0;
@@ -139,6 +140,7 @@
             this.Controls.Add(this.txtKullaniciSifre);
             this.Controls.Add(this.lblKullaniciSifre);
             this.Name = "FrmLogin";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Giriş Yap";
             this.ResumeLayout(false);
             this.PerformLayout();

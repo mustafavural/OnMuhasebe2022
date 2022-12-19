@@ -89,6 +89,8 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CekSenetMusteri>>(GetAll(b => b.Vade == vade));
         }
 
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<CekSenetMusteri>> GetListPortfoydekiler()
         {
             return new SuccessDataResult<List<CekSenetMusteri>>(GetAll(m => m.BordroTediyeId == null));

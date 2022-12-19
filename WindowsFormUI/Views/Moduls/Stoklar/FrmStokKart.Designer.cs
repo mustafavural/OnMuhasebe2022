@@ -60,6 +60,12 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.btnGrupEkle = new System.Windows.Forms.Button();
             this.uscStokEkleSilButon = new WindowsFormUI.Views.UserControls.UscFormButtons();
             this.dgvStokListe = new System.Windows.Forms.DataGridView();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colKod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBarkod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colKDV = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBirim = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabFrmStok = new System.Windows.Forms.TabControl();
             this.tabStokKart = new System.Windows.Forms.TabPage();
             this.tabStokHareket = new System.Windows.Forms.TabPage();
@@ -77,12 +83,6 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.colHareketTarih = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHareketAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.imLStokKart = new System.Windows.Forms.ImageList(this.components);
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBarkod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKDV = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBirim = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpStok.SuspendLayout();
             this.grpGrup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGrupView)).BeginInit();
@@ -338,6 +338,58 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.dgvStokListe.TabStop = false;
             this.dgvStokListe.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvStokListe_CellDoubleClick);
             // 
+            // colId
+            // 
+            this.colId.DataPropertyName = "Id";
+            this.colId.HeaderText = "Id";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            // 
+            // colKod
+            // 
+            this.colKod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colKod.DataPropertyName = "Kod";
+            this.colKod.HeaderText = "Kod";
+            this.colKod.Name = "colKod";
+            this.colKod.ReadOnly = true;
+            this.colKod.Width = 52;
+            // 
+            // colBarkod
+            // 
+            this.colBarkod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colBarkod.DataPropertyName = "Barkod";
+            this.colBarkod.HeaderText = "Barkod";
+            this.colBarkod.Name = "colBarkod";
+            this.colBarkod.ReadOnly = true;
+            this.colBarkod.Width = 71;
+            // 
+            // colAd
+            // 
+            this.colAd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colAd.DataPropertyName = "Ad";
+            this.colAd.HeaderText = "Ad";
+            this.colAd.Name = "colAd";
+            this.colAd.ReadOnly = true;
+            // 
+            // colKDV
+            // 
+            this.colKDV.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colKDV.DataPropertyName = "KDV";
+            this.colKDV.HeaderText = "KDV";
+            this.colKDV.Name = "colKDV";
+            this.colKDV.ReadOnly = true;
+            this.colKDV.Width = 57;
+            // 
+            // colBirim
+            // 
+            this.colBirim.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colBirim.DataPropertyName = "Birim";
+            this.colBirim.HeaderText = "Birim";
+            this.colBirim.Name = "colBirim";
+            this.colBirim.ReadOnly = true;
+            this.colBirim.Width = 63;
+            // 
             // tabFrmStok
             // 
             this.tabFrmStok.Controls.Add(this.tabStokKart);
@@ -552,58 +604,6 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.imLStokKart.Images.SetKeyName(0, "Stok_Kartı32x32.ico");
             this.imLStokKart.Images.SetKeyName(1, "Stok_Hareket32x32.ico");
             // 
-            // colId
-            // 
-            this.colId.DataPropertyName = "Id";
-            this.colId.HeaderText = "Id";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Visible = false;
-            // 
-            // colKod
-            // 
-            this.colKod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colKod.DataPropertyName = "Kod";
-            this.colKod.HeaderText = "Kod";
-            this.colKod.Name = "colKod";
-            this.colKod.ReadOnly = true;
-            this.colKod.Width = 52;
-            // 
-            // colBarkod
-            // 
-            this.colBarkod.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colBarkod.DataPropertyName = "Barkod";
-            this.colBarkod.HeaderText = "Barkod";
-            this.colBarkod.Name = "colBarkod";
-            this.colBarkod.ReadOnly = true;
-            this.colBarkod.Width = 71;
-            // 
-            // colAd
-            // 
-            this.colAd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colAd.DataPropertyName = "Ad";
-            this.colAd.HeaderText = "Ad";
-            this.colAd.Name = "colAd";
-            this.colAd.ReadOnly = true;
-            // 
-            // colKDV
-            // 
-            this.colKDV.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colKDV.DataPropertyName = "KDV";
-            this.colKDV.HeaderText = "KDV";
-            this.colKDV.Name = "colKDV";
-            this.colKDV.ReadOnly = true;
-            this.colKDV.Width = 57;
-            // 
-            // colBirim
-            // 
-            this.colBirim.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colBirim.DataPropertyName = "Birim";
-            this.colBirim.HeaderText = "Birim";
-            this.colBirim.Name = "colBirim";
-            this.colBirim.ReadOnly = true;
-            this.colBirim.Width = 63;
-            // 
             // FrmStokKart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -616,6 +616,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.Name = "FrmStokKart";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Stok Kartı";
+            this.Load += new System.EventHandler(this.FrmStokKart_Load);
             this.grpStok.ResumeLayout(false);
             this.grpStok.PerformLayout();
             this.grpGrup.ResumeLayout(false);

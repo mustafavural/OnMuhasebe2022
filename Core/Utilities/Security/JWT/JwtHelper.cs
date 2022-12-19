@@ -1,7 +1,6 @@
 ﻿using Core.Entities.Concrete;
 using Core.Extensions;
-using Core.Utilities.Security.Encyption;
-using Microsoft.Extensions.Configuration;
+using Core.Utilities.Security.Encryption;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,14 +9,18 @@ namespace Core.Utilities.Security.JWT
 {
     public class JwtHelper : ITokenHelper
     {
-        public IConfiguration _configuration;
         private readonly TokenOptions _tokenOptions;
         DateTime _accessTokenExpiration;
 
-        public JwtHelper(IConfiguration configuration)
+        public JwtHelper()
         {
-            _configuration = configuration;
-            _tokenOptions = _configuration.GetSection("TokenOptions").Get<TokenOptions>();
+            _tokenOptions = new TokenOptions
+            {
+                Issuer = "www.mvural.com",
+                Audience = "www.mvural.com",
+                AccessTokenExpiration = 1,
+                SecurityKey = "mysecretkey424434424434"
+            };
         }
 
         public AccessToken CreateToken(User user, List<OperationClaim> operationClaims)

@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
+using WindowsFormUI.Helpers;
 
 namespace WindowsFormUI.Views.Moduls.Cariler
 {
@@ -28,9 +29,27 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             _cariService = cariService;
             _cariCategoryService = cariCategoryService;
             _cariHareketService = cariHareketService;
-            _cariler = _cariService.GetList().Data;
-            _cariCategoryler = _cariCategoryService.GetList().Data;
             SecimIcin = false;
+        }
+
+        private void FrmCariListe_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                _cariler = _cariService.GetList().Data;
+                _cariCategoryler = _cariCategoryService.GetList().Data;
+                WriteToScreen(_cariler);
+                txtCariKod.Focus();
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void WriteToScreen(List<Cari> cariler)
@@ -52,12 +71,6 @@ namespace WindowsFormUI.Views.Moduls.Cariler
                 s.Adres.AcikAdres,
                 Bakiye = _cariHareketService.GetCariBakiye(s.Kod).Data
             }).ToList();
-        }
-
-        private void FrmCariListe_Load(object sender, EventArgs e)
-        {
-            WriteToScreen(_cariler);
-            txtCariKod.Focus();
         }
 
         #region GrupFiltreleri

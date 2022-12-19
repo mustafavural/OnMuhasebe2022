@@ -430,6 +430,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.Name = "FrmStokListe";
             this.Text = "Stok Listesi";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmStokListe_FormClosing);
+            this.Load += new System.EventHandler(this.FrmStokListe_Load);
             this.grpStokListe.ResumeLayout(false);
             this.grpStokListe.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStokListe)).EndInit();

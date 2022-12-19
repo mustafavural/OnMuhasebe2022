@@ -36,7 +36,6 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
         {
             var form = Program.Container.Resolve<FrmPortfoydekiEvraklar>();
             form.MdiParent = this;
-            form.SecimIcin = false;
             form.Show();
         }
 

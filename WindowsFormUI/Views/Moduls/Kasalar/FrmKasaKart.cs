@@ -52,6 +52,11 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
                 _kasalar = _kasaService.GetList().Data;
                 dgvKasalar.DataSource = _kasalar.OrderByDescending(s => s.Id).ToList();
             }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
             catch (Exception err)
             {
                 MessageHelper.ErrorMessageBuilder(err);

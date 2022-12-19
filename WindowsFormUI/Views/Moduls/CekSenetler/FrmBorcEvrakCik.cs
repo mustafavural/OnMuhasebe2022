@@ -41,12 +41,24 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
 
         private void FrmBorcEvrakCik_Load(object sender, EventArgs e)
         {
-            ClearScreen();
-            //
-            CekSenetBordro yeniBordro = _cekSenetBordroService.GetList().Data?.MaxBy(s => s.Id);
-            int bordroNo = yeniBordro == null ? 1 : yeniBordro.No[1..].Trim('0').ToInt() + 1;
-            txtBordroNo.Text = bordroNo.ToString();
-            //
+            try
+            {
+                ClearScreen();
+                //
+                CekSenetBordro yeniBordro = _cekSenetBordroService.GetList().Data?.MaxBy(s => s.Id);
+                int bordroNo = yeniBordro == null ? 1 : yeniBordro.No[1..].Trim('0').ToInt() + 1;
+                txtBordroNo.Text = bordroNo.ToString();
+                //
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void TxtDecimalHarfEngelle(object sender, KeyPressEventArgs e)

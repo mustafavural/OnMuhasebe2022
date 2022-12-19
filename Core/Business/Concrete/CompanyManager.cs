@@ -1,6 +1,7 @@
 ﻿using Core.Business.Abstract;
 using Core.DataAccess.Abstract;
 using Core.Entities.Concrete;
+using System.Linq.Expressions;
 
 namespace Core.Business.Concrete
 {
@@ -23,9 +24,14 @@ namespace Core.Business.Concrete
             return _companyDal.Get(s => s.Name == name);
         }
 
-        public List<Company> GetList()
+        public List<Company> GetList(Expression<Func<Company, bool>>? filter = null)
         {
-            return _companyDal.GetList();
+            return _companyDal.GetList(filter);
+        }
+
+        public List<Company> GetListByUserId(int userId)
+        {
+            return _companyDal.GetListByUserId(userId);
         }
 
         public List<User> GetUsers(Company company)

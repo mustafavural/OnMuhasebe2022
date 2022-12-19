@@ -7,7 +7,9 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
+using WindowsFormUI.Helpers;
 using WindowsFormUI.Properties;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace WindowsFormUI.Views.Moduls.Kasalar
 {
@@ -22,21 +24,34 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
         {
             InitializeComponent();
             _kasaHareketService = kasaHareketService;
+            _kasaHareketler = new();
             KasaIslemTuru = KasaIslemTuru.Hepsi;
-            _kasaHareketler = _kasaHareketService.GetList().Data;
             this.Icon = Resources.Kasa_Hareket32x321;
             dtpTarihIlk.Value = DateTime.Today.AddDays(-10);
         }
 
         private void FrmKasaListe_Load(object sender, EventArgs e)
         {
-            if (!SecimIcin)
-                this.Text = "Kasa Hareket Listesi";
-            else
-                this.Text = KasaIslemTuru == KasaIslemTuru.Tahsilat ? "Kasa Tahsilat Listesi" : "Kasa Tediye Listesi";
+            try
+            {
+                _kasaHareketler.AddRange(_kasaHareketService.GetList().Data);
+                if (!SecimIcin)
+                    this.Text = "Kasa Hareket Listesi";
+                else
+                    this.Text = KasaIslemTuru == KasaIslemTuru.Tahsilat ? "Kasa Tahsilat Listesi" : "Kasa Tediye Listesi";
 
-            _TextChanged(sender, e);
-            txtEvrakNo.Focus();
+                _TextChanged(sender, e);
+                txtEvrakNo.Focus();
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void _TextChanged(object sender, EventArgs e)

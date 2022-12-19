@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using System;
+using System.CodeDom;
 using System.Windows.Forms;
 using WindowsFormUI.Views.Moduls.Bankalar;
 using WindowsFormUI.Views.Moduls.Cariler;
@@ -42,7 +43,7 @@ namespace WindowsFormUI.Views
             Program.Container.Resolve<FrmKasa>().Show();
         }
 
-        private void BtnWelcomeCek_Click(object sender, EventArgs e)
+        private void BtnWelcomeCekSenet_Click(object sender, EventArgs e)
         {
             Program.Container.Resolve<FrmCekSenet>().Show();
         }
@@ -50,6 +51,16 @@ namespace WindowsFormUI.Views
         private void BtnWelcomeBanka_Click(object sender, EventArgs e)
         {
             Program.Container.Resolve<FrmBanka>().Show();
+        }
+
+        private void BtnWelcomeUser_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnWelcomeCompany_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void BtnMinimize_Click(object sender, EventArgs e)

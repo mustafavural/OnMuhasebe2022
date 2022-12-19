@@ -38,6 +38,10 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             _cariService = cariService;
             _cekSenetMusteriService = cekSenetMusteriService;
             _musteriCekSenetler = new List<CekSenetMusteri>();
+        }
+
+        private void FrmEvrakAl_Load(object sender, EventArgs e)
+        {
             ClearDeger_NoSayaclar();
             ClearForm_BordroBilgiler();
             ClearForm_EvrakBilgiler();
@@ -474,8 +478,20 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
 
         private void ClearDeger_NoSayaclar()
         {
-            bordroNo = _cekSenetBordroService.GetNewRowsEvrakNo().Data;
-            evrakNo = _cekSenetMusteriService.GetLastRowIndex().Data;
+            try 
+            {
+                bordroNo = _cekSenetBordroService.GetNewRowsEvrakNo().Data;
+                evrakNo = _cekSenetMusteriService.GetLastRowIndex().Data;
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void UpdateForm_DgvEvraklar()

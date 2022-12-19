@@ -157,6 +157,7 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             this.ShowInTaskbar = false;
             this.Text = "Cari Grupları";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmStokGrup_FormClosing);
+            this.Load += new System.EventHandler(this.FrmCariGrup_Load);
             this.grpEkleGuncelle.ResumeLayout(false);
             this.grpEkleGuncelle.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGruplar)).EndInit();

@@ -33,6 +33,10 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             _cariService = cariService;
             _cariHareketService = cariHareketService;
             _musteriCekSenetler = new();
+        }
+
+        private void FrmMusteriyePortfoydenEvrakCik_Load(object sender, EventArgs e)
+        {
             ClearForm_EvrakBilgiler();
             ClearForm_BordroBilgiler();
             ClearParameters();
@@ -320,24 +324,36 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
 
         private void ClearForm_BordroBilgiler()
         {
-            txtBordroNo.Text = _cekSenetBordroService.GetNewRowsEvrakNo().Data.ToString();
-            txtBordroNo.Enabled = true;
-            btnBordroBul.Enabled = true;
+            try
+            {
+                txtBordroNo.Text = _cekSenetBordroService.GetNewRowsEvrakNo().Data.ToString();
+                txtBordroNo.Enabled = true;
+                btnBordroBul.Enabled = true;
 
-            txtCariKod.Text = "";
-            txtCariKod.Enabled = false;
-            btnCariBul.Enabled = false;
-            lblCariUnvan.Text = "";
+                txtCariKod.Text = "";
+                txtCariKod.Enabled = false;
+                btnCariBul.Enabled = false;
+                lblCariUnvan.Text = "";
 
-            dtpCikisTarih.Value = DateTime.Today;
-            dtpCikisTarih.Enabled = false;
+                dtpCikisTarih.Value = DateTime.Today;
+                dtpCikisTarih.Enabled = false;
 
-            txtBordroAciklama.Text = "";
-            txtBordroAciklama.Enabled = false;
+                txtBordroAciklama.Text = "";
+                txtBordroAciklama.Enabled = false;
 
-            txtEvrakNo.Text = "";
-            txtEvrakNo.Enabled = false;
-            btnEvrakBul.Enabled = false;
+                txtEvrakNo.Text = "";
+                txtEvrakNo.Enabled = false;
+                btnEvrakBul.Enabled = false;
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void ClearParameters()

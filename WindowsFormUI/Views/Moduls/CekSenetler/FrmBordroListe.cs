@@ -29,10 +29,22 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
 
         private void FrmBordroListe_Load(object sender, EventArgs e)
         {
-            var tur = BordroTur.ToText();
-            lblBordroTurler.Text = tur != "" ? tur : "Hepsi";
-            _bordrolar = _bordroService.GetList(f => f.Tur == tur || tur == "").Data;
-            dtpTarihIlk.Value = DateTime.Today.AddDays(-10);
+            try
+            {
+                var tur = BordroTur.ToText();
+                lblBordroTurler.Text = tur != "" ? tur : "Hepsi";
+                _bordrolar = _bordroService.GetList(f => f.Tur == tur || tur == "").Data;
+                dtpTarihIlk.Value = DateTime.Today.AddDays(-10);
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void WriteToScreen(List<CekSenetBordro> kiymetliEvrakBordrolar)

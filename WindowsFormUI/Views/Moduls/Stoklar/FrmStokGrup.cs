@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
+using WindowsFormUI.Helpers;
 
 namespace WindowsFormUI.Views.Moduls.Stoklar
 {
@@ -29,19 +30,35 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
                 uscGruplar.Visible = false;
                 grpEkleGuncelle.Height = 55;
             }
+        }
+
+        private void FrmStokGrup_Load(object sender, EventArgs e)
+        {
             this.ClearScreen();
         }
 
         private void ClearScreen()
         {
-            _secilenCategory = null;
-            _stokCategoryler = _stokCategoryService.GetList().Data;
-            txtGrupKodAd.Text = "";
-            uscGruplar.BtnDelete_Enable = false;
-            uscGruplar.BtnSave_Enable = false;
-            uscGruplar.BtnSave_Text = "Kaydet";
-            lblStatusBar.Text = "";
-            dgvGruplar.DataSource = _stokCategoryler.OrderByDescending(s => s.Id).ToList();
+            try
+            {
+                _secilenCategory = null;
+                _stokCategoryler = _stokCategoryService.GetList().Data;
+                txtGrupKodAd.Text = "";
+                uscGruplar.BtnDelete_Enable = false;
+                uscGruplar.BtnSave_Enable = false;
+                uscGruplar.BtnSave_Text = "Kaydet";
+                lblStatusBar.Text = "";
+                dgvGruplar.DataSource = _stokCategoryler.OrderByDescending(s => s.Id).ToList();
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void WriteToScreen(StokCategory stokCategory)

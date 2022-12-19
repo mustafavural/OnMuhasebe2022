@@ -22,13 +22,26 @@ namespace WindowsFormUI.Views.Moduls.CekSenetler
             InitializeComponent();
             _cekSenetBordroService = cekSenetBordroService;
             _cekSenetMusteriService = cekSenetMusteriService;
-            _portfoydekiEvraklar = _cekSenetMusteriService.GetListPortfoydekiler().Data;
+            _portfoydekiEvraklar = new();
             SecimIcin = false;
         }
 
         private void FrmPortfoydekiEvraklar_Load(object sender, EventArgs e)
         {
-            dtpVadeIlk.Value = DateTime.Today.AddDays(-10);
+            try
+            {
+                _portfoydekiEvraklar.AddRange(_cekSenetMusteriService.GetListPortfoydekiler().Data);
+                dtpVadeIlk.Value = DateTime.Today.AddDays(-10);
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void WriteToScreen(List<CekSenetMusteri> portfoydekiler)

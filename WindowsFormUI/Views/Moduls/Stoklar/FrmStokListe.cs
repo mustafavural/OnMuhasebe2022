@@ -28,9 +28,21 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             _stokHareketService = stokHareketService;
             _stokCategoryService = stokCategoryService;
             SecimIcin = false;
-            _stoklar = _stokService.GetList().Data;
-            WriteToScreen(_stoklar);
-            txtStokKod.Focus();
+        }
+
+        private void FrmStokListe_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                _stoklar.AddRange(_stokService.GetList().Data);
+                WriteToScreen(_stoklar);
+                txtStokKod.Focus();
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(this.Close));
+            }
         }
 
         private void WriteToScreen(List<Stok> _stoklar)

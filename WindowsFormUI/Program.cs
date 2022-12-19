@@ -62,11 +62,11 @@ namespace WindowsFormUI
             builder.RegisterType<FrmEvrakAl>().AsSelf();
             builder.RegisterType<FrmMusteriyePortfoydenEvrakCik>().AsSelf();
             builder.RegisterType<FrmPortfoydekiEvraklar>().AsSelf();
+            builder.RegisterType<FrmBorcEvrakCik>().AsSelf();
             builder.RegisterType<FrmBanka>().AsSelf();
             builder.RegisterType<FrmBankaKart>().AsSelf();
             builder.RegisterType<FrmBankaKayit>().AsSelf();
             builder.RegisterType<FrmBankaHareketListe>().AsSelf();
-
 
             return builder.Build();
         }

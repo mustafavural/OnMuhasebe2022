@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
+using WindowsFormUI.Helpers;
 
 namespace WindowsFormUI.Views.Moduls.Cariler
 {
@@ -19,21 +20,33 @@ namespace WindowsFormUI.Views.Moduls.Cariler
 
         public FrmCariKart(ICariService cariService, ICariHareketService cariHareketService, IIlceService ilceService, ISehirService sehirService)
         {
-            InitializeComponent();
-            _cariService = cariService;
-            _cariHareketService = cariHareketService;
-            _ilceService = ilceService;
-            _sehirService = sehirService;
-            cmbSehir.Items.Add("<<Seçiniz>>");
-            cmbSehir.Items.AddRange(_sehirService.GetList().Data.Select(s => s.Ad).ToArray());
-            cmbSehir.SelectedIndex = 0;
-            cmbIlce.SelectedIndex = 0;
+                InitializeComponent();
+                _cariService = cariService;
+                _cariHareketService = cariHareketService;
+                _ilceService = ilceService;
+                _sehirService = sehirService;
         }
 
         #region Events
         private void FrmCariKart_Load(object sender, EventArgs e)
         {
-            this.ClearScreen();
+            try
+            {
+                cmbSehir.Items.Add("<<Seçiniz>>");
+                cmbSehir.Items.AddRange(_sehirService.GetList().Data.Select(s => s.Ad).ToArray());
+                cmbSehir.SelectedIndex = 0;
+                cmbIlce.SelectedIndex = 0;
+                this.ClearScreen();
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void TxtCariKod_Leave(object sender, EventArgs e)

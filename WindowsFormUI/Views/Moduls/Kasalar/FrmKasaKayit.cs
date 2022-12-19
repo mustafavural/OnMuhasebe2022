@@ -40,17 +40,29 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
 
         private void FrmKasaKayit_Load(object sender, EventArgs e)
         {
-            if (KasaIslemTuru == KasaIslemTuru.Tahsilat)
+            try
             {
-                this.Icon = Resources.Kasa_Tahsilat32x321;
-                this.Text += "  --  Tahsilat Yap";
+                if (KasaIslemTuru == KasaIslemTuru.Tahsilat)
+                {
+                    this.Icon = Resources.Kasa_Tahsilat32x321;
+                    this.Text += "  --  Tahsilat Yap";
+                }
+                else if (KasaIslemTuru == KasaIslemTuru.Tediye)
+                {
+                    this.Icon = Resources.Kasa_Odeme32x321;
+                    this.Text += "  --  Tediye (Ödeme) Yap";
+                }
+                ClearScreen();
             }
-            else if (KasaIslemTuru == KasaIslemTuru.Tediye)
+            catch (UnauthorizedAccessException err)
             {
-                this.Icon = Resources.Kasa_Odeme32x321;
-                this.Text += "  --  Tediye (Ödeme) Yap";
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
             }
-            ClearScreen();
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void ClearScreen()

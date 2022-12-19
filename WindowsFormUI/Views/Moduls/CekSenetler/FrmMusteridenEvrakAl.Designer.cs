@@ -54,6 +54,12 @@
             this.lblCariUnvan = new System.Windows.Forms.Label();
             this.lblCariKod = new System.Windows.Forms.Label();
             this.dgvEvraklar = new System.Windows.Forms.DataGridView();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVade = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAsilBorclu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uscBordro = new WindowsFormUI.Views.UserControls.UscFormButtons();
             this.pnlUstBilgiler = new System.Windows.Forms.Panel();
             this.grpBordroBilgiler = new System.Windows.Forms.GroupBox();
@@ -62,12 +68,6 @@
             this.txtBordroAciklama = new System.Windows.Forms.TextBox();
             this.txtBordroNo = new System.Windows.Forms.TextBox();
             this.lblBordroAciklama = new System.Windows.Forms.Label();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colVade = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTutar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAsilBorclu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpEvrakBilgiler.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEvraklar)).BeginInit();
             this.pnlUstBilgiler.SuspendLayout();
@@ -297,6 +297,77 @@
             this.dgvEvraklar.TabStop = false;
             this.dgvEvraklar.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvEvraklar_CellDoubleClick);
             // 
+            // colId
+            // 
+            this.colId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colId.DataPropertyName = "Id";
+            this.colId.HeaderText = "Id";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.colId.Visible = false;
+            // 
+            // colNo
+            // 
+            this.colNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colNo.DataPropertyName = "No";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.colNo.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colNo.HeaderText = "No";
+            this.colNo.Name = "colNo";
+            this.colNo.ReadOnly = true;
+            this.colNo.Width = 49;
+            // 
+            // colVade
+            // 
+            this.colVade.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colVade.DataPropertyName = "Vade";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            this.colVade.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colVade.HeaderText = "Vadesi";
+            this.colVade.Name = "colVade";
+            this.colVade.ReadOnly = true;
+            this.colVade.Width = 69;
+            // 
+            // colTutar
+            // 
+            this.colTutar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colTutar.DataPropertyName = "Tutar";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle4.Format = "#,###.## TL";
+            dataGridViewCellStyle4.NullValue = null;
+            this.colTutar.DefaultCellStyle = dataGridViewCellStyle4;
+            this.colTutar.HeaderText = "Tutarı";
+            this.colTutar.Name = "colTutar";
+            this.colTutar.ReadOnly = true;
+            this.colTutar.Width = 69;
+            // 
+            // colAsilBorclu
+            // 
+            this.colAsilBorclu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colAsilBorclu.DataPropertyName = "AsilBorclu";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.colAsilBorclu.DefaultCellStyle = dataGridViewCellStyle5;
+            this.colAsilBorclu.HeaderText = "Asıl Borçlu";
+            this.colAsilBorclu.Name = "colAsilBorclu";
+            this.colAsilBorclu.ReadOnly = true;
+            this.colAsilBorclu.Width = 95;
+            // 
+            // colAciklama
+            // 
+            this.colAciklama.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colAciklama.DataPropertyName = "Aciklama";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
+            this.colAciklama.DefaultCellStyle = dataGridViewCellStyle6;
+            this.colAciklama.HeaderText = "Açıklama";
+            this.colAciklama.Name = "colAciklama";
+            this.colAciklama.ReadOnly = true;
+            // 
             // uscBordro
             // 
             this.uscBordro.BtnClear_Visible = true;
@@ -393,78 +464,6 @@
             this.lblBordroAciklama.TabIndex = 5;
             this.lblBordroAciklama.Text = "Açıklama";
             // 
-            // colId
-            // 
-            this.colId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colId.DataPropertyName = "Id";
-            this.colId.HeaderText = "Id";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colId.Visible = false;
-            this.colId.Width = 46;
-            // 
-            // colNo
-            // 
-            this.colNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colNo.DataPropertyName = "No";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
-            this.colNo.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colNo.HeaderText = "No";
-            this.colNo.Name = "colNo";
-            this.colNo.ReadOnly = true;
-            this.colNo.Width = 49;
-            // 
-            // colVade
-            // 
-            this.colVade.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colVade.DataPropertyName = "Vade";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Format = "d";
-            dataGridViewCellStyle3.NullValue = null;
-            this.colVade.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colVade.HeaderText = "Vadesi";
-            this.colVade.Name = "colVade";
-            this.colVade.ReadOnly = true;
-            this.colVade.Width = 69;
-            // 
-            // colTutar
-            // 
-            this.colTutar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colTutar.DataPropertyName = "Tutar";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle4.Format = "#,###.## TL";
-            dataGridViewCellStyle4.NullValue = null;
-            this.colTutar.DefaultCellStyle = dataGridViewCellStyle4;
-            this.colTutar.HeaderText = "Tutarı";
-            this.colTutar.Name = "colTutar";
-            this.colTutar.ReadOnly = true;
-            this.colTutar.Width = 69;
-            // 
-            // colAsilBorclu
-            // 
-            this.colAsilBorclu.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colAsilBorclu.DataPropertyName = "AsilBorclu";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
-            this.colAsilBorclu.DefaultCellStyle = dataGridViewCellStyle5;
-            this.colAsilBorclu.HeaderText = "Asıl Borçlu";
-            this.colAsilBorclu.Name = "colAsilBorclu";
-            this.colAsilBorclu.ReadOnly = true;
-            this.colAsilBorclu.Width = 95;
-            // 
-            // colAciklama
-            // 
-            this.colAciklama.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colAciklama.DataPropertyName = "Aciklama";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(1, 0, 0, 0);
-            this.colAciklama.DefaultCellStyle = dataGridViewCellStyle6;
-            this.colAciklama.HeaderText = "Açıklama";
-            this.colAciklama.Name = "colAciklama";
-            this.colAciklama.ReadOnly = true;
-            // 
             // FrmEvrakAl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -479,6 +478,7 @@
             this.Name = "FrmEvrakAl";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Muşteriden Evrak Al";
+            this.Load += new System.EventHandler(this.FrmEvrakAl_Load);
             this.grpEvrakBilgiler.ResumeLayout(false);
             this.grpEvrakBilgiler.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEvraklar)).EndInit();

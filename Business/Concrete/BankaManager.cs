@@ -47,31 +47,33 @@ namespace Business.Concrete
 
         #endregion
 
-        [SecuredOperation("List,Admin")]
-        [LogAspect(typeof(DatabaseLogger))]
         private Banka Get(Expression<Func<Banka, bool>> filter)
         {
             return _bankaDal.Get(filter);
         }
 
-        [SecuredOperation("List,Admin")]
-        [LogAspect(typeof(DatabaseLogger))]
-        [CacheAspect(1)]
         private List<Banka> GetAll(Expression<Func<Banka, bool>>? filter = null)
         {
             return _bankaDal.GetList(filter);
         }
 
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Banka> GetById(int id)
         {
             return new SuccessDataResult<Banka>(Get(s => s.Id == id));
         }
 
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheAspect(1)]
         public IDataResult<List<Banka>> GetList(Expression<Func<Banka, bool>>? filter = null)
         {
             return new SuccessDataResult<List<Banka>>(GetAll(filter));
         }
 
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Banka> GetByHesapNo(string hesapNo)
         {
             return new SuccessDataResult<Banka>(Get(s => s.HesapNo == hesapNo));
@@ -84,11 +86,17 @@ namespace Business.Concrete
             return new SuccessDataResult<decimal>(_bankaDal.GetHesapBakiye(hesapId));
         }
 
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheAspect(1)]
         public IDataResult<List<Banka>> GetListByBankaAd(string bankaAd)
         {
             return new SuccessDataResult<List<Banka>>(GetAll(s => s.BankaAd == bankaAd));
         }
 
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheAspect(1)]
         public IDataResult<List<Banka>> GetListByBankaSubeAd(string bankaSubeAd)
         {
             return new SuccessDataResult<List<Banka>>(GetAll(s => s.BankaSubeAd == bankaSubeAd));

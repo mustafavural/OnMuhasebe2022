@@ -31,10 +31,22 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
 
         private void FrmFaturaListe_Load(object sender, EventArgs e)
         {
-            var tur = FaturaTur.ToText();
-            lblFaturaTurler.Text = tur != "" ? tur : "Tümü";
-            _faturalar = _faturaService.GetList(f => f.Tur == tur || tur == "").Data;
-            dtpTarihIlk.Value = DateTime.Today.AddDays(-10);
+            try
+            {
+                var tur = FaturaTur.ToText();
+                lblFaturaTurler.Text = tur != "" ? tur : "Tümü";
+                _faturalar = _faturaService.GetList(f => f.Tur == tur || tur == "").Data;
+                dtpTarihIlk.Value = DateTime.Today.AddDays(-10);
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void WriteToScreen(List<Fatura> faturalar)

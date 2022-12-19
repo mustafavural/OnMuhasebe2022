@@ -28,8 +28,6 @@ namespace Business.Concrete
             _bankaService = bankaService;
         }
 
-        [SecuredOperation("List,Admin")]
-        [LogAspect(typeof(DatabaseLogger))]
         private BankaHareket Get(Expression<Func<BankaHareket, bool>> filter)
         {
             var bankaHareket = _bankaHareketDal.Get(filter);
@@ -41,9 +39,6 @@ namespace Business.Concrete
             return bankaHareket;
         }
 
-        [SecuredOperation("List,Admin")]
-        [CacheAspect(1)]
-        [LogAspect(typeof(DatabaseLogger))]
         private List<BankaHareket> GetAll(Expression<Func<BankaHareket, bool>>? filter = null)
         {
             var bankaHareketler = _bankaHareketDal.GetList(filter);
@@ -55,42 +50,63 @@ namespace Business.Concrete
             return bankaHareketler;
         }
 
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<BankaHareket> GetById(int entityId)
         {
             return new SuccessDataResult<BankaHareket>(Get(s => s.Id == entityId));
         }
 
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<BankaHareket> GetByEvrakNo(string evrakNo)
         {
             return new SuccessDataResult<BankaHareket>(Get(s => s.EvrakNo == evrakNo));
         }
 
+        [SecuredOperation("List,Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<int> GetNewRowsEvrakNo()
         {
             var hareket = GetAll().MaxBy(s => s.Id);
             return new SuccessDataResult<int>(hareket == null ? 1 : hareket.EvrakNo[1..].Trim('0').ToInt() + 1);
         }
 
+        [SecuredOperation("List,Admin")]
+        [CacheAspect(1)]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<BankaHareket>> GetListByCariId(int cariId)
         {
             return new SuccessDataResult<List<BankaHareket>>(GetAll(s => s.CariId == cariId));
         }
 
+        [SecuredOperation("List,Admin")]
+        [CacheAspect(1)]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<BankaHareket>> GetListByBankaHesapId(int bankaHesapId)
         {
             return new SuccessDataResult<List<BankaHareket>>(GetAll(s => s.BankaId == bankaHesapId));
         }
 
+        [SecuredOperation("List,Admin")]
+        [CacheAspect(1)]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<BankaHareket>> GetListBetweenFiyatlar(decimal min, decimal max)
         {
             return new SuccessDataResult<List<BankaHareket>>(GetAll(s => s.GirenCikanMiktar >= min && s.GirenCikanMiktar <= max));
         }
 
+        [SecuredOperation("List,Admin")]
+        [CacheAspect(1)]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<BankaHareket>> GetListBetweenTarihler(DateTime first, DateTime last)
         {
             return new SuccessDataResult<List<BankaHareket>>(GetAll(s => s.Tarih >= first && s.Tarih <= last));
         }
 
+        [SecuredOperation("List,Admin")]
+        [CacheAspect(1)]
+        [LogAspect(typeof(DatabaseLogger))]
         [PerformanceAspect(5)]
         public IDataResult<List<BankaHareket>> GetList(Expression<Func<BankaHareket, bool>>? filter = null)
         {

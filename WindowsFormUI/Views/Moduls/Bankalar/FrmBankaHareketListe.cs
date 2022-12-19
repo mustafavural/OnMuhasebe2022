@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
+using WindowsFormUI.Helpers;
 using WindowsFormUI.Properties;
 
 namespace WindowsFormUI.Views.Moduls.Bankalar
@@ -24,17 +25,30 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             _bankaHareketService = bankaHareketService;
             BankaIslemTuru = BankaIslemTurleri.Hepsi;
             this.Icon = Resources.Banka_Hareket32x321;
-            _bankaHareketler = _bankaHareketService.GetList().Data;
+            _bankaHareketler = new();
             dtpTarihIlk.Value = DateTime.Today.AddDays(-10);
         }
 
         private void FrmBankaListe_Load(object sender, EventArgs e)
         {
-            if (SecimIcin)
-                this.Text = BankaIslemTuru == BankaIslemTurleri.Tahsilat ? "Banka Tahsilat Listesi" : "Banka Tediye Listesi";
+            try
+            {
+                _bankaHareketler.AddRange(_bankaHareketService.GetList().Data);
+                if (SecimIcin)
+                    this.Text = BankaIslemTuru == BankaIslemTurleri.Tahsilat ? "Banka Tahsilat Listesi" : "Banka Tediye Listesi";
 
-            _TextChanged(sender, e);
-            txtEvrakNo.Focus();
+                _TextChanged(sender, e);
+                txtEvrakNo.Focus();
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void _TextChanged(object sender, EventArgs e)

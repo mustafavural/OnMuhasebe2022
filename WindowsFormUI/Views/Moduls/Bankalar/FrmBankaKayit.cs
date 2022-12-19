@@ -86,20 +86,32 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
 
         private void UpdateDgvBankaHareketler()
         {
-            _bankaHareketler.Clear();
-            string startWith = BankaIslemTuru.ToChar().ToString();
-            _bankaHareketler.AddRange(_bankaHareketService.GetList(s => s.EvrakNo.StartsWith(startWith)).Data);
-            dgvBankaHareketler.DataSource = _bankaHareketler.Select(s => new
+            try
             {
-                s.Id,
-                s.BankaId,
-                s.CariId,
-                _cariService.GetById(s.CariId).Data.Unvan,
-                s.EvrakNo,
-                s.GirenCikanMiktar,
-                s.Tarih,
-                s.Aciklama
-            }).ToList();
+                _bankaHareketler.Clear();
+                string startWith = BankaIslemTuru.ToChar().ToString();
+                _bankaHareketler.AddRange(_bankaHareketService.GetList(s => s.EvrakNo.StartsWith(startWith)).Data);
+                dgvBankaHareketler.DataSource = _bankaHareketler.Select(s => new
+                {
+                    s.Id,
+                    s.BankaId,
+                    s.CariId,
+                    _cariService.GetById(s.CariId).Data.Unvan,
+                    s.EvrakNo,
+                    s.GirenCikanMiktar,
+                    s.Tarih,
+                    s.Aciklama
+                }).ToList();
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
 
         private void BtnHesapBul_Click(object sender, EventArgs e)

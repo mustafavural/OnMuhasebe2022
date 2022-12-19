@@ -59,7 +59,7 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
                     break;
             }
 
-            ClearScreen();
+                ClearScreen();
         }
 
         #region LeaveEvents
@@ -232,8 +232,21 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             txtStokKod.Focus();
         }
 
-        private void ClearScreen()
+        public void ClearScreen()
         {
+            try
+            {
+                _faturaService.GetList();
+            }
+            catch (UnauthorizedAccessException err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+                this.BeginInvoke(new MethodInvoker(Close));
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
             ClearItems();
             txtFaturaNo.Text = "";
             txtFaturaNo.Enabled = true;
