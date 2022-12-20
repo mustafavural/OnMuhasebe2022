@@ -27,7 +27,8 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             _stokService = stokService;
             _stokHareketService = stokHareketService;
             _stokCategoryService = stokCategoryService;
-            SecimIcin = false;
+            _stoklar = new();
+        SecimIcin = false;
         }
 
         private void FrmStokListe_Load(object sender, EventArgs e)

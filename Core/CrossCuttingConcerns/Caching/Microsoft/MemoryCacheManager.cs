@@ -41,7 +41,6 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 
         public void RemoveByPattern(string pattern)
         {
-
             var coherentState = typeof(MemoryCache).GetRuntimeFields().Where(p => p.Name == "_coherentState").FirstOrDefault();
             var collectionCoherentStateType = coherentState.GetValue(_cache).GetType();
             var collectionCoherentStateValue = coherentState.GetValue(_cache);

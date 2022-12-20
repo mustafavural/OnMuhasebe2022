@@ -1,4 +1,5 @@
-﻿using Core.Business.Abstract;
+﻿using Core.Aspects.Autofac.Security;
+using Core.Business.Abstract;
 using Core.DataAccess.Abstract;
 using Core.Entities.Concrete;
 
@@ -17,10 +18,12 @@ namespace Core.Business.Concrete
         {
             _userDal.Add(user);
         }
+
         public User GetByMail(string email)
         {
             return _userDal.Get(u => u.Email == email);
         }
+
         public List<OperationClaim> GetClaims(User user)
         {
             return _userDal.GetClaims(user);

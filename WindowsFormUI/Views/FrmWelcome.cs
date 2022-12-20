@@ -5,9 +5,11 @@ using System.Windows.Forms;
 using WindowsFormUI.Views.Moduls.Bankalar;
 using WindowsFormUI.Views.Moduls.Cariler;
 using WindowsFormUI.Views.Moduls.CekSenetler;
+using WindowsFormUI.Views.Moduls.Companies;
 using WindowsFormUI.Views.Moduls.Faturalar;
 using WindowsFormUI.Views.Moduls.Kasalar;
 using WindowsFormUI.Views.Moduls.Stoklar;
+using WindowsFormUI.Views.Moduls.Users;
 
 namespace WindowsFormUI.Views
 {
@@ -55,12 +57,12 @@ namespace WindowsFormUI.Views
 
         private void BtnWelcomeUser_Click(object sender, EventArgs e)
         {
-
+            Program.Container.Resolve<FrmUser>().Show();
         }
 
         private void BtnWelcomeCompany_Click(object sender, EventArgs e)
         {
-
+            Program.Container.Resolve<FrmCompany>().Show();
         }
 
         private void BtnMinimize_Click(object sender, EventArgs e)

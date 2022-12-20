@@ -14,13 +14,7 @@ namespace Core.Utilities.Security.JWT
 
         public JwtHelper()
         {
-            _tokenOptions = new TokenOptions
-            {
-                Issuer = "www.mvural.com",
-                Audience = "www.mvural.com",
-                AccessTokenExpiration = 1,
-                SecurityKey = "mysecretkey424434424434"
-            };
+            _tokenOptions = new TokenOptions();
         }
 
         public AccessToken CreateToken(User user, List<OperationClaim> operationClaims)

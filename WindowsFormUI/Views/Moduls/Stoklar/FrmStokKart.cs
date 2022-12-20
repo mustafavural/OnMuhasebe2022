@@ -15,21 +15,21 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
     {
         private readonly IStokService _stokService;
         private readonly IStokHareketService _stokHareketService;
+        private readonly IStokCategoryService _stokCategoryService;
         private Stok _secilenStok = null;
 
-        public FrmStokKart(IStokService stokService, IStokHareketService stokHareketService)
+        public FrmStokKart(IStokService stokService, IStokHareketService stokHareketService, IStokCategoryService stokCategoryService)
         {
             InitializeComponent();
             _stokService = stokService;
             _stokHareketService = stokHareketService;
+            _stokCategoryService = stokCategoryService;
         }
 
         private void FrmStokKart_Load(object sender, EventArgs e)
         {
             this.ClearScreen();
         }
-
-        #region Events
 
         private void TxtStokKod_Leave(object sender, EventArgs e)
         {
@@ -86,9 +86,8 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
                         StokId = _secilenStok.Id,
                         StokCategoryId = StaticPrimitives.SecilenStokCategoryId
                     });
-
+                    Update_dgvGrupBilgiler();
                     uscStokEkleSilButon.LblStatus_Text = result.Message;
-                    dgvGrupView.DataSource = _secilenStok.StokCategoryler.ToList();
                     btnGrupEkle.Focus();
                 }
             }
@@ -109,7 +108,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
 
                 btnGrupSil.Enabled = false;
                 StaticPrimitives.SecilenStokCategoryId = 0;
-                dgvGrupView.DataSource = _secilenStok.StokCategoryler;
+                Update_dgvGrupBilgiler();
             }
             catch (Exception err)
             {
@@ -168,16 +167,21 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
                 int secilenStokId = (int)dgvStokListe.Rows[e.RowIndex].Cells["colId"].Value;
                 _secilenStok = _stokService.GetById(secilenStokId).Data;
                 WriteToScreen();
+                btnGrupSil.Enabled = false;
             }
         }
 
-        private void DgvGrupView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvGrupBilgiler_DoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            StaticPrimitives.SecilenStokCategoryId = (int)dgvGrupView.Rows[e.RowIndex].Cells["colGrupId"].Value;
-            btnGrupSil.Enabled = true;
+            if (e.RowIndex > -1)
+            {
+                int secilenCategoryId = (int)dgvGrupBilgiler.Rows[e.RowIndex].Cells["colCategoryId"].Value;
+                StaticPrimitives.SecilenStokCategoryId = _stokCategoryService.GetById(secilenCategoryId).Data.Id;
+                btnGrupSil.Enabled = true;
+            }
         }
 
-        private void DgvGrupView_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvGrupBilgiler_Click(object sender, DataGridViewCellEventArgs e)
         {
             btnGrupSil.Enabled = false;
         }
@@ -189,9 +193,19 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             else
                 e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ',';
         }
-        #endregion
 
         #region PrivateMethods
+
+        private void Update_dgvGrupBilgiler()
+        {
+            dgvGrupBilgiler.DataSource = new List<StokCategory>();
+            dgvGrupBilgiler.DataSource = _stokCategoryService.GetListByStokId(_secilenStok?.Id ?? 0).Data.Select(s => new
+            {
+                s.Id,
+                s.Ad
+            }).ToList();
+        }
+
         private Stok ReadStokFromForm() => new()
         {
             Kod = txtStokKod.Text,
@@ -209,7 +223,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             txtStokKDV.Text = _secilenStok.Kdv.ToString();
             txtStokBirim.Text = _secilenStok.Birim;
 
-            dgvGrupView.DataSource = _secilenStok.StokCategoryler.ToList();
+            Update_dgvGrupBilgiler();
 
             btnGrupEkle.Enabled = true;
             btnGrupSil.Enabled = true;
@@ -218,8 +232,6 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             uscStokEkleSilButon.BtnSave_Enable = true;
             uscStokEkleSilButon.BtnSave_Text = "Güncelle";
             uscStokEkleSilButon.LblStatus_Text = "";
-
-
 
             if (!tabFrmStok.TabPages.Contains(tabStokHareket))
             {
@@ -254,7 +266,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
                 txtStokKDV.Text = "";
                 txtStokBirim.Text = "";
 
-                dgvGrupView.DataSource = new List<StokCategory>();
+                Update_dgvGrupBilgiler();
 
                 btnGrupEkle.Enabled = false;
                 btnGrupSil.Enabled = false;
@@ -271,9 +283,9 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
                     tabFrmStok.TabPages.Remove(tabStokHareket);
                 }
             }
-            catch (UnauthorizedAccessException autherr)
+            catch (UnauthorizedAccessException err)
             {
-                MessageHelper.ErrorMessageBuilder(autherr);
+                MessageHelper.ErrorMessageBuilder(err);
                 this.BeginInvoke(new MethodInvoker(Close));
             }
             catch (Exception err)

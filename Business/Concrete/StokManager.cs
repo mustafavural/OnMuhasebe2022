@@ -51,8 +51,6 @@ namespace Business.Concrete
         }
         #endregion
 
-        [SecuredOperation("List,Admin")]
-        [LogAspect(typeof(DatabaseLogger))]
         private Stok Get(Expression<Func<Stok, bool>> filter)
         {
             var result = _stokDal.Get(filter);
@@ -61,9 +59,6 @@ namespace Business.Concrete
             return result;
         }
 
-        [SecuredOperation("List,Admin")]
-        [CacheAspect(duration: 1)]
-        [LogAspect(typeof(DatabaseLogger))]
         private List<Stok> GetAll(Expression<Func<Stok, bool>>? filter = null)
         {
             var result = _stokDal.GetList(filter);
@@ -90,10 +85,7 @@ namespace Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<Stok>> GetListByCategoryId(int categoryId)
         {
-            //var result = _stokDal.GetListByCategoryId(categoryId);
-            //result?.ForEach(s => s.StokCategoryler = _stokDal.GetStokCategoryler(s.Id));
-            //return new SuccessDataResult<List<Stok>>(result);
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Stok>>(_stokDal.GetListByCategoryId(categoryId));
         }
 
         [SecuredOperation("List,Admin")]
@@ -113,6 +105,7 @@ namespace Business.Concrete
         }
 
         [CacheRemoveAspect("IStokService.Get")]
+        [CacheRemoveAspect("IStokCategoryService.Get")]
         [LogAspect(typeof(DatabaseLogger))]
         public IResult AddCategoryToStok(StokGrup stokGrup)
         {
@@ -126,6 +119,7 @@ namespace Business.Concrete
         }
 
         [CacheRemoveAspect("IStokService.Get")]
+        [CacheRemoveAspect("IStokCategoryService.Get")]
         [LogAspect(typeof(DatabaseLogger))]
         public IResult DeleteCategoryFromStok(StokGrup grup)
         {

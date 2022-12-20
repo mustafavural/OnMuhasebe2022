@@ -2,9 +2,9 @@
 {
     public class TokenOptions
     {
-        public string Audience { get; set; }
-        public string Issuer { get; set; }
-        public int AccessTokenExpiration { get; set; }
-        public string SecurityKey { get; set; }
+        public string Audience => "www.mvural.com";
+        public string Issuer => "www.mvural.com";
+        public int AccessTokenExpiration => 5;
+        public string SecurityKey => "mysecretkey424434424434";
     }
 }

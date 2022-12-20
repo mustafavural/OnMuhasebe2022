@@ -65,6 +65,7 @@
             this.cmbSirketAd.Name = "cmbSirketAd";
             this.cmbSirketAd.Size = new System.Drawing.Size(194, 25);
             this.cmbSirketAd.TabIndex = 2;
+            this.cmbSirketAd.SelectedIndexChanged += new System.EventHandler(this.CmbSirketAd_SelectedIndexChanged);
             // 
             // btnVazgec
             // 
@@ -127,8 +128,10 @@
             // 
             // FrmLogin
             // 
+            this.AcceptButton = this.btnGiris;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnVazgec;
             this.ClientSize = new System.Drawing.Size(299, 145);
             this.ControlBox = false;
             this.Controls.Add(this.btnGiris);

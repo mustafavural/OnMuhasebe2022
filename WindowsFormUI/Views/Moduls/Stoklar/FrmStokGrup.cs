@@ -25,15 +25,16 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.InitializeComponent();
             _stokCategoryService = stokCategoryService;
             SecimIcin = false;
-            if (SecimIcin)
-            {
-                uscGruplar.Visible = false;
-                grpEkleGuncelle.Height = 55;
-            }
         }
 
         private void FrmStokGrup_Load(object sender, EventArgs e)
         {
+            if (SecimIcin)
+            {
+                uscGruplar.Visible = false;
+                lblStatusBar.Visible = false;
+                grpEkleGuncelle.Height = 55;
+            }
             this.ClearScreen();
         }
 
@@ -73,6 +74,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
                 lblStatusBar.Text = "";
             }
         }
+
         #region USCButtons
         private void UscGruplar_GrupEkleGuncelle(object sender, EventArgs e)
         {

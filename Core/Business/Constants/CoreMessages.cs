@@ -1,4 +1,6 @@
-﻿namespace Core.Business.Constants
+﻿using System.Runtime.Serialization;
+
+namespace Core.Business.Constants
 {
     public static class CoreMessages
     {
@@ -11,6 +13,8 @@
             public static string UserRegistered => "Kullanıcı başarıyla kaydedildi.";
             public static string AccessTokenCreated => "AccessToken başarıyla oluşturuldu.";
             public static string AuthorizationDenied => "Yetkiniz yok.";
+            public static string TokenIsTooOld => "Token'ın süresi dolmuş.";
+            public static string UserHasNoClaims => "Kullanıcının yetkileri bulunamadı.";
         }
     }
 }

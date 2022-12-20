@@ -9,9 +9,11 @@ using WindowsFormUI.Views;
 using WindowsFormUI.Views.Moduls.Bankalar;
 using WindowsFormUI.Views.Moduls.Cariler;
 using WindowsFormUI.Views.Moduls.CekSenetler;
+using WindowsFormUI.Views.Moduls.Companies;
 using WindowsFormUI.Views.Moduls.Faturalar;
 using WindowsFormUI.Views.Moduls.Kasalar;
 using WindowsFormUI.Views.Moduls.Stoklar;
+using WindowsFormUI.Views.Moduls.Users;
 
 namespace WindowsFormUI
 {
@@ -67,6 +69,8 @@ namespace WindowsFormUI
             builder.RegisterType<FrmBankaKart>().AsSelf();
             builder.RegisterType<FrmBankaKayit>().AsSelf();
             builder.RegisterType<FrmBankaHareketListe>().AsSelf();
+            builder.RegisterType<FrmUser>().AsSelf();
+            builder.RegisterType<FrmCompany>().AsSelf();
 
             return builder.Build();
         }

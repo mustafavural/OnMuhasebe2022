@@ -11,5 +11,7 @@ namespace Business.Abstract
         IResult Add(StokCategory entity);
         IResult Delete(StokCategory entity);
         IResult Update(StokCategory entity);
+        IDataResult<List<StokCategory>> GetListByStokId(int stokId);
+        IDataResult<StokCategory> GetByAd(string categoryAd);
     }
 }

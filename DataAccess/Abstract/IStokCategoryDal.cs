@@ -5,6 +5,7 @@ namespace DataAccess.Abstract
 {
     public interface IStokCategoryDal : IEntityRepository<StokCategory>
     {
-
+        List<StokGrup>? GetGrupList(int ıd);
+        List<StokCategory> GetListByStokId(int stokId);
     }
 }

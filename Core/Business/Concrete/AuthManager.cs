@@ -1,5 +1,8 @@
-﻿using Core.Business.Abstract;
+﻿using Core.Aspects.Autofac.Security;
+using Core.Aspects.Autofac.Validation;
+using Core.Business.Abstract;
 using Core.Business.Constants;
+using Core.Business.ValidationRules.FluentValidation;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Core.Utilities.Results;
@@ -19,6 +22,7 @@ namespace Core.Business.Concrete
             _tokenHelper = tokenHelper;
         }
 
+        [ValidationAspect(typeof(UserLoginValidator), Priority = 1)]
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
@@ -42,10 +46,12 @@ namespace Core.Business.Concrete
             return new SuccessResult();
         }
 
-        public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
+        [SecuredOperation("Admin")]
+        [ValidationAspect(typeof(UserRegisterValidator), Priority = 1)]
+        public IDataResult<User> Register(UserForRegisterDto userForRegisterDto)
         {
             byte[] passwordHash, passwordSalt;
-            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            HashingHelper.CreatePasswordHash(userForRegisterDto.Password, out passwordHash, out passwordSalt);
             User _user = new User
             {
                 Email = userForRegisterDto.Email,

@@ -73,9 +73,9 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
             this.uscGruplar.BtnSave_Text = "Kaydet";
             this.uscGruplar.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.uscGruplar.LblStatus_Text = "";
-            this.uscGruplar.Location = new System.Drawing.Point(3, 86);
+            this.uscGruplar.Location = new System.Drawing.Point(3, 78);
             this.uscGruplar.Name = "uscGruplar";
-            this.uscGruplar.Size = new System.Drawing.Size(307, 61);
+            this.uscGruplar.Size = new System.Drawing.Size(307, 69);
             this.uscGruplar.TabIndex = 4;
             this.uscGruplar.ClickClear += new System.EventHandler(this.UscGruplar_ClickClear);
             this.uscGruplar.ClickSave += new System.EventHandler(this.UscGruplar_GrupEkleGuncelle);
