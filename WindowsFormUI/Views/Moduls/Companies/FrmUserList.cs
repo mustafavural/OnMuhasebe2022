@@ -1,13 +1,8 @@
 ﻿using Core.Business.Abstract;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormUI.Constants;
 
 namespace WindowsFormUI.Views.Moduls.Companies
 {
@@ -22,7 +17,13 @@ namespace WindowsFormUI.Views.Moduls.Companies
 
         private void FrmUserList_Load(object sender, EventArgs e)
         {
-            dgvUsers.DataSource = _userService.GetList();
+            dgvUsers.DataSource = _userService.GetList().Select(s => new
+            {
+                s.Id,
+                s.FirstName,
+                s.LastName,
+                s.Email
+            }).ToList();
         }
 
         private void DgvUsers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -30,6 +31,8 @@ namespace WindowsFormUI.Views.Moduls.Companies
             if (e.RowIndex > 0)
             {
                 var secilenUser = _userService.GetByMail(dgvUsers.Rows[e.RowIndex].Cells["colEmail"].Value.ToString());
+                StaticPrimitives.SecilenUserId = secilenUser.Id;
+                this.Close();
             }
         }
     }

@@ -3,6 +3,7 @@ using Core.Business.Abstract;
 using Core.Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using WindowsFormUI.Constants;
 using WindowsFormUI.Helpers;
@@ -61,6 +62,13 @@ namespace WindowsFormUI.Views.Moduls.Companies
                 txtCompanyName.Enabled = false;
                 txtCompanyYear.Enabled = false;
                 grpUsers.Enabled = true;
+                dgvUsers.DataSource = _userService.GetListByCompanyId(result.Data.Id).Data.Select(s => new
+                {
+                    s.Id,
+                    s.Email,
+                    s.FirstName,
+                    s.LastName
+                }).ToList();
             }
         }
 
@@ -96,7 +104,8 @@ namespace WindowsFormUI.Views.Moduls.Companies
             frm.ShowDialog();
             if (StaticPrimitives.SecilenUserId > 0)
             {
-                //_companyService.AddUserToCompany(_userService.GetById(StaticPrimitives.SecilenUserId));
+                _companyService.AddUserToCompany(new UserCompany { UserId = StaticPrimitives.SecilenUserId, CompanyId = _secilenCompany.Id });
+                StaticPrimitives.SecilenUserId = 0;
             }
         }
 
@@ -104,7 +113,7 @@ namespace WindowsFormUI.Views.Moduls.Companies
         {
             if (_secilenUser != null)
             {
-                //_companyService.DeleteUserFromCompany(_secilenUser);
+                _companyService.DeleteUserFromCompany(new UserCompany { UserId = _secilenUser.Id, CompanyId = _secilenCompany.Id });
                 _secilenUser = null;
                 btnDeleteUser.Enabled = false;
             }
@@ -120,7 +129,7 @@ namespace WindowsFormUI.Views.Moduls.Companies
             if (e.RowIndex > 0)
             {
                 var secilenUserEmail = dgvUsers.Rows[e.RowIndex].Cells["colEmail"].Value.ToString();
-                _secilenUser = _userService.GetByMail(secilenUserEmail);
+                _secilenUser = _userService.GetByMail(secilenUserEmail).Data;
                 btnDeleteUser.Enabled = true;
             }
         }

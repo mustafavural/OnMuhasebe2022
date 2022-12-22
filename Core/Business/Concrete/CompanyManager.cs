@@ -1,6 +1,8 @@
-﻿using Core.Aspects.Autofac.Security;
+﻿using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Security;
 using Core.Business.Abstract;
 using Core.Business.Constants;
+using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.DataAccess.Abstract;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
@@ -18,71 +20,86 @@ namespace Core.Business.Concrete
         }
 
         [SecuredOperation("Admin")]
-        public IResult Add(Company company)
-        {
-            _companyDal.Add(company);
-            return new SuccessResult(CoreMessages.Company.CompanyAdded);
-        }
-
-        [SecuredOperation("Admin")]
-        public IResult Delete(Company company)
-        {
-            _companyDal.Delete(company);
-            return new SuccessResult(CoreMessages.Company.CompanyDeleted);
-        }
-
-        [SecuredOperation("Admin")]
-        public IResult Update(Company company)
-        {
-            _companyDal.Update(company);
-            return new SuccessResult(CoreMessages.Company.CompanyModified);
-        }
-
-        [SecuredOperation("Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Company> GetById(int id)
         {
             return new SuccessDataResult<Company>(_companyDal.Get(s => s.Id == id));
         }
 
         [SecuredOperation("Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Company> GetByName(string name)
         {
             return new SuccessDataResult<Company>(_companyDal.Get(s => s.Name == name));
         }
 
         [SecuredOperation("Admin")]
-        public IDataResult<List<Company>> GetList(Expression<Func<Company, bool>>? filter = null)
-        {
-            return new SuccessDataResult<List<Company>>(_companyDal.GetList(filter));
-        }
-
-        [SecuredOperation("Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<Company>> GetListByUserId(int userId)
         {
             return new SuccessDataResult<List<Company>>(_companyDal.GetListByUserId(userId));
         }
 
         [SecuredOperation("Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
+        public IDataResult<List<Company>> GetList(Expression<Func<Company, bool>>? filter = null)
+        {
+            return new SuccessDataResult<List<Company>>(_companyDal.GetList(filter));
+        }
+
+        [SecuredOperation("Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<User>> GetUsers(Company company)
         {
             return new SuccessDataResult<List<User>>(_companyDal.GetUsers(company));
         }
 
         [SecuredOperation("Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
+        public IResult AddUserToCompany(UserCompany userCompany)
+        {
+            _companyDal.AddUserToCompany(userCompany);
+            return new SuccessResult(CoreMessages.CompanyMessages.UserAddedToCompany);
+        }
+
+        [SecuredOperation("Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
+        public IResult DeleteUserFromCompany(UserCompany userCompany)
+        {
+            _companyDal.DeleteUserFromCompany(userCompany);
+            return new SuccessResult(CoreMessages.CompanyMessages.UserDeletedFromCompany);
+        }
+
+        [SecuredOperation("Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IResult YearEndTransfer(Company sourceCompany, Company targetNewCompany)
         {
             _companyDal.YearEndTransfer(sourceCompany, targetNewCompany);
-            return new SuccessResult(CoreMessages.Company.YearEndTransferCompletedSuccessfully);
+            return new SuccessResult(CoreMessages.CompanyMessages.YearEndTransferCompletedSuccessfully);
         }
 
-        public void AddUserToCompany(UserCompany userCompany)
+        [SecuredOperation("Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
+        public IResult Add(Company company)
         {
-            _companyDal.AddUserToCompany(userCompany);
+            _companyDal.Add(company);
+            return new SuccessResult(CoreMessages.CompanyMessages.CompanyAdded);
         }
 
-        public void DeleteUserFromCompany(UserCompany userCompany)
+        [SecuredOperation("Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
+        public IResult Delete(Company company)
         {
-            _companyDal.DeleteUserFromCompany(userCompany);
+            _companyDal.Delete(company);
+            return new SuccessResult(CoreMessages.CompanyMessages.CompanyDeleted);
+        }
+
+        [SecuredOperation("Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
+        public IResult Update(Company company)
+        {
+            _companyDal.Update(company);
+            return new SuccessResult(CoreMessages.CompanyMessages.CompanyModified);
         }
     }
 }

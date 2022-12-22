@@ -35,10 +35,10 @@ namespace Core.Aspects.Autofac.Security
                     Thread.CurrentPrincipal = new GenericPrincipal(user.Identity, roleClaims.ToArray());
                 }
                 else
-                    throw new UnauthorizedAccessException(CoreMessages.Authorization.UserHasNoClaims);
+                    throw new UnauthorizedAccessException(CoreMessages.AuthorizationMessages.UserHasNoClaims);
             }
             else
-                throw new TimeoutException(CoreMessages.Authorization.TokenIsTooOld);
+                throw new TimeoutException(CoreMessages.AuthorizationMessages.TokenIsTooOld);
 
             IPrincipal principal = Thread.CurrentPrincipal;
             foreach (var role in _roles)
@@ -48,7 +48,7 @@ namespace Core.Aspects.Autofac.Security
                     return;
                 }
             }
-            throw new UnauthorizedAccessException(CoreMessages.Authorization.AuthorizationDenied);
+            throw new UnauthorizedAccessException(CoreMessages.AuthorizationMessages.AuthorizationDenied);
         }
     }
 }

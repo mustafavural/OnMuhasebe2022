@@ -8,14 +8,14 @@ namespace Core.Business.Abstract
     {
         IDataResult<Company> GetById(int id);
         IDataResult<Company> GetByName(string name);
-        IDataResult<List<User>> GetUsers(Company company);
         IDataResult<List<Company>> GetListByUserId(int userId);
         IDataResult<List<Company>> GetList(Expression<Func<Company, bool>>? filter = null);
+        IDataResult<List<User>> GetUsers(Company company);
+        IResult AddUserToCompany(UserCompany userCompany);
+        IResult DeleteUserFromCompany(UserCompany userCompany);
+        IResult YearEndTransfer(Company sourceCompany, Company targetNewCompany);
         IResult Add(Company company);
         IResult Delete(Company company);
         IResult Update(Company company);
-        IResult YearEndTransfer(Company sourceCompany, Company targetNewCompany);
-        void DeleteUserFromCompany(UserCompany userCompany);
-        void AddUserToCompany(UserCompany userCompany);
     }
 }

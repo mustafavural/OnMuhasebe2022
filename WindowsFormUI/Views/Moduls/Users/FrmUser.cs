@@ -74,7 +74,7 @@ namespace WindowsFormUI.Views.Moduls.Users
         {
             if (txtUserEmail.Text.Length > 3)
             {
-                _secilenUser = _userService.GetByMail(txtUserEmail.Text);
+                _secilenUser = _userService.GetByMail(txtUserEmail.Text).Data;
                 if (_secilenUser != null)
                     WriteToScreenSelectedUser();
                 txtUserEmail.Enabled = false;
@@ -92,7 +92,7 @@ namespace WindowsFormUI.Views.Moduls.Users
 
             grpClaims.Enabled = true;
 
-            dgvClaims.DataSource = _userService.GetClaims(_secilenUser).ToList();
+            dgvClaims.DataSource = _userService.GetClaims(_secilenUser).Data;
         }
 
         private void TxtUserFirstName_Leave()
@@ -179,7 +179,7 @@ namespace WindowsFormUI.Views.Moduls.Users
                         UserId = _secilenUser.Id,
                         OperationClaimId = StaticPrimitives.SecilenClaimId
                     });
-                    dgvClaims.DataSource = _userService.GetClaims(_secilenUser).ToList();
+                    dgvClaims.DataSource = _userService.GetClaims(_secilenUser).Data;
                     btnGrupEkle.Focus();
                 }
             }
@@ -207,10 +207,10 @@ namespace WindowsFormUI.Views.Moduls.Users
         {
             try
             {
-                var UserOperationClaim = _userService.GetUserOperationClaim(_secilenUser.Id, _secilenClaimId);
+                var UserOperationClaim = _userService.GetUserOperationClaim(_secilenUser.Id, _secilenClaimId).Data;
                 var result = _userService.DeleteClaimFromUser(UserOperationClaim);
 
-                dgvClaims.DataSource = _userService.GetClaims(_secilenUser).ToList();
+                dgvClaims.DataSource = _userService.GetClaims(_secilenUser).Data;
                 btnGrupSil.Enabled = false;
                 _secilenClaimId = 0;
                 btnDeleteClaim.Enabled = false;

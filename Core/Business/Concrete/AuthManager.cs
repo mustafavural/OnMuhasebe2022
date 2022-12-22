@@ -25,23 +25,23 @@ namespace Core.Business.Concrete
         [ValidationAspect(typeof(UserLoginValidator), Priority = 1)]
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
-            var userToCheck = _userService.GetByMail(userForLoginDto.Email);
+            var userToCheck = _userService.GetByMail(userForLoginDto.Email).Data;
             if (userToCheck == null)
             {
-                return new ErrorDataResult<User>(CoreMessages.Authorization.UserNotFound);
+                return new ErrorDataResult<User>(CoreMessages.AuthorizationMessages.UserNotFound);
             }
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
-                return new ErrorDataResult<User>(CoreMessages.Authorization.PasswordError);
+                return new ErrorDataResult<User>(CoreMessages.AuthorizationMessages.PasswordError);
             }
-            return new SuccessDataResult<User>(userToCheck, CoreMessages.Authorization.SuccessfulLogin);
+            return new SuccessDataResult<User>(userToCheck, CoreMessages.AuthorizationMessages.SuccessfulLogin);
         }
 
         public IResult UserExists(string email)
         {
             if (_userService.GetByMail(email) != null)
             {
-                return new ErrorResult(CoreMessages.Authorization.UserAlreadyExists);
+                return new ErrorResult(CoreMessages.AuthorizationMessages.UserAlreadyExists);
             }
             return new SuccessResult();
         }
@@ -62,14 +62,14 @@ namespace Core.Business.Concrete
                 Status = true
             };
             _userService.Add(_user);
-            return new SuccessDataResult<User>(_user, CoreMessages.Authorization.UserRegistered);
+            return new SuccessDataResult<User>(_user, CoreMessages.AuthorizationMessages.UserRegistered);
         }
 
         public IDataResult<AccessToken> CreateAccessToken(User user)
         {
-            var claims = _userService.GetClaims(user);
+            var claims = _userService.GetClaims(user).Data;
             var accessToken = _tokenHelper.CreateToken(user, claims);
-            return new SuccessDataResult<AccessToken>(accessToken, CoreMessages.Authorization.AccessTokenCreated);
+            return new SuccessDataResult<AccessToken>(accessToken, CoreMessages.AuthorizationMessages.AccessTokenCreated);
         }
     }
 }

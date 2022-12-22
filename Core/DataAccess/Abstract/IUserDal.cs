@@ -4,14 +4,12 @@ namespace Core.DataAccess.Abstract
 {
     public interface IUserDal : IEntityRepository<User>
     {
+        List<User> GetListByCompanyId(int companyId);
         List<OperationClaim> GetClaims(User user);
-        List<OperationClaim> GetClaimList();
-        void AddClaim(OperationClaim secilenClaim);
-        void DeleteClaim(OperationClaim secilenClaim);
-        void AddClaimToUser(UserOperationClaim userOperationClaim);
-        void DeleteClaimFromUser(UserOperationClaim userOperationClaim);
-        UserOperationClaim GetUserOperationClaim(int userId, int operationClaimId);
-        void UpdateClaim(OperationClaim secilenClaim);
         UserCompany GetUserCompany(int userId, int companyId);
+        UserOperationClaim GetUserOperationClaim(int userId, int operationClaimId);
+        void DeleteClaimFromUser(UserOperationClaim userOperationClaim);
+        void AddClaimToUser(UserOperationClaim userOperationClaim);
+        bool IsinUse(int id);
     }
 }
