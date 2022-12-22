@@ -1,6 +1,7 @@
 ﻿using Core.DataAccess.Abstract;
 using Core.DataAccess.Concrete.EntityFramework.Contexts;
 using Core.Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace Core.DataAccess.Concrete.EntityFramework
 {
@@ -27,6 +28,27 @@ namespace Core.DataAccess.Concrete.EntityFramework
                          where groups.UserId == userId
                          select company;
             return result.ToList();
+        }
+
+        public void YearEndTransfer(Company sourceCompany, Company targetNewCompany)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddUserToCompany(UserCompany userCompanyny)
+        {
+            using var context = new MVMasterContext();
+            var addedEntity = context.Entry(userCompanyny);
+            addedEntity.State = EntityState.Added;
+            context.SaveChanges();
+        }
+
+        public void DeleteUserFromCompany(UserCompany userCompanyny)
+        {
+            using var context = new MVMasterContext();
+            var addedEntity = context.Entry(userCompanyny);
+            addedEntity.State = EntityState.Deleted;
+            context.SaveChanges();
         }
     }
 }

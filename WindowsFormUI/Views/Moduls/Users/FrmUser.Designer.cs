@@ -75,7 +75,7 @@
             this.grpUser.Location = new System.Drawing.Point(0, 0);
             this.grpUser.Name = "grpUser";
             this.grpUser.Size = new System.Drawing.Size(362, 383);
-            this.grpUser.TabIndex = 1;
+            this.grpUser.TabIndex = 0;
             this.grpUser.TabStop = false;
             this.grpUser.Text = "Kullanıcı Bilgileri";
             // 
@@ -89,7 +89,7 @@
             this.grpClaims.Location = new System.Drawing.Point(3, 173);
             this.grpClaims.Name = "grpClaims";
             this.grpClaims.Size = new System.Drawing.Size(356, 149);
-            this.grpClaims.TabIndex = 12;
+            this.grpClaims.TabIndex = 10;
             this.grpClaims.TabStop = false;
             this.grpClaims.Text = "Yetki Bilgileri";
             // 
@@ -116,6 +116,8 @@
             this.dgvClaims.Size = new System.Drawing.Size(298, 126);
             this.dgvClaims.TabIndex = 2;
             this.dgvClaims.TabStop = false;
+            this.dgvClaims.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvClaims_CellDoubleClick);
+            this.dgvClaims.Click += new System.EventHandler(this.DgvClaims_Click);
             // 
             // colClaimId
             // 
@@ -129,8 +131,8 @@
             // colClaimName
             // 
             this.colClaimName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colClaimName.DataPropertyName = "Ad";
-            this.colClaimName.HeaderText = "Grup Adı";
+            this.colClaimName.DataPropertyName = "Name";
+            this.colClaimName.HeaderText = "Yetki Adı";
             this.colClaimName.Name = "colClaimName";
             this.colClaimName.ReadOnly = true;
             // 
@@ -143,6 +145,7 @@
             this.btnDeleteClaim.Name = "btnDeleteClaim";
             this.btnDeleteClaim.Size = new System.Drawing.Size(40, 51);
             this.btnDeleteClaim.TabIndex = 1;
+            this.btnDeleteClaim.TabStop = false;
             this.btnDeleteClaim.UseVisualStyleBackColor = true;
             this.btnDeleteClaim.Click += new System.EventHandler(this.BtnDeleteClaim_Click);
             // 
@@ -155,49 +158,50 @@
             this.btnAddClaim.Name = "btnAddClaim";
             this.btnAddClaim.Size = new System.Drawing.Size(40, 55);
             this.btnAddClaim.TabIndex = 0;
+            this.btnAddClaim.TabStop = false;
             this.btnAddClaim.UseVisualStyleBackColor = true;
             this.btnAddClaim.Click += new System.EventHandler(this.BtnAddClaim_Click);
             // 
             // txtPasswordAgain
             // 
-            this.txtPasswordAgain.BackColor = System.Drawing.SystemColors.Control;
+            this.txtPasswordAgain.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtPasswordAgain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPasswordAgain.Location = new System.Drawing.Point(113, 143);
             this.txtPasswordAgain.Name = "txtPasswordAgain";
             this.txtPasswordAgain.PasswordChar = '*';
             this.txtPasswordAgain.Size = new System.Drawing.Size(218, 24);
-            this.txtPasswordAgain.TabIndex = 8;
+            this.txtPasswordAgain.TabIndex = 9;
             this.txtPasswordAgain.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // txtPassword
             // 
-            this.txtPassword.BackColor = System.Drawing.SystemColors.Control;
+            this.txtPassword.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPassword.Location = new System.Drawing.Point(113, 113);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(218, 24);
-            this.txtPassword.TabIndex = 8;
+            this.txtPassword.TabIndex = 7;
             this.txtPassword.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // txtUserEmail
             // 
-            this.txtUserEmail.BackColor = System.Drawing.SystemColors.Control;
+            this.txtUserEmail.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtUserEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUserEmail.Location = new System.Drawing.Point(113, 23);
             this.txtUserEmail.Name = "txtUserEmail";
             this.txtUserEmail.Size = new System.Drawing.Size(218, 24);
-            this.txtUserEmail.TabIndex = 6;
+            this.txtUserEmail.TabIndex = 1;
             this.txtUserEmail.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // txtUserLastName
             // 
-            this.txtUserLastName.BackColor = System.Drawing.SystemColors.Control;
+            this.txtUserLastName.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtUserLastName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUserLastName.Location = new System.Drawing.Point(113, 83);
             this.txtUserLastName.Name = "txtUserLastName";
             this.txtUserLastName.Size = new System.Drawing.Size(218, 24);
-            this.txtUserLastName.TabIndex = 4;
+            this.txtUserLastName.TabIndex = 5;
             this.txtUserLastName.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // lblPasswordAgain
@@ -207,17 +211,17 @@
             this.lblPasswordAgain.Location = new System.Drawing.Point(25, 145);
             this.lblPasswordAgain.Name = "lblPasswordAgain";
             this.lblPasswordAgain.Size = new System.Drawing.Size(82, 16);
-            this.lblPasswordAgain.TabIndex = 7;
+            this.lblPasswordAgain.TabIndex = 8;
             this.lblPasswordAgain.Text = "Şifre Tekrar";
             // 
             // txtUserFirstName
             // 
-            this.txtUserFirstName.BackColor = System.Drawing.SystemColors.Control;
+            this.txtUserFirstName.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtUserFirstName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUserFirstName.Location = new System.Drawing.Point(113, 53);
             this.txtUserFirstName.Name = "txtUserFirstName";
             this.txtUserFirstName.Size = new System.Drawing.Size(218, 24);
-            this.txtUserFirstName.TabIndex = 1;
+            this.txtUserFirstName.TabIndex = 3;
             this.txtUserFirstName.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.LeaveOnlyWithTabKey);
             // 
             // lblPassword
@@ -227,7 +231,7 @@
             this.lblPassword.Location = new System.Drawing.Point(25, 115);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(37, 16);
-            this.lblPassword.TabIndex = 7;
+            this.lblPassword.TabIndex = 6;
             this.lblPassword.Text = "Şifre";
             // 
             // lblUserEmail
@@ -237,7 +241,7 @@
             this.lblUserEmail.Location = new System.Drawing.Point(25, 25);
             this.lblUserEmail.Name = "lblUserEmail";
             this.lblUserEmail.Size = new System.Drawing.Size(37, 16);
-            this.lblUserEmail.TabIndex = 5;
+            this.lblUserEmail.TabIndex = 0;
             this.lblUserEmail.Text = "Email";
             // 
             // lblUserLastName
@@ -247,7 +251,7 @@
             this.lblUserLastName.Location = new System.Drawing.Point(25, 85);
             this.lblUserLastName.Name = "lblUserLastName";
             this.lblUserLastName.Size = new System.Drawing.Size(45, 16);
-            this.lblUserLastName.TabIndex = 3;
+            this.lblUserLastName.TabIndex = 4;
             this.lblUserLastName.Text = "Soyadı";
             // 
             // lblUserName
@@ -257,7 +261,7 @@
             this.lblUserName.Location = new System.Drawing.Point(25, 55);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(26, 16);
-            this.lblUserName.TabIndex = 0;
+            this.lblUserName.TabIndex = 2;
             this.lblUserName.Text = "Adı";
             // 
             // uscAddDeleteUser
@@ -273,6 +277,7 @@
             this.uscAddDeleteUser.Name = "uscAddDeleteUser";
             this.uscAddDeleteUser.Size = new System.Drawing.Size(356, 58);
             this.uscAddDeleteUser.TabIndex = 11;
+            this.uscAddDeleteUser.TabStop = false;
             this.uscAddDeleteUser.ClickClear += new System.EventHandler(this.UscAddDeleteUser_ClickClear);
             this.uscAddDeleteUser.ClickSave += new System.EventHandler(this.UscAddDeleteUser_ClickSave);
             this.uscAddDeleteUser.ClickCancel += new System.EventHandler(this.UscAddDeleteUser_ClickCancel);

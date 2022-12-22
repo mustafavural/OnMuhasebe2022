@@ -70,7 +70,9 @@ namespace WindowsFormUI
             builder.RegisterType<FrmBankaKayit>().AsSelf();
             builder.RegisterType<FrmBankaHareketListe>().AsSelf();
             builder.RegisterType<FrmUser>().AsSelf();
+            builder.RegisterType<FrmClaim>().AsSelf();
             builder.RegisterType<FrmCompany>().AsSelf();
+            builder.RegisterType<FrmUserList>().AsSelf();
 
             return builder.Build();
         }

@@ -9,15 +9,15 @@ namespace Business.ValidationRules.FluentValidation
         {
             RuleFor(s => s.EvrakNo).NotEmpty();
             RuleFor(s => s.EvrakNo).Length(14);
-            RuleFor(s => s.EvrakNo).Must(StartWithOorT).WithMessage("Evrak No 'O' veya 'T' harfleri ile başlamalıdır.");
+            RuleFor(s => s.EvrakNo).Must(StartWithK).WithMessage("Evrak No 'K' harfi ile başlamalıdır.");
             RuleFor(s => s.KasaId).NotEmpty();
             RuleFor(s => s.GirenCikanMiktar).NotEmpty();
             RuleFor(s => s.GirenCikanMiktar).GreaterThan(0).WithMessage("Miktar 0(sıfır) veya negatif olamaz.");
         }
 
-        private bool StartWithOorT(string arg)
+        private bool StartWithK(string arg)
         {
-            return arg.StartsWith('O') || arg.StartsWith('T');
+            return arg.StartsWith('K');
         }
     }
 }

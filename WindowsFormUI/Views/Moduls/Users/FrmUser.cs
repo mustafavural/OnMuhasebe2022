@@ -1,17 +1,14 @@
-﻿using Core.Business.Abstract;
+﻿using Autofac;
+using Core.Business.Abstract;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Core.Extensions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormUI.Constants;
 using WindowsFormUI.Helpers;
 
 namespace WindowsFormUI.Views.Moduls.Users
@@ -20,13 +17,14 @@ namespace WindowsFormUI.Views.Moduls.Users
     {
         private readonly IUserService _userService;
         private readonly IAuthService _authService;
-        private readonly List<User> _users;
+        private User _secilenUser;
+        private int _secilenClaimId;
+
         public FrmUser(IUserService userService, IAuthService authService)
         {
             InitializeComponent();
             _userService = userService;
             _authService = authService;
-            _users = new();
         }
 
         private void FrmUser_Load(object sender, EventArgs e)
@@ -36,17 +34,19 @@ namespace WindowsFormUI.Views.Moduls.Users
 
         private void ClearScreen()
         {
+            txtUserEmail.Text = string.Empty;
             txtUserFirstName.Text = string.Empty;
             txtUserLastName.Text = string.Empty;
-            txtUserEmail.Text = string.Empty;
             txtPassword.Text = string.Empty;
             txtPasswordAgain.Text = string.Empty;
 
-            txtUserFirstName.Enabled = true;
+            txtUserEmail.Enabled = true;
+            txtUserFirstName.Enabled = false;
             txtUserLastName.Enabled = false;
-            txtUserEmail.Enabled = false;
             txtPassword.Enabled = false;
             txtPasswordAgain.Enabled = false;
+
+            grpClaims.Enabled = false;
 
             dgvClaims.DataSource = new List<OperationClaim>();
 
@@ -70,13 +70,37 @@ namespace WindowsFormUI.Views.Moduls.Users
             }
         }
 
+        private void TxtUserEmail_Leave()
+        {
+            if (txtUserEmail.Text.Length > 3)
+            {
+                _secilenUser = _userService.GetByMail(txtUserEmail.Text);
+                if (_secilenUser != null)
+                    WriteToScreenSelectedUser();
+                txtUserEmail.Enabled = false;
+                txtUserFirstName.Enabled = true;
+                uscAddDeleteUser.BtnClear_Visible = true;
+                txtUserFirstName.Focus();
+            }
+        }
+
+        private void WriteToScreenSelectedUser()
+        {
+            txtUserEmail.Text = _secilenUser.Email;
+            txtUserFirstName.Text = _secilenUser.FirstName;
+            txtUserLastName.Text = _secilenUser.LastName;
+
+            grpClaims.Enabled = true;
+
+            dgvClaims.DataSource = _userService.GetClaims(_secilenUser).ToList();
+        }
+
         private void TxtUserFirstName_Leave()
         {
             if (txtUserFirstName.Text.Length > 0)
             {
                 txtUserFirstName.Enabled = false;
                 txtUserLastName.Enabled = true;
-                uscAddDeleteUser.BtnClear_Visible = true;
                 txtUserLastName.Focus();
             }
         }
@@ -86,18 +110,7 @@ namespace WindowsFormUI.Views.Moduls.Users
             if (txtUserLastName.Text.Length > 0)
             {
                 txtUserLastName.Enabled = false;
-                txtUserEmail.Enabled = true;
-                txtUserEmail.Focus();
-            }
-        }
-
-        private void TxtUserEmail_Leave()
-        {
-            if (txtUserEmail.Text.Length > 0)
-            {
-                txtUserEmail.Enabled = false;
                 txtPassword.Enabled = true;
-                txtPasswordAgain.Enabled = true;
                 txtPassword.Focus();
             }
         }
@@ -106,6 +119,7 @@ namespace WindowsFormUI.Views.Moduls.Users
         {
             if (txtPassword.Text.Length > 0)
             {
+                txtPasswordAgain.Enabled = true;
                 txtPasswordAgain.Focus();
             }
         }
@@ -152,12 +166,59 @@ namespace WindowsFormUI.Views.Moduls.Users
 
         private void BtnAddClaim_Click(object sender, EventArgs e)
         {
+            var frm = Program.Container.Resolve<FrmClaim>();
+            frm.SecimIcin = true;
+            frm.ShowDialog();
 
+            try
+            {
+                if (StaticPrimitives.SecilenClaimId > 0)
+                {
+                    var result = _userService.AddClaimToUser(new UserOperationClaim
+                    {
+                        UserId = _secilenUser.Id,
+                        OperationClaimId = StaticPrimitives.SecilenClaimId
+                    });
+                    dgvClaims.DataSource = _userService.GetClaims(_secilenUser).ToList();
+                    btnGrupEkle.Focus();
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        private void DgvClaims_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex>0)
+            {
+                btnDeleteClaim.Enabled = true;
+                _secilenClaimId = (int)dgvClaims.Rows[e.RowIndex].Cells["colClaimId"].Value;
+            }
+        }
+
+        private void DgvClaims_Click(object sender, EventArgs e)
+        {
+            btnDeleteClaim.Enabled = false;
         }
 
         private void BtnDeleteClaim_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var UserOperationClaim = _userService.GetUserOperationClaim(_secilenUser.Id, _secilenClaimId);
+                var result = _userService.DeleteClaimFromUser(UserOperationClaim);
 
+                dgvClaims.DataSource = _userService.GetClaims(_secilenUser).ToList();
+                btnGrupSil.Enabled = false;
+                _secilenClaimId = 0;
+                btnDeleteClaim.Enabled = false;
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
         }
     }
 }

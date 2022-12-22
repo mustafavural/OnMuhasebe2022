@@ -13,5 +13,8 @@
         public static int SecilenMusteriEvrakId { get; set; }
         public static int SecilenBankaId { get; set; }
         public static int SecilenBankaHareketId { get; set; }
+        public static int SecilenClaimId { get; internal set; }
+        public static int SecilenSirketId { get; internal set; }
+        public static int SecilenUserId { get; internal set; }
     }
 }

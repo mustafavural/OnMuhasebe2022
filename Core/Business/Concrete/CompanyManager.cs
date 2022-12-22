@@ -1,7 +1,9 @@
 ﻿using Core.Aspects.Autofac.Security;
 using Core.Business.Abstract;
+using Core.Business.Constants;
 using Core.DataAccess.Abstract;
 using Core.Entities.Concrete;
+using Core.Utilities.Results;
 using System.Linq.Expressions;
 
 namespace Core.Business.Concrete
@@ -16,39 +18,71 @@ namespace Core.Business.Concrete
         }
 
         [SecuredOperation("Admin")]
-        public void Add(Company company)
+        public IResult Add(Company company)
         {
             _companyDal.Add(company);
+            return new SuccessResult(CoreMessages.Company.CompanyAdded);
         }
 
         [SecuredOperation("Admin")]
-        public void Delete(Company company)
+        public IResult Delete(Company company)
         {
             _companyDal.Delete(company);
+            return new SuccessResult(CoreMessages.Company.CompanyDeleted);
         }
 
         [SecuredOperation("Admin")]
-        public Company GetByName(string name)
+        public IResult Update(Company company)
         {
-            return _companyDal.Get(s => s.Name == name);
+            _companyDal.Update(company);
+            return new SuccessResult(CoreMessages.Company.CompanyModified);
         }
 
         [SecuredOperation("Admin")]
-        public List<Company> GetList(Expression<Func<Company, bool>>? filter = null)
+        public IDataResult<Company> GetById(int id)
         {
-            return _companyDal.GetList(filter);
+            return new SuccessDataResult<Company>(_companyDal.Get(s => s.Id == id));
         }
 
         [SecuredOperation("Admin")]
-        public List<Company> GetListByUserId(int userId)
+        public IDataResult<Company> GetByName(string name)
         {
-            return _companyDal.GetListByUserId(userId);
+            return new SuccessDataResult<Company>(_companyDal.Get(s => s.Name == name));
         }
 
         [SecuredOperation("Admin")]
-        public List<User> GetUsers(Company company)
+        public IDataResult<List<Company>> GetList(Expression<Func<Company, bool>>? filter = null)
         {
-            return _companyDal.GetUsers(company);
+            return new SuccessDataResult<List<Company>>(_companyDal.GetList(filter));
+        }
+
+        [SecuredOperation("Admin")]
+        public IDataResult<List<Company>> GetListByUserId(int userId)
+        {
+            return new SuccessDataResult<List<Company>>(_companyDal.GetListByUserId(userId));
+        }
+
+        [SecuredOperation("Admin")]
+        public IDataResult<List<User>> GetUsers(Company company)
+        {
+            return new SuccessDataResult<List<User>>(_companyDal.GetUsers(company));
+        }
+
+        [SecuredOperation("Admin")]
+        public IResult YearEndTransfer(Company sourceCompany, Company targetNewCompany)
+        {
+            _companyDal.YearEndTransfer(sourceCompany, targetNewCompany);
+            return new SuccessResult(CoreMessages.Company.YearEndTransferCompletedSuccessfully);
+        }
+
+        public void AddUserToCompany(UserCompany userCompany)
+        {
+            _companyDal.AddUserToCompany(userCompany);
+        }
+
+        public void DeleteUserFromCompany(UserCompany userCompany)
+        {
+            _companyDal.DeleteUserFromCompany(userCompany);
         }
     }
 }

@@ -41,7 +41,8 @@ namespace WindowsFormUI.Views
                     {
                         UserHelper.AccessToken = _accessToken.Data;
                         cmbSirketAd.Enabled = true;
-                        cmbSirketAd.Items.AddRange(_companyService.GetListByUserId(_user.Data.Id).Select(s => s.Name).ToArray());
+                        cmbSirketAd.Items.Add("<<Şirket Seçiniz>>");
+                        cmbSirketAd.Items.AddRange(_companyService.GetListByUserId(_user.Data.Id).Data.Select(s => s.Name).ToArray());
                     }
                     else
                     {
@@ -108,7 +109,7 @@ namespace WindowsFormUI.Views
         {
             if (cmbSirketAd.SelectedIndex > 0)
             {
-                btnGiris.Enabled = cmbSirketAd.SelectedIndex > 0;
+                btnGiris.Enabled = true;
             }
         }
     }
