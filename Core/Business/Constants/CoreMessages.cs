@@ -43,6 +43,11 @@
             public static string UserAddedToCompany => "Kullanıcı şirkete eklendi.";
             public static string UserDeletedFromCompany => "Kullanıcı şirketten silindi.";
             public static string YearEndTransferCompletedSuccessfully => "Yıl sonu devir işlemi başarıyla gerçekleştirildi.";
+            public static string CompanyAlreadyExist => "Şirket zaten mevcut.";
+            public static string CompanyNotFound => "Şirket bulunamadı.";
+            public static string YearOuOfDate => "Yıl bilgisi güncel değil.";
+            public static string CompanyDatabaseCreatedSuccessfully => " adet şirkete ait veritabanı başarıyla oluşturuldu.";
+            public static string CompanyTableCreatedSuccessfully => " adet tablo başarıyla oluşturuldu.";
         }
     }
 }

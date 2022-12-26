@@ -15,7 +15,6 @@ namespace DataAccess.Configuration
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedNever().UseIdentityColumn();
             builder.Property(x => x.KasaId).HasColumnName(@"KasaId").HasColumnType("int").IsRequired();
-            builder.Property(x => x.CariId).HasColumnName(@"CariId").HasColumnType("int").IsRequired();
             builder.Property(x => x.EvrakNo).HasColumnName(@"EvrakNo").HasColumnType("varchar(14)").IsRequired().IsUnicode(false).HasMaxLength(14);
             builder.Property(x => x.GirenCikanMiktar).HasColumnName(@"GirenCikanMiktar").HasColumnType("money").IsRequired();
             builder.Property(x => x.Tarih).HasColumnName(@"Tarih").HasColumnType("date").IsRequired();
@@ -25,7 +24,6 @@ namespace DataAccess.Configuration
 
             // Foreign keys
             builder.HasOne(a => a.Kasa).WithMany().HasForeignKey(c => c.KasaId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("Kasa_1_M_KasaHareketler");
-            builder.HasOne(x => x.Cari).WithMany().HasForeignKey(x => x.CariId).HasConstraintName("Cari_1_M_KasaHareketler");
             builder.HasOne(a => a.CariHareket).WithOne().HasForeignKey<KasaHareket>(c => c.Id).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("CariHareket_1_1o0_KasaHareket");
         }
     }

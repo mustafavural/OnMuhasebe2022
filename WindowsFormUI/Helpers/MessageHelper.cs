@@ -34,5 +34,10 @@ namespace WindowsFormUI.Helpers
         {
             MessageBox.Show(successMessage, caption, MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
         }
+
+        public static void InformationMessageBuilder(string info, string caption)
+        {
+            MessageBox.Show(info, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

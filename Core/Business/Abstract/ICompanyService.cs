@@ -14,6 +14,7 @@ namespace Core.Business.Abstract
         IResult AddUserToCompany(UserCompany userCompany);
         IResult DeleteUserFromCompany(UserCompany userCompany);
         IResult YearEndTransfer(Company sourceCompany, Company targetNewCompany);
+        IResult InsertSQLQuery(string sql);
         IResult Add(Company company);
         IResult Delete(Company company);
         IResult Update(Company company);

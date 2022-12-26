@@ -7,5 +7,6 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCariHareketDal : EfEntityRepositoryBase<CariHareket, SIRKETLERContext>, ICariHareketDal
     {
+
     }
 }

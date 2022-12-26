@@ -55,6 +55,7 @@
             this.txtKullaniciSifre.PasswordChar = '*';
             this.txtKullaniciSifre.Size = new System.Drawing.Size(194, 24);
             this.txtKullaniciSifre.TabIndex = 1;
+            this.txtKullaniciSifre.Text = "123456";
             // 
             // cmbSirketAd
             // 
@@ -99,6 +100,7 @@
             this.txtKullaniciAd.Name = "txtKullaniciAd";
             this.txtKullaniciAd.Size = new System.Drawing.Size(194, 24);
             this.txtKullaniciAd.TabIndex = 1;
+            this.txtKullaniciAd.Text = "mustafavural88@hotmail.com.tr";
             // 
             // lblSirketAd
             // 

@@ -5,6 +5,5 @@ namespace WindowsFormUI.Views
 {
     public partial class FrmMdiBase : Form
     {
-
     }
 }

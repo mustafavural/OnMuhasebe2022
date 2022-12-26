@@ -35,15 +35,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvKasaHareketler = new System.Windows.Forms.DataGridView();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKasaId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCariId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colKasaAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEvrakNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMiktar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCariAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTarih = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpKasaHareket = new System.Windows.Forms.GroupBox();
             this.dtpKasaTarih = new System.Windows.Forms.DateTimePicker();
             this.txtCariKod = new System.Windows.Forms.TextBox();
@@ -62,6 +53,14 @@
             this.btnKasaBul = new System.Windows.Forms.Button();
             this.txtKasaAd = new System.Windows.Forms.TextBox();
             this.lblKasaAd = new System.Windows.Forms.Label();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colKasaId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colKasaAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEvrakNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMiktar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCariAd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTarih = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAciklama = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKasaHareketler)).BeginInit();
             this.grpKasaHareket.SuspendLayout();
             this.SuspendLayout();
@@ -84,7 +83,6 @@
             this.dgvKasaHareketler.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
             this.colKasaId,
-            this.colCariId,
             this.colKasaAd,
             this.colEvrakNo,
             this.colMiktar,
@@ -103,98 +101,6 @@
             this.dgvKasaHareketler.TabIndex = 1;
             this.dgvKasaHareketler.TabStop = false;
             this.dgvKasaHareketler.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvKasaHareketler_CellContentDoubleClick);
-            // 
-            // colId
-            // 
-            this.colId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colId.DataPropertyName = "Id";
-            this.colId.HeaderText = "Id";
-            this.colId.Name = "colId";
-            this.colId.ReadOnly = true;
-            this.colId.Visible = false;
-            // 
-            // colKasaId
-            // 
-            this.colKasaId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colKasaId.DataPropertyName = "KasaId";
-            this.colKasaId.HeaderText = "Kasa Id";
-            this.colKasaId.Name = "colKasaId";
-            this.colKasaId.ReadOnly = true;
-            this.colKasaId.Visible = false;
-            // 
-            // colCariId
-            // 
-            this.colCariId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colCariId.DataPropertyName = "CariId";
-            this.colCariId.HeaderText = "Cari Id";
-            this.colCariId.Name = "colCariId";
-            this.colCariId.ReadOnly = true;
-            this.colCariId.Visible = false;
-            // 
-            // colKasaAd
-            // 
-            this.colKasaAd.DataPropertyName = "KasaAd";
-            this.colKasaAd.HeaderText = "Kasa Adı";
-            this.colKasaAd.Name = "colKasaAd";
-            this.colKasaAd.ReadOnly = true;
-            this.colKasaAd.Visible = false;
-            // 
-            // colEvrakNo
-            // 
-            this.colEvrakNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colEvrakNo.DataPropertyName = "EvrakNo";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colEvrakNo.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colEvrakNo.HeaderText = "Evrak No";
-            this.colEvrakNo.Name = "colEvrakNo";
-            this.colEvrakNo.ReadOnly = true;
-            this.colEvrakNo.Width = 85;
-            // 
-            // colMiktar
-            // 
-            this.colMiktar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colMiktar.DataPropertyName = "GirenCikanMiktar";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
-            dataGridViewCellStyle3.Format = "#,###.## TL";
-            this.colMiktar.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colMiktar.HeaderText = "Miktar";
-            this.colMiktar.Name = "colMiktar";
-            this.colMiktar.ReadOnly = true;
-            this.colMiktar.Width = 71;
-            // 
-            // colCariAd
-            // 
-            this.colCariAd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colCariAd.DataPropertyName = "Unvan";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colCariAd.DefaultCellStyle = dataGridViewCellStyle4;
-            this.colCariAd.FillWeight = 310F;
-            this.colCariAd.HeaderText = "Cari Adı";
-            this.colCariAd.Name = "colCariAd";
-            this.colCariAd.ReadOnly = true;
-            // 
-            // colTarih
-            // 
-            this.colTarih.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colTarih.DataPropertyName = "Tarih";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            this.colTarih.DefaultCellStyle = dataGridViewCellStyle5;
-            this.colTarih.HeaderText = "Tarih";
-            this.colTarih.Name = "colTarih";
-            this.colTarih.ReadOnly = true;
-            this.colTarih.Width = 63;
-            // 
-            // colAciklama
-            // 
-            this.colAciklama.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colAciklama.DataPropertyName = "Aciklama";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            this.colAciklama.DefaultCellStyle = dataGridViewCellStyle6;
-            this.colAciklama.HeaderText = "Aciklama";
-            this.colAciklama.MinimumWidth = 150;
-            this.colAciklama.Name = "colAciklama";
-            this.colAciklama.ReadOnly = true;
-            this.colAciklama.Width = 150;
             // 
             // grpKasaHareket
             // 
@@ -402,6 +308,91 @@
             this.lblKasaAd.TabIndex = 0;
             this.lblKasaAd.Text = "Kasa Adı";
             // 
+            // colId
+            // 
+            this.colId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colId.DataPropertyName = "Id";
+            this.colId.HeaderText = "Id";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            this.colId.Width = 27;
+            // 
+            // colKasaId
+            // 
+            this.colKasaId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colKasaId.DataPropertyName = "KasaId";
+            this.colKasaId.HeaderText = "Kasa Id";
+            this.colKasaId.Name = "colKasaId";
+            this.colKasaId.ReadOnly = true;
+            this.colKasaId.Visible = false;
+            this.colKasaId.Width = 56;
+            // 
+            // colKasaAd
+            // 
+            this.colKasaAd.DataPropertyName = "KasaAd";
+            this.colKasaAd.HeaderText = "Kasa Adı";
+            this.colKasaAd.Name = "colKasaAd";
+            this.colKasaAd.ReadOnly = true;
+            this.colKasaAd.Visible = false;
+            // 
+            // colEvrakNo
+            // 
+            this.colEvrakNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colEvrakNo.DataPropertyName = "EvrakNo";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colEvrakNo.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colEvrakNo.HeaderText = "Evrak No";
+            this.colEvrakNo.Name = "colEvrakNo";
+            this.colEvrakNo.ReadOnly = true;
+            this.colEvrakNo.Width = 85;
+            // 
+            // colMiktar
+            // 
+            this.colMiktar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colMiktar.DataPropertyName = "GirenCikanMiktar";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopRight;
+            dataGridViewCellStyle3.Format = "#,###.## TL";
+            this.colMiktar.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colMiktar.HeaderText = "Miktar";
+            this.colMiktar.Name = "colMiktar";
+            this.colMiktar.ReadOnly = true;
+            this.colMiktar.Width = 71;
+            // 
+            // colCariAd
+            // 
+            this.colCariAd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colCariAd.DataPropertyName = "Unvan";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colCariAd.DefaultCellStyle = dataGridViewCellStyle4;
+            this.colCariAd.FillWeight = 310F;
+            this.colCariAd.HeaderText = "Cari Adı";
+            this.colCariAd.Name = "colCariAd";
+            this.colCariAd.ReadOnly = true;
+            // 
+            // colTarih
+            // 
+            this.colTarih.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colTarih.DataPropertyName = "Tarih";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            this.colTarih.DefaultCellStyle = dataGridViewCellStyle5;
+            this.colTarih.HeaderText = "Tarih";
+            this.colTarih.Name = "colTarih";
+            this.colTarih.ReadOnly = true;
+            this.colTarih.Width = 63;
+            // 
+            // colAciklama
+            // 
+            this.colAciklama.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colAciklama.DataPropertyName = "Aciklama";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            this.colAciklama.DefaultCellStyle = dataGridViewCellStyle6;
+            this.colAciklama.HeaderText = "Aciklama";
+            this.colAciklama.MinimumWidth = 150;
+            this.colAciklama.Name = "colAciklama";
+            this.colAciklama.ReadOnly = true;
+            this.colAciklama.Width = 150;
+            // 
             // FrmKasaKayit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -444,7 +435,6 @@
         private System.Windows.Forms.Label lblMiktar;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colKasaId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCariId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colKasaAd;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEvrakNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMiktar;

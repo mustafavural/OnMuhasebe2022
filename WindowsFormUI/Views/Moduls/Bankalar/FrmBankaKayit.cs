@@ -95,8 +95,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
                 {
                     s.Id,
                     s.BankaId,
-                    s.CariId,
-                    _cariService.GetById(s.CariId).Data.Unvan,
+                    _cariService.GetById(s.CariHareket.CariId).Data.Unvan,
                     s.EvrakNo,
                     s.GirenCikanMiktar,
                     s.Tarih,
@@ -239,7 +238,7 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
             {
                 string controlName = ((Control)sender).Name.ToFirstLetterUpperCase();
                 controlName += "_Leaved";
-
+                
                 MethodInfo methodInfo = this.GetType().GetMethod(controlName, BindingFlags.NonPublic | BindingFlags.Instance);
                 methodInfo.Invoke(this, null);
             }
@@ -412,7 +411,6 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
         {
             Id = 0,
             BankaId = _secilenHesap.Id,
-            CariId = _secilenCari.Id,
             EvrakNo = txtEvrakNo.Text,
             GirenCikanMiktar = BankaIslemTuru == BankaIslemTurleri.Tahsilat ? _girenCikanMiktar : _girenCikanMiktar *= -1,
             Tarih = dtpBankaTarih.Value,

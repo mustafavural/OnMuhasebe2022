@@ -40,13 +40,13 @@
             this.txtCompanyName = new System.Windows.Forms.TextBox();
             this.grpUsers = new System.Windows.Forms.GroupBox();
             this.dgvUsers = new System.Windows.Forms.DataGridView();
-            this.btnDeleteUser = new System.Windows.Forms.Button();
-            this.btnAddUser = new System.Windows.Forms.Button();
-            this.grpCompany = new System.Windows.Forms.GroupBox();
             this.colCompanyId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFirstName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLastName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEmail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnDeleteUser = new System.Windows.Forms.Button();
+            this.btnAddUser = new System.Windows.Forms.Button();
+            this.grpCompany = new System.Windows.Forms.GroupBox();
             this.grpUsers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             this.grpCompany.SuspendLayout();
@@ -165,9 +165,7 @@
             this.dgvUsers.AllowUserToDeleteRows = false;
             this.dgvUsers.AllowUserToResizeRows = false;
             this.dgvUsers.BackgroundColor = System.Drawing.Color.White;
-            this.dgvUsers.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvUsers.ColumnHeadersVisible = false;
             this.dgvUsers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCompanyId,
             this.colFirstName,
@@ -186,6 +184,42 @@
             this.dgvUsers.TabStop = false;
             this.dgvUsers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvUsers_CellClick);
             this.dgvUsers.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvUsers_CellDoubleClick);
+            // 
+            // colCompanyId
+            // 
+            this.colCompanyId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colCompanyId.DataPropertyName = "Id";
+            this.colCompanyId.HeaderText = "Id";
+            this.colCompanyId.Name = "colCompanyId";
+            this.colCompanyId.ReadOnly = true;
+            this.colCompanyId.Visible = false;
+            // 
+            // colFirstName
+            // 
+            this.colFirstName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colFirstName.DataPropertyName = "FirstName";
+            this.colFirstName.HeaderText = "Adı";
+            this.colFirstName.Name = "colFirstName";
+            this.colFirstName.ReadOnly = true;
+            this.colFirstName.Width = 51;
+            // 
+            // colLastName
+            // 
+            this.colLastName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colLastName.DataPropertyName = "LastName";
+            this.colLastName.HeaderText = "Soyadı";
+            this.colLastName.Name = "colLastName";
+            this.colLastName.ReadOnly = true;
+            this.colLastName.Width = 70;
+            // 
+            // colEmail
+            // 
+            this.colEmail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colEmail.DataPropertyName = "Email";
+            this.colEmail.HeaderText = "E-Mail";
+            this.colEmail.Name = "colEmail";
+            this.colEmail.ReadOnly = true;
+            this.colEmail.Width = 71;
             // 
             // btnDeleteUser
             // 
@@ -231,43 +265,6 @@
             this.grpCompany.TabIndex = 0;
             this.grpCompany.TabStop = false;
             this.grpCompany.Text = "Şirket Bilgileri";
-            // 
-            // colCompanyId
-            // 
-            this.colCompanyId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colCompanyId.DataPropertyName = "Id";
-            this.colCompanyId.HeaderText = "Id";
-            this.colCompanyId.Name = "colCompanyId";
-            this.colCompanyId.ReadOnly = true;
-            this.colCompanyId.Visible = false;
-            this.colCompanyId.Width = 5;
-            // 
-            // colFirstName
-            // 
-            this.colFirstName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colFirstName.DataPropertyName = "FirstName";
-            this.colFirstName.HeaderText = "Adı";
-            this.colFirstName.Name = "colFirstName";
-            this.colFirstName.ReadOnly = true;
-            this.colFirstName.Width = 5;
-            // 
-            // colLastName
-            // 
-            this.colLastName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colLastName.DataPropertyName = "LastName";
-            this.colLastName.HeaderText = "Soyadı";
-            this.colLastName.Name = "colLastName";
-            this.colLastName.ReadOnly = true;
-            this.colLastName.Width = 5;
-            // 
-            // colEmail
-            // 
-            this.colEmail.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colEmail.DataPropertyName = "Email";
-            this.colEmail.HeaderText = "E-Mail";
-            this.colEmail.Name = "colEmail";
-            this.colEmail.ReadOnly = true;
-            this.colEmail.Width = 5;
             // 
             // FrmCompany
             // 

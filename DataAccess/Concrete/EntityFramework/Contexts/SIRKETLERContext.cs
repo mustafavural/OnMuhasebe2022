@@ -6,22 +6,17 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
 {
     public class SIRKETLERContext : DbContext
     {
-        public static string ServerName { get; set; }
-        public static string DatabaseName { get; set; }
-        public static string UserId { get; set; }
-        public static string Password { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            ServerName ??= "(localdb)\\MSSQLLocalDB";
-            DatabaseName ??= "SIRKET";
-            UserId ??= "sa";
-            Password ??= "sapass";
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(connectionString: $"server={ServerName};Database={DatabaseName};User Id={UserId};Password={Password}");
+                optionsBuilder.UseSqlServer(connectionString: $"server={Properties.Statics.ServerName};" +
+                                                              $"Database={Properties.Statics.DatabaseName};" +
+                                                              $"User Id={Properties.Statics.UserId};" +
+                                                              $"Password={Properties.Statics.Password}");
             }
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -60,5 +55,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<Adres> Adresler { get; set; }
         public DbSet<Ilce> Ilceler { get; set; }
         public DbSet<Sehir> Sehirler { get; set; }
+
+
     }
 }

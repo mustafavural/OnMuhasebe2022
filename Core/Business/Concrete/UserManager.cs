@@ -52,11 +52,16 @@ namespace Core.Business.Concrete
             return new SuccessDataResult<User>(_userDal.Get(u => u.Id == id));
         }
 
-        [SecuredOperation("Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<User> GetByMail(string email)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
+        }
+
+        [LogAspect(typeof(DatabaseLogger))]
+        public IDataResult<User> GetByFullName(string fullName)
+        {
+            return new SuccessDataResult<User>(_userDal.Get(u => u.FirstName.ToLower() + " " + u.LastName.ToLower() == fullName.ToLower()));
         }
 
         [SecuredOperation("Admin")]
@@ -73,7 +78,6 @@ namespace Core.Business.Concrete
             return new SuccessDataResult<List<User>>(_userDal.GetList());
         }
 
-        [SecuredOperation("Admin")]
         [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<OperationClaim>> GetClaims(User user)
         {
@@ -162,7 +166,7 @@ namespace Core.Business.Concrete
             return new SuccessResult(CoreMessages.UserMessages.UserAdded);
         }
 
-        [SecuredOperation("Admin")]
+        [SecuredOperation("Admin,user")]
         [LogAspect(typeof(DatabaseLogger))]
         public IResult Delete(User user)
         {

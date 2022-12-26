@@ -22,5 +22,6 @@ namespace Core.Business.Abstract
         IResult Add(User user);
         IResult Delete(User user);
         IResult Update(User user);
+        IDataResult<User> GetByFullName(string fullName);
     }
 }

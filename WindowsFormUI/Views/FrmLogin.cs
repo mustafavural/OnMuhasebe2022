@@ -74,9 +74,9 @@ namespace WindowsFormUI.Views
 
         private void LoginToCompany()
         {
-            if (cmbSirketAd.SelectedIndex > -1)
+            if (cmbSirketAd.SelectedIndex > 0)
             {
-                DataAccess.Concrete.EntityFramework.Contexts.SIRKETLERContext.DatabaseName = cmbSirketAd.Text;
+                DataAccess.Properties.Statics.DatabaseName = cmbSirketAd.Text;
                 this.Hide();
                 Program.Container.Resolve<FrmWelcome>().ShowDialog();
                 this.Close();

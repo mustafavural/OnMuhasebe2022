@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Core.Business.Abstract;
 using Core.Entities.Concrete;
+using DataAccess.Concrete.EntityFramework.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,13 @@ using WindowsFormUI.Helpers;
 
 namespace WindowsFormUI.Views.Moduls.Companies
 {
-    public partial class FrmCompany : FrmMdiBase
+    public partial class FrmCompany : FrmBase
     {
         private readonly ICompanyService _companyService;
         private readonly IUserService _userService;
         private User _secilenUser;
         private Company _secilenCompany;
+        private int _addedCompanyId;
 
         public FrmCompany(IUserService userService, ICompanyService companyService)
         {
@@ -84,6 +86,7 @@ namespace WindowsFormUI.Views.Moduls.Companies
 
         private void UscAddDeleteCompany_ClickSave(object sender, EventArgs e)
         {
+            string tempDb = DataAccess.Properties.Statics.DatabaseName;
             var result = _companyService.Add(new Company
             {
                 Id = 0,
@@ -92,10 +95,27 @@ namespace WindowsFormUI.Views.Moduls.Companies
                 Year = txtCompanyYear.Text,
                 Detail = txtCompanyDetail.Text
             });
-            if (!result.IsSuccess)
+            if (result.IsSuccess)
             {
-                MessageHelper.ErrorMessageBuilder(result.Message, "Hata !");
+                try
+                {
+                    DataAccess.Properties.Statics.DatabaseName = txtCompanyName.Text;
+                    using (var context = new SIRKETLERContext())
+                    {
+                        context.Database.EnsureCreated();
+                    }
+                }
+                catch(Exception err)
+                {
+                    MessageHelper.ErrorMessageBuilder(err);
+                }
+
+                _companyService.InsertSQLQuery(CreateNewDatabase.InsertDatabaseSehirlerSQL);
+                _companyService.InsertSQLQuery(CreateNewDatabase.InsertDatabaseIlcelerSQL);
+                DataAccess.Properties.Statics.DatabaseName = tempDb;
             }
+            else
+                MessageHelper.ErrorMessageBuilder(result.Message, "Hata !");
         }
 
         private void BtnAddUserToCompany_Click(object sender, EventArgs e)
@@ -104,8 +124,13 @@ namespace WindowsFormUI.Views.Moduls.Companies
             frm.ShowDialog();
             if (StaticPrimitives.SecilenUserId > 0)
             {
-                _companyService.AddUserToCompany(new UserCompany { UserId = StaticPrimitives.SecilenUserId, CompanyId = _secilenCompany.Id });
-                StaticPrimitives.SecilenUserId = 0;
+                if (_userService.GetUserCompany(StaticPrimitives.SecilenUserId, _secilenCompany.Id).Data == null)
+                {
+                    _companyService.AddUserToCompany(new UserCompany { UserId = StaticPrimitives.SecilenUserId, CompanyId = _secilenCompany.Id });
+                    StaticPrimitives.SecilenUserId = 0;
+
+                    TxtCompanyName_Leave(sender, e);
+                }
             }
         }
 
@@ -113,9 +138,11 @@ namespace WindowsFormUI.Views.Moduls.Companies
         {
             if (_secilenUser != null)
             {
-                _companyService.DeleteUserFromCompany(new UserCompany { UserId = _secilenUser.Id, CompanyId = _secilenCompany.Id });
+                _companyService.DeleteUserFromCompany(_userService.GetUserCompany(_secilenUser.Id, _secilenCompany.Id).Data);
                 _secilenUser = null;
                 btnDeleteUser.Enabled = false;
+
+                TxtCompanyName_Leave(sender, e);
             }
         }
 
@@ -126,7 +153,7 @@ namespace WindowsFormUI.Views.Moduls.Companies
 
         private void DgvUsers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > 0)
+            if (e.RowIndex > -1)
             {
                 var secilenUserEmail = dgvUsers.Rows[e.RowIndex].Cells["colEmail"].Value.ToString();
                 _secilenUser = _userService.GetByMail(secilenUserEmail).Data;

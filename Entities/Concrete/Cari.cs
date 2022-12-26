@@ -22,7 +22,7 @@ namespace Entities.Concrete
         {
             CariCategoryler = new();
             CariGruplar = new();
-            CariHareketler= new();
+            CariHareketler = new();
         }
     }
 }

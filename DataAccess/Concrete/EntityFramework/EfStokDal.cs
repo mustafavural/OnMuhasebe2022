@@ -2,12 +2,13 @@
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Contexts;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfStokDal : EfEntityRepositoryBase<Stok, SIRKETLERContext>, IStokDal
     {
-        IStokGrupDal _stokGrupDal;
+        private readonly IStokGrupDal _stokGrupDal;
 
         public EfStokDal(IStokGrupDal stokGrupDal)
         {
@@ -43,6 +44,7 @@ namespace DataAccess.Concrete.EntityFramework
                          on categoryler.Id equals gruplar.StokCategoryId
                          where gruplar.StokId == stokId
                          select categoryler;
+
             return result.ToList();
         }
         public List<StokHareket> GetStokHareketler(int stokId)

@@ -30,9 +30,16 @@ namespace Core.DataAccess.Concrete.EntityFramework
             return result.ToList();
         }
 
-        public void YearEndTransfer(Company sourceCompany, Company targetNewCompany)
+        public void YearEndTransfer(Company sourceCompany, Company newCompany)
         {
-            throw new NotImplementedException();
+
+        }
+
+        public int ExecuteSQLQuery(string sql)
+        {
+            using MVMasterContext context = new();
+            int result = context.Database.ExecuteSqlRaw(sql);
+            return result;
         }
 
         public void AddUserToCompany(UserCompany userCompanyny)
@@ -43,11 +50,11 @@ namespace Core.DataAccess.Concrete.EntityFramework
             context.SaveChanges();
         }
 
-        public void DeleteUserFromCompany(UserCompany userCompanyny)
+        public void DeleteUserFromCompany(UserCompany userCompany)
         {
             using var context = new MVMasterContext();
-            var addedEntity = context.Entry(userCompanyny);
-            addedEntity.State = EntityState.Deleted;
+            var entity = context.Entry(userCompany);
+            entity.State = EntityState.Deleted;
             context.SaveChanges();
         }
     }

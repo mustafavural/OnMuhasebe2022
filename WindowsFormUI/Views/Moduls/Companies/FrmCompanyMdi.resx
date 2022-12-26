@@ -57,28 +57,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="colId.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
+  <metadata name="msFaturaMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
-  <metadata name="colKasaId.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colKasaAd.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colEvrakNo.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colMiktar.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colCariAd.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colTarih.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="colAciklama.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAICAAAAAAIADVAwAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAgAAAAIAgGAAAAc3p69AAAAAFz
+        UkdCAK7OHOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAA7DAAAOwwHHb6hkAAADaklEQVRYR8VXS0tb
+        QRQOFLrpqn+hK/ddK8QH6kLUhW/wCWoxGokGn9GCUBHkuhGKCrqQgqIoCLrSheIDkaoIPnChCyOCiOC9
+        CUksudNzDmPUsadDLYkffHDyfXfmm5ubO2fi+B/09va+R8qPiUNLS8uHzs5Ob3d3t4lsb293JWQhEPSx
+        tbXV19HRYc3MzIQvLi7s8/Pz6PT0dLitrc2EhXnjspDm5uZPTU1N37xebyz45uZGPOXZ2Zk9OTkZgmvN
+        xsZGT0FBwTs5/PWora1NqqurG/R4PNbc3FwE7ta+vLwUfr9fLC0t3ff09AS6uroCWKOG3tHRUXR0dDRU
+        X19vwlj3qxZSUVHxuby8/Lvb7Q7A1xs5PT3FOxQnJyc2foY7DKCP1z1cC5r19Nrd3d3o0NBQCHwTfJec
+        +u8oLCx0FhcX/2hoaMDge7gbcXx8jJPZIyMjkcrKSquoqGiwpKQkSQ6JATX0qqurrYmJicje3p6NYzc2
+        NqIDAwMhmPcn+F/k5S+Rl5dnQHBwamrq1/7+vkCura3Z/f39YRhogW/+CyHQMgwjvLm5aeNcKysrUXhk
+        IfD8ubm5X2XsI7Kysszt7W0Rb66urtqQ5Zexj0hLSzPX19dFvLm8vGxD1ssFpKSkGEAzNTVVOJ1OItbp
+        6elETtf5qp6cnOwHvnwED4DnJILBIBHrxcVFIqfrfFWXMTzgvRaWZRGxfpiI03W+qssYHrDdiru7OyLW
+        CwsLRE7X+aouY3jAXi9ub2+JWM/PzxM5XeeruozhAXu5uL6+JmI9OztL5HSdr+oyhofL5RJXV1dErGFj
+        InK6zld1GcMDmoiAbkfEGjockdN1vqrLGB41NTUCuh4R6/HxcSKn63xVlzE8oHsJ7GhIrKEJETld56u6
+        jOFRWlqKPZ2I9fDwMJHTdb6qyxgecIAQBwcHRKyhoxE5XeeruozhkZ+fj/2fiDX0ciKn63xVlzE8cnJy
+        xM7ODhHrvr4+IqfrfFWXMTyys7PF1tYWEWufz0fkdJ2v6jKGR0ZGRqx3Y437N5LTdb6qy5jngDN9AI5e
+        Ao5koqqqSsARLC7EuTEDszCTwuFrMuD9tA8PD2Pva7yJWZiJ2Q74w2GOjY0JOETSrzQRxCzMxGxHWVmZ
+        +adVJoKY7cjMzDSA5hvRoN/B28Hh+A1lEJ55TLuJWQAAAABJRU5ErkJggg==
+</value>
+  </data>
 </root>

@@ -17,7 +17,7 @@ namespace WindowsFormUI.Views.Moduls.Companies
 
         private void FrmUserList_Load(object sender, EventArgs e)
         {
-            dgvUsers.DataSource = _userService.GetList().Select(s => new
+            dgvUsers.DataSource = _userService.GetList().Data.Select(s => new
             {
                 s.Id,
                 s.FirstName,
@@ -28,9 +28,9 @@ namespace WindowsFormUI.Views.Moduls.Companies
 
         private void DgvUsers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > 0)
+            if (e.RowIndex > -1)
             {
-                var secilenUser = _userService.GetByMail(dgvUsers.Rows[e.RowIndex].Cells["colEmail"].Value.ToString());
+                var secilenUser = _userService.GetByMail(dgvUsers.Rows[e.RowIndex].Cells["colEmail"].Value.ToString()).Data;
                 StaticPrimitives.SecilenUserId = secilenUser.Id;
                 this.Close();
             }

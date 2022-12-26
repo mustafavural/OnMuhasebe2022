@@ -65,14 +65,6 @@ namespace Business.Concrete
         [SecuredOperation("List,Admin")]
         [CacheAspect(duration: 1)]
         [LogAspect(typeof(DatabaseLogger))]
-        public IDataResult<List<KasaHareket>> GetListByCariId(int cariId)
-        {
-            return new SuccessDataResult<List<KasaHareket>>(GetAll(k => k.CariId == cariId));
-        }
-
-        [SecuredOperation("List,Admin")]
-        [CacheAspect(duration: 1)]
-        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<KasaHareket>> GetListByKasaId(int kasaId)
         {
             return new SuccessDataResult<List<KasaHareket>>(GetAll(k => k.KasaId == kasaId));
@@ -117,9 +109,10 @@ namespace Business.Concrete
         public IResult Add(KasaHareket hareket)
         {
             string evrakTur = hareket.EvrakNo.StartsWith("T") ? "tahsilat" : "tediye";
+            var cariId = hareket.CariHareket.CariId;
             var cariHareket = new CariHareket
             {
-                CariId = hareket.CariId,
+                CariId = cariId,
                 Tarih = hareket.Tarih,
                 Tutar = evrakTur == "tahsilat" ? hareket.GirenCikanMiktar : hareket.GirenCikanMiktar * -1,
                 Aciklama = $"{hareket.EvrakNo} nolu kasa {evrakTur}."
@@ -154,7 +147,7 @@ namespace Business.Concrete
             var cariHareket = _cariHareketService.GetById(hareket.Id).Data;
             hareket.GirenCikanMiktar = evrakTur == "tahsilat" ? hareket.GirenCikanMiktar : hareket.GirenCikanMiktar * -1;
             _kasaHareketDal.Update(hareket);
-            cariHareket.CariId = hareket.CariId;
+            cariHareket.CariId = hareket.CariHareket.CariId;
             cariHareket.Tarih = hareket.Tarih;
             cariHareket.Tutar = evrakTur == "tahsilat" ? hareket.GirenCikanMiktar : hareket.GirenCikanMiktar * -1;
             cariHareket.Aciklama = $"{hareket.EvrakNo} nolu kasa {evrakTur}.";

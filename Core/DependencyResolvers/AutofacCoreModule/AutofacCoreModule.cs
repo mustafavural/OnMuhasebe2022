@@ -5,6 +5,7 @@ using Core.Business.Abstract;
 using Core.Business.Concrete;
 using Core.DataAccess.Abstract;
 using Core.DataAccess.Concrete.EntityFramework;
+using Core.Entities.Concrete;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Security.JWT;
 
@@ -19,6 +20,8 @@ namespace Core.DependencyResolvers.AutofacCoreModule
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+
+            builder.RegisterType<Company>().AsSelf();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

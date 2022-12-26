@@ -6,6 +6,7 @@ namespace Core.DataAccess.Abstract
     {
         void AddUserToCompany(UserCompany userCompany);
         void DeleteUserFromCompany(UserCompany userCompany);
+        int ExecuteSQLQuery(string sql);
         List<Company> GetListByUserId(int userId);
         List<User> GetUsers(Company company);
         void YearEndTransfer(Company sourceCompany, Company targetNewCompany);

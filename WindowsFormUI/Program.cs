@@ -72,6 +72,8 @@ namespace WindowsFormUI
             builder.RegisterType<FrmUser>().AsSelf();
             builder.RegisterType<FrmClaim>().AsSelf();
             builder.RegisterType<FrmCompany>().AsSelf();
+            builder.RegisterType<FrmCompanyMdi>().AsSelf();
+            builder.RegisterType<FrmCompanyTransfer>().AsSelf();
             builder.RegisterType<FrmUserList>().AsSelf();
 
             return builder.Build();

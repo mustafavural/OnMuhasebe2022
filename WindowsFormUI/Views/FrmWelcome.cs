@@ -1,6 +1,7 @@
 ﻿using Autofac;
+using Core.Business.Abstract;
+using DataAccess.Concrete.EntityFramework.Contexts;
 using System;
-using System.CodeDom;
 using System.Windows.Forms;
 using WindowsFormUI.Views.Moduls.Bankalar;
 using WindowsFormUI.Views.Moduls.Cariler;
@@ -15,9 +16,19 @@ namespace WindowsFormUI.Views
 {
     public partial class FrmWelcome : FrmBase
     {
-        public FrmWelcome()
+        private readonly ICompanyService _companyService;
+        public FrmWelcome(ICompanyService companyService)
         {
             InitializeComponent();
+            _companyService = companyService;
+            using (var context = new SIRKETLERContext())
+            {
+                if(context.Database.EnsureCreated())
+                {
+                    _companyService.InsertSQLQuery(CreateNewDatabase.InsertDatabaseSehirlerSQL);
+                    _companyService.InsertSQLQuery(CreateNewDatabase.InsertDatabaseIlcelerSQL);
+                }
+            }
         }
 
         private void BtnExit_Click(object sender, EventArgs e)
@@ -62,7 +73,7 @@ namespace WindowsFormUI.Views
 
         private void BtnWelcomeCompany_Click(object sender, EventArgs e)
         {
-            Program.Container.Resolve<FrmCompany>().Show();
+            Program.Container.Resolve<FrmCompanyMdi>().Show();
         }
 
         private void BtnMinimize_Click(object sender, EventArgs e)

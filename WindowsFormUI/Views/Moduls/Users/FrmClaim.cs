@@ -41,7 +41,7 @@ namespace WindowsFormUI.Views.Moduls.Users
             try
             {
                 _secilenClaim = null;
-                _userClaims = _userService.GetClaimList();
+                _userClaims = _userService.GetClaimList().Data;
                 txtClaimName.Text = "";
                 uscClaims.BtnDelete_Enable = false;
                 uscClaims.BtnSave_Enable = false;

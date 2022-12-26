@@ -5,8 +5,11 @@ using Core.Business.Constants;
 using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.DataAccess.Abstract;
 using Core.Entities.Concrete;
+using Core.Extensions;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using System.Linq.Expressions;
+using System.Media;
 
 namespace Core.Business.Concrete
 {
@@ -18,6 +21,24 @@ namespace Core.Business.Concrete
         {
             _companyDal = companyDal;
         }
+
+        #region BusinessRules
+
+        private IResult KontrolSirketYiliGuncelMi(string year)
+        {
+            return DateTime.Today.Year <= year.ToInt() ? new SuccessResult() : new ErrorResult(CoreMessages.CompanyMessages.YearOuOfDate);
+        }
+
+        private IResult KontrolSirketZatenVarMi(string name)
+        {
+            return _companyDal.Get(s => s.Name == name) == null ? new SuccessResult() : new ErrorResult(CoreMessages.CompanyMessages.CompanyAlreadyExist);
+        }
+
+        private IResult KontrolSirketMevcutMu(int id)
+        {
+            return _companyDal.Get(s => s.Id == id) != null ? new SuccessResult() : new ErrorResult(CoreMessages.CompanyMessages.CompanyNotFound);
+        }
+        #endregion
 
         [SecuredOperation("Admin")]
         [LogAspect(typeof(DatabaseLogger))]
@@ -80,8 +101,21 @@ namespace Core.Business.Concrete
 
         [SecuredOperation("Admin")]
         [LogAspect(typeof(DatabaseLogger))]
+        public IResult InsertSQLQuery(string sql)
+        {
+            var result = _companyDal.ExecuteSQLQuery(sql);
+            return new SuccessResult(result + CoreMessages.CompanyMessages.CompanyTableCreatedSuccessfully);
+        }
+
+        [SecuredOperation("Admin")]
+        [LogAspect(typeof(DatabaseLogger))]
         public IResult Add(Company company)
         {
+            var result = BusinessRules.Run(KontrolSirketZatenVarMi(company.Name),
+                                           KontrolSirketYiliGuncelMi(company.Year));
+            if (!result.IsSuccess)
+                return result;
+
             _companyDal.Add(company);
             return new SuccessResult(CoreMessages.CompanyMessages.CompanyAdded);
         }
@@ -90,6 +124,10 @@ namespace Core.Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IResult Delete(Company company)
         {
+            var result = BusinessRules.Run(KontrolSirketMevcutMu(company.Id));
+            if (!result.IsSuccess)
+                return result;
+
             _companyDal.Delete(company);
             return new SuccessResult(CoreMessages.CompanyMessages.CompanyDeleted);
         }
@@ -98,6 +136,11 @@ namespace Core.Business.Concrete
         [LogAspect(typeof(DatabaseLogger))]
         public IResult Update(Company company)
         {
+            var result = BusinessRules.Run(KontrolSirketMevcutMu(company.Id),
+                                           KontrolSirketYiliGuncelMi(company.Year));
+            if (!result.IsSuccess)
+                return result;
+
             _companyDal.Update(company);
             return new SuccessResult(CoreMessages.CompanyMessages.CompanyModified);
         }

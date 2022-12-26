@@ -75,14 +75,6 @@ namespace Business.Concrete
         [SecuredOperation("List,Admin")]
         [CacheAspect(1)]
         [LogAspect(typeof(DatabaseLogger))]
-        public IDataResult<List<BankaHareket>> GetListByCariId(int cariId)
-        {
-            return new SuccessDataResult<List<BankaHareket>>(GetAll(s => s.CariId == cariId));
-        }
-
-        [SecuredOperation("List,Admin")]
-        [CacheAspect(1)]
-        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<BankaHareket>> GetListByBankaHesapId(int bankaHesapId)
         {
             return new SuccessDataResult<List<BankaHareket>>(GetAll(s => s.BankaId == bankaHesapId));

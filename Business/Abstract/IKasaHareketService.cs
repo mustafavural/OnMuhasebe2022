@@ -10,7 +10,6 @@ namespace Business.Abstract
         IDataResult<List<KasaHareket>> GetList(Expression<Func<KasaHareket, bool>>? filter = null);
         IDataResult<KasaHareket> GetByEvrakNo(string evrakNo);
         IDataResult<List<KasaHareket>> GetListByKasaId(int kasaId);
-        IDataResult<List<KasaHareket>> GetListByCariId(int cariId);
         IDataResult<List<KasaHareket>> GetListBetweenTarihler(DateTime first, DateTime last);
         IDataResult<List<KasaHareket>> GetListBetweenFiyatlar(decimal min, decimal max);
         IResult Add(KasaHareket tahsilat);

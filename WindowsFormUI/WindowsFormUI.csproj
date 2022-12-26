@@ -45,6 +45,9 @@
     <Compile Update="Views\Moduls\CekSenetler\FrmBorcEvrakCik.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Views\Moduls\Companies\FrmCompanyMdi.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Views\Moduls\Faturalar\FrmFaturaListe.cs">
       <SubType>Form</SubType>
     </Compile>

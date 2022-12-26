@@ -110,8 +110,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
                 s.Id,
                 s.KasaId,
                 KasaAd = _kasaService.GetById(s.KasaId).Data.Ad,
-                s.CariId,
-                _cariService.GetById(s.CariId).Data.Unvan,
+                _cariService.GetById(s.CariHareket.CariId).Data.Unvan,
                 s.EvrakNo,
                 s.GirenCikanMiktar,
                 s.Tarih,
@@ -210,7 +209,7 @@ namespace WindowsFormUI.Views.Moduls.Kasalar
             return new KasaHareket
             {
                 KasaId = _secilenKasa.Id,
-                CariId = _secilenCari.Id,
+                CariHareket = new CariHareket { CariId = _secilenCari.Id },
                 EvrakNo = txtEvrakNo.Text,
                 Aciklama = txtAciklama.Text,
                 GirenCikanMiktar = _girenCikanMiktar,
