@@ -393,6 +393,22 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             UpdateAltBilgiler();
             ClearItems();
         }
+        private void UscFaturaEkleSilGuncelle_ClickSave(object sender, EventArgs e)
+        {
+            try
+            {
+                Fatura fatura = ReadFaturaFromForm();
+                IResult result = _faturaService.GetByNo(fatura.No).Data == null 
+                    ? _faturaService.Add(fatura) 
+                    : _faturaService.Update(fatura);
+                ClearScreen();
+                uscFaturaEkleSilGuncelle.LblStatus_Text = result.Message;
+            }
+            catch (Exception err)
+            {
+                MessageHelper.ErrorMessageBuilder(err);
+            }
+        }
 
         private void UscKalemEkleSilGuncelle_ClickCancel(object sender, EventArgs e)
         {
@@ -426,20 +442,6 @@ namespace WindowsFormUI.Views.Moduls.Faturalar
             txtFaturaNo.Focus();
         }
 
-        private void UscFaturaEkleSilGuncelle_ClickSave(object sender, EventArgs e)
-        {
-            try
-            {
-                Fatura fatura = ReadFaturaFromForm();
-                IResult result = _faturaService.GetByNo(fatura.No).Data == null ? _faturaService.Add(fatura) : _faturaService.Update(fatura);
-                ClearScreen();
-                uscFaturaEkleSilGuncelle.LblStatus_Text = result.Message;
-            }
-            catch (Exception err)
-            {
-                MessageHelper.ErrorMessageBuilder(err);
-            }
-        }
 
         private void UscFaturaEkleSilGuncelle_ClickCancel(object sender, EventArgs e)
         {

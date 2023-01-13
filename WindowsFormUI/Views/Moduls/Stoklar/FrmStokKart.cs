@@ -227,6 +227,7 @@ namespace WindowsFormUI.Views.Moduls.Stoklar
 
             btnGrupEkle.Enabled = true;
             btnGrupSil.Enabled = true;
+            txtStokKod.Enabled = false;
             uscStokEkleSilButon.BtnClear_Visible = true;
             uscStokEkleSilButon.BtnDelete_Enable = true;
             uscStokEkleSilButon.BtnSave_Enable = true;

@@ -157,7 +157,9 @@ namespace WindowsFormUI.Views.Moduls.Bankalar
         {
             try
             {
-                var result = isUpdate ? _bankaService.Update(ReadBankaFromForm()) : _bankaService.Add(ReadBankaFromForm());
+                var result = isUpdate 
+                    ? _bankaService.Update(ReadBankaFromForm()) 
+                    : _bankaService.Add(ReadBankaFromForm());
                 ClearScreen();
                 lblStatusBar.Text = result.Message;
             }

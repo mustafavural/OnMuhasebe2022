@@ -1,7 +1,9 @@
 ﻿using Autofac;
 using Core.Business.Abstract;
 using DataAccess.Concrete.EntityFramework.Contexts;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 using WindowsFormUI.Views.Moduls.Bankalar;
 using WindowsFormUI.Views.Moduls.Cariler;
@@ -16,17 +18,16 @@ namespace WindowsFormUI.Views
 {
     public partial class FrmWelcome : FrmBase
     {
-        private readonly ICompanyService _companyService;
         public FrmWelcome(ICompanyService companyService)
         {
             InitializeComponent();
-            _companyService = companyService;
             using (var context = new SIRKETLERContext())
             {
                 if(context.Database.EnsureCreated())
                 {
-                    _companyService.InsertSQLQuery(CreateNewDatabase.InsertDatabaseSehirlerSQL);
-                    _companyService.InsertSQLQuery(CreateNewDatabase.InsertDatabaseIlcelerSQL);
+                    Thread.Sleep(1000);
+                    context.Database.ExecuteSqlRaw(CreateNewDatabase.InsertDatabaseSehirlerSQL);
+                    context.Database.ExecuteSqlRaw(CreateNewDatabase.InsertDatabaseIlcelerSQL);
                 }
             }
         }

@@ -140,7 +140,7 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
@@ -157,7 +157,7 @@ namespace WindowsFormUI.Views.Moduls.Cariler
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                MessageHelper.ErrorMessageBuilder(err);
             }
         }
 
